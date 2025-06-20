@@ -5,28 +5,35 @@ import Header from "./components/header/Header";
 import SettingsModal from "./components/settings-modal/SettingsModal";
 import TaskModal from "./components/task-modal/TaskModal";
 import MusicModal from "./components/music-modal/MusicModal";
-import { Pause, Play, SkipForward, RefreshCcw } from "lucide-react";
 import "./page.css";
+import Focus from "./components/home/Focus";
+import StopWatch from "./components/home/Stopwatch";
+import Clock from "./components/home/Clock";
 
 export const TIMER_MODES = {
   FOCUS: "focus",
   SHORT_BREAK: "short_break",
   LONG_BREAK: "long_break",
-  COUNTDOWN: "timer",
+  STOPWATCH: "stopwatch",
 };
 export const DEFAULT_TIMES = {
   [TIMER_MODES.FOCUS]: 25 * 60,
   [TIMER_MODES.SHORT_BREAK]: 5 * 60,
   [TIMER_MODES.LONG_BREAK]: 15 * 60,
-  [TIMER_MODES.TIMER]: 0,
+  [TIMER_MODES.STOPWATCH]: 0,
 };
 
 export default function Page() {
+  // navigation
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showTasks, setShowTasks] = useState(false);
   const [showMusic, setShowMusic] = useState(false);
+  // pomodoro
   const [pomodoroCount, setPomodoroCount] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(DEFAULT_TIMES[TIMER_MODES.FOCUS]);
+  const [isRunning, setIsRunning] = useState(false);
+  //other
   const [settings, setSettings] = useState({
     focusTime: 25,
     shortBreakTime: 5,
@@ -35,13 +42,13 @@ export default function Page() {
   });
   const [currentMode, setCurrentMode] = useState(TIMER_MODES.FOCUS);
   const [currentTab, setCurrentTab] = useState("focus");
-  const [timeLeft, setTimeLeft] = useState(DEFAULT_TIMES[TIMER_MODES.FOCUS]);
-  const [timeLeftTimer, setTimeLeftTimer] = useState(
-    DEFAULT_TIMES[TIMER_MODES.TIMER]
+  // stopwatch
+  const [timeLeftStopwatch, setTimeLeftStopwatch] = useState(
+    DEFAULT_TIMES[TIMER_MODES.STOPWATCH]
   );
-  const [timerIsRunning, setTimerIsRunning] = useState(false);
-  const [isRunning, setIsRunning] = useState(false);
+  const [stopwatchIsRunning, setStopwatchIsRunning] = useState(false);
 
+  // modal actions
   const toggleFullscreen = () => {
     if (!isFullscreen) {
       document.documentElement.requestFullscreen?.();
@@ -50,8 +57,8 @@ export default function Page() {
     }
     setIsFullscreen(!isFullscreen);
   };
-
-  const handleTimerComplete = () => {
+  // pomodoro actions
+  const handlePomodoroComplete = () => {
     setIsRunning(false);
     if (currentMode === TIMER_MODES.FOCUS) {
       setPomodoroCount((prev) => prev + 1);
@@ -72,7 +79,7 @@ export default function Page() {
       intervalRef.current = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
-            handleTimerComplete();
+            handlePomodoroComplete();
             return 0;
           }
           return prev - 1;
@@ -94,16 +101,22 @@ export default function Page() {
 
     return ((totalTime - timeLeft) / totalTime) * 100;
   };
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs
-      .toString()
-      .padStart(2, "0")}`;
+  const progress = getProgress();
+  const circumference = 2 * Math.PI * 180;
+  const strokeDashoffset = circumference * (1 - progress / 100);
+  const togglePomodoro = () => {
+    setIsRunning(!isRunning);
+  };
+  const skipPomodoro = () => {
+    handlePomodoroComplete();
+  };
+  const resetPomodoro = () => {
+    setIsRunning(false);
+    setTimeLeft(DEFAULT_TIMES[currentMode]);
   };
 
+  //clock
   const [dateTime, setDateTime] = useState(new Date());
-
   useEffect(() => {
     const formatTime = () => {
       const now = new Date();
@@ -122,36 +135,36 @@ export default function Page() {
     return () => clearInterval(interval);
   }, [settings.is24Hour]);
 
-  const timerIntervalRef = useRef(null);
+  // stopwatch actions
+  const stopwatchRef = useRef(null);
   useEffect(() => {
-    if (timerIsRunning) {
-      timerIntervalRef.current = setInterval(() => {
-        setTimeLeftTimer((prev) => {
+    if (stopwatchIsRunning) {
+      stopwatchRef.current = setInterval(() => {
+        setTimeLeftStopwatch((prev) => {
           return prev + 1;
         });
       }, 1000);
     } else {
-      clearInterval(timerIntervalRef.current);
+      clearInterval(stopwatchRef.current);
     }
 
-    return () => clearInterval(timerIntervalRef.current);
-  }, [timerIsRunning, timeLeftTimer]);
-  const toggleCountdown = () => {
-    setTimerIsRunning(!timerIsRunning);
+    return () => clearInterval(stopwatchRef.current);
+  }, [stopwatchIsRunning, timeLeftStopwatch]);
+
+  const toggleStopwatch = () => {
+    setStopwatchIsRunning(!stopwatchIsRunning);
   };
-  const resetCountdown = () => {
-    setTimerIsRunning(false);
-    setTimeLeftTimer(DEFAULT_TIMES[TIMER_MODES.TIMER]);
+  const resetStopwatch = () => {
+    setStopwatchIsRunning(false);
+    setTimeLeftStopwatch(DEFAULT_TIMES[TIMER_MODES.STOPWATCH]);
   };
-  const toggleTimer = () => {
-    setIsRunning(!isRunning);
-  };
-  const skipTimer = () => {
-    handleTimerComplete();
-  };
-  const resetTimer = () => {
-    setIsRunning(false);
-    setTimeLeft(DEFAULT_TIMES[currentMode]);
+  // other
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   };
   useEffect(() => {
     if (currentTab !== "focus") setIsRunning(false);
@@ -174,9 +187,9 @@ export default function Page() {
             Focus
           </button>
           <button
-            className={`mode-tab ${currentTab === "timer" ? "active" : ""}`}
-            onClick={() => setCurrentTab("timer")}>
-            Countdown
+            className={`mode-tab ${currentTab === "stopwatch" ? "active" : ""}`}
+            onClick={() => setCurrentTab("stopwatch")}>
+            Stopwatch
           </button>
           <button
             className={`mode-tab ${currentTab === "clock" ? "active" : ""}`}
@@ -184,107 +197,28 @@ export default function Page() {
             Clock
           </button>
         </div>
-        <div className="timer-container">
-          <div className="timer-circle">
-            <svg className="progress-ring" width="300" height="300">
-              <circle
-                className="progress-ring-background"
-                strokeWidth="8"
-                fill="transparent"
-                r="140"
-                cx="150"
-                cy="150"
-              />
-              {currentTab === "focus" && (
-                <circle
-                  className="progress-ring-progress"
-                  strokeWidth="8"
-                  fill="transparent"
-                  r="140"
-                  cx="150"
-                  cy="150"
-                  style={{
-                    strokeDasharray: `${2 * Math.PI * 140}`,
-                    strokeDashoffset: `${
-                      2 * Math.PI * 140 * (1 - getProgress() / 100)
-                    }`,
-                  }}
-                />
-              )}
-            </svg>
-
-            <div className="timer-content">
-              {currentTab === "focus" && (
-                <React.Fragment>
-                  <p className="mode-label">
-                    {currentMode === "short_break"
-                      ? "Short Break"
-                      : currentMode === "long_break"
-                      ? "Long Break"
-                      : "Focus"}
-                  </p>
-                  <time className="timer-display">{formatTime(timeLeft)}</time>
-                </React.Fragment>
-              )}
-              {currentTab === "timer" && (
-                <React.Fragment>
-                  <p className="mode-label">Countdown</p>
-                  <time className="timer-display">
-                    {formatTime(timeLeftTimer)}
-                  </time>
-                </React.Fragment>
-              )}
-              {currentTab === "clock" && (
-                <React.Fragment>
-                  <p className="mode-label">Current Time</p>
-                  <time className="timer-display">{dateTime}</time>
-                </React.Fragment>
-              )}
-            </div>
-          </div>
-        </div>
-        {currentTab === "focus" && (
-          <div className="timer-controls">
-            <button
-              className="control-button primary"
-              onClick={toggleTimer}
-              aria-label={isRunning ? "Pause" : "Start"}>
-              <span>{isRunning ? "Pause" : "Start"}</span>
-              {isRunning ? <Pause /> : <Play />}
-            </button>
-            <button
-              className="control-button secondary"
-              onClick={skipTimer}
-              aria-label="Skip">
-              <span>Skip</span>
-              <SkipForward />
-            </button>
-            <button
-              className="control-button secondary"
-              onClick={resetTimer}
-              aria-label="Reset">
-              <span>Reset</span>
-              <RefreshCcw />
-            </button>
-          </div>
-        )}
-        {currentTab === "timer" && (
-          <div className="timer-controls">
-            <button
-              className="control-button primary"
-              onClick={toggleCountdown}
-              aria-label={timerIsRunning ? "Pause" : "Start"}>
-              <span>{timerIsRunning ? "Pause" : "Start"}</span>
-              {timerIsRunning ? <Pause /> : <Play />}
-            </button>
-            <button
-              className="control-button secondary"
-              onClick={resetCountdown}
-              aria-label="Reset">
-              <span>Reset</span>
-              <RefreshCcw />
-            </button>
-          </div>
+        {currentTab === "focus" ? (
+          <Focus
+            currentMode={currentMode}
+            formatTime={formatTime}
+            timeLeft={timeLeft}
+            circumference={circumference}
+            strokeDashoffset={strokeDashoffset}
+            togglePomodoro={togglePomodoro}
+            isRunning={isRunning}
+            skipPomodoro={skipPomodoro}
+            resetPomodoro={resetPomodoro}
+          />
+        ) : currentTab === "stopwatch" ? (
+          <StopWatch
+            formatTime={formatTime}
+            timeLeftStopwatch={timeLeftStopwatch}
+            toggleStopwatch={toggleStopwatch}
+            stopwatchIsRunning={stopwatchIsRunning}
+            resetStopwatch={resetStopwatch}
+          />
+        ) : (
+          <Clock dateTime={dateTime} />
         )}
       </main>
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
