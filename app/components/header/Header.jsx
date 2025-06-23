@@ -13,6 +13,7 @@ const Header = ({
   setShowSettings,
   setShowTasks,
   setShowMusic,
+  streak,
 }) => {
   return (
     <header className="header">
@@ -21,7 +22,7 @@ const Header = ({
       <nav>
         <p className="pomodoro-counter">
           <Flame />
-          <span>10</span>
+          <span>{streak}</span>
         </p>
         <ul className="header-controls">
           <li>
