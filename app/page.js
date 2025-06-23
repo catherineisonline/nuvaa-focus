@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { act, useCallback, useEffect, useRef, useState } from "react";
 import Header from "./components/header/Header";
 import SettingsModal from "./components/settings-modal/SettingsModal";
 import TaskModal from "./components/task-modal/TaskModal";
@@ -17,8 +17,8 @@ export const TIMER_MODES = {
   STOPWATCH: "stopwatch",
 };
 export const DEFAULT_TIMES = {
-  [TIMER_MODES.FOCUS]: 25 * 60,
-  [TIMER_MODES.SHORT_BREAK]: 5 * 60,
+  [TIMER_MODES.FOCUS]: 0.1 * 60,
+  [TIMER_MODES.SHORT_BREAK]: 0.1 * 60,
   [TIMER_MODES.LONG_BREAK]: 15 * 60,
   [TIMER_MODES.STOPWATCH]: 0,
 };
@@ -33,10 +33,11 @@ export default function Page() {
   const [pomodoroCount, setPomodoroCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(DEFAULT_TIMES[TIMER_MODES.FOCUS]);
   const [isRunning, setIsRunning] = useState(false);
+  const [streak, setStreak] = useState(0);
   //other
   const [settings, setSettings] = useState({
-    focusTime: 25,
-    shortBreakTime: 5,
+    focusTime: 0.1,
+    shortBreakTime: 0.1,
     longBreakTime: 15,
     is24Hour: false,
   });
@@ -58,10 +59,19 @@ export default function Page() {
     setIsFullscreen(!isFullscreen);
   };
   // pomodoro actions
-  const handlePomodoroComplete = () => {
+  const completedRef = useRef(false);
+  useEffect(() => {
+    if (isRunning) {
+      completedRef.current = false;
+    }
+  }, [isRunning]);
+  const handlePomodoroComplete = useCallback(() => {
+    if (completedRef.current) return;
+    completedRef.current = true;
     setIsRunning(false);
     if (currentMode === TIMER_MODES.FOCUS) {
       setPomodoroCount((prev) => prev + 1);
+      setStreak((prev) => prev + 1);
       const mode =
         (pomodoroCount + 1) % 4 === 0
           ? TIMER_MODES.LONG_BREAK
@@ -72,14 +82,17 @@ export default function Page() {
       setCurrentMode(TIMER_MODES.FOCUS);
       setTimeLeft(DEFAULT_TIMES[TIMER_MODES.FOCUS]);
     }
-  };
+  }, [currentMode, pomodoroCount]);
+
   const intervalRef = useRef(null);
+
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
       intervalRef.current = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
             handlePomodoroComplete();
+
             return 0;
           }
           return prev - 1;
@@ -90,7 +103,7 @@ export default function Page() {
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isRunning, timeLeft]);
+  }, [isRunning, timeLeft, handlePomodoroComplete]);
 
   const getProgress = () => {
     const totalTime = {
@@ -108,7 +121,19 @@ export default function Page() {
     setIsRunning(!isRunning);
   };
   const skipPomodoro = () => {
-    handlePomodoroComplete();
+    setIsRunning(false);
+    if (currentMode === TIMER_MODES.FOCUS) {
+      setPomodoroCount((prev) => prev + 1);
+      const mode =
+        (pomodoroCount + 1) % 4 === 0
+          ? TIMER_MODES.LONG_BREAK
+          : TIMER_MODES.SHORT_BREAK;
+      setCurrentMode(mode);
+      setTimeLeft(DEFAULT_TIMES[mode]);
+    } else {
+      setCurrentMode(TIMER_MODES.FOCUS);
+      setTimeLeft(DEFAULT_TIMES[TIMER_MODES.FOCUS]);
+    }
   };
   const resetPomodoro = () => {
     setIsRunning(false);
@@ -178,6 +203,7 @@ export default function Page() {
         setShowTasks={setShowTasks}
         setShowMusic={setShowMusic}
         setShowSettings={setShowSettings}
+        streak={streak}
       />
       <main className="main-content">
         <div className="mode-tabs">
