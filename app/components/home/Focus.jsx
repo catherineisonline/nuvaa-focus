@@ -17,16 +17,27 @@ const Focus = ({
         <svg className="progress-ring" width="400" height="400">
           <circle
             className="progress-ring-background"
-            strokeWidth="8"
+            strokeWidth="20"
             fill="transparent"
             r="180"
             cx="190"
             cy="190"
           />
-
+          <defs>
+            <linearGradient
+              id="progressGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%">
+              <stop offset="0%" stopColor="#4740a1" />
+              <stop offset="100%" stopColor="#b59dee" />
+            </linearGradient>
+          </defs>
           <circle
             className="progress-ring-progress"
-            strokeWidth="8"
+            stroke="url(#progressGradient)"
+            strokeWidth="20"
             fill="transparent"
             r="180"
             cx="190"
@@ -40,9 +51,9 @@ const Focus = ({
 
         <div className="timer-content">
           <p className="mode-label">
-            {currentMode === "short_break"
+            {currentMode === "shortBreakTime"
               ? "Short Break"
-              : currentMode === "long_break"
+              : currentMode === "longBreakTime"
               ? "Long Break"
               : "Focus"}
           </p>
@@ -54,22 +65,19 @@ const Focus = ({
           className="control-button primary"
           onClick={togglePomodoro}
           aria-label={isRunning ? "Pause" : "Start"}>
-          <span>{isRunning ? "Pause" : "Start"}</span>
-          {isRunning ? <Pause /> : <Play />}
+          {isRunning ? <Pause strokeWidth={2.8} /> : <Play strokeWidth={2.8} />}
         </button>
         <button
           className="control-button secondary"
           onClick={skipPomodoro}
           aria-label="Skip">
-          <span>Skip</span>
-          <SkipForward />
+          <SkipForward strokeWidth={2.8} />
         </button>
         <button
           className="control-button secondary"
           onClick={resetPomodoro}
           aria-label="Reset">
-          <span>Reset</span>
-          <RefreshCcw />
+          <RefreshCcw strokeWidth={2.8} />
         </button>
       </div>
     </div>

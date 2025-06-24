@@ -1,0 +1,64 @@
+.settings-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.single-column .settings-content {
+  padding: 2rem;
+}
+
+.setting-group {
+  margin-bottom: 2rem;
+}
+
+.setting-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.setting-input,
+.setting-select,
+.setting-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--shadow-light);
+  border-radius: 8px;
+  background-color: var(--color-modal);
+  font-size: 1rem;
+  color: var(--color-text);
+  transition: var(--transition);
+}
+
+.setting-input:focus,
+.setting-select:focus,
+.setting-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+}
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 14px;
+}

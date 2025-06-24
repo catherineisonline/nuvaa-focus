@@ -18,15 +18,17 @@ const StopWatch = ({
           className="control-button primary"
           onClick={toggleStopwatch}
           aria-label={stopwatchIsRunning ? "Pause" : "Start"}>
-          <span>{stopwatchIsRunning ? "Pause" : "Start"}</span>
-          {stopwatchIsRunning ? <Pause /> : <Play />}
+          {stopwatchIsRunning ? (
+            <Pause strokeWidth={2.8} />
+          ) : (
+            <Play strokeWidth={2.8} />
+          )}
         </button>
         <button
           className="control-button secondary"
           onClick={resetStopwatch}
           aria-label="Reset">
-          <span>Reset</span>
-          <RefreshCcw />
+          <RefreshCcw strokeWidth={2.8} />
         </button>
       </div>
     </div>

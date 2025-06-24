@@ -1,12 +1,13 @@
 :root {
   --color-text: #333333;
-  --color-background: linear-gradient(150deg, #dac7e6, #bfeae8);
+  --color-background: linear-gradient(150deg, #ebddf4, #bfeae8);
   --color-accent: #d5a9ef;
   --color-button-bg: #bfeae8;
   --color-button-text: #252525;
-  --color-glass: rgba(255, 255, 255, 0.2);
-  --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --color-glass: #ffffff33;
+  --color-modal: #fffffff2;
+  --shadow-light: 0 4px 12px #0000001a;
+  --shadow-medium: 0 8px 24px #00000026;
   --border-radius: 12px;
   --transition: all 0.3s ease-in-out;
 }
@@ -17,4 +18,17 @@ body {
   color: var(--color-text);
   position: relative;
   transition: var(--transition);
+}
+
+h1,
+h2,
+h3,
+h4,
+time {
+  font-family: var(--font-outfit);
+  font-weight: 800;
+}
+p {
+  font-family: var(--font-lexend);
+  font-weight: 800;
 }

@@ -1,29 +1,24 @@
 "use client";
-
-import React, { act, useCallback, useEffect, useRef, useState } from "react";
+import "./page.css";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Header from "./components/header/Header";
 import SettingsModal from "./components/settings-modal/SettingsModal";
 import TaskModal from "./components/task-modal/TaskModal";
 import MusicModal from "./components/music-modal/MusicModal";
-import "./page.css";
 import Focus from "./components/home/Focus";
 import StopWatch from "./components/home/Stopwatch";
 import Clock from "./components/home/Clock";
 
-export const TIMER_MODES = {
-  FOCUS: "focus",
-  SHORT_BREAK: "short_break",
-  LONG_BREAK: "long_break",
-  STOPWATCH: "stopwatch",
-};
-export const DEFAULT_TIMES = {
-  [TIMER_MODES.FOCUS]: 0.1 * 60,
-  [TIMER_MODES.SHORT_BREAK]: 0.1 * 60,
-  [TIMER_MODES.LONG_BREAK]: 15 * 60,
-  [TIMER_MODES.STOPWATCH]: 0,
-};
-
 export default function Page() {
+  //settings
+  const [settings, setSettings] = useState({
+    focusTime: 25,
+    shortBreakTime: 5,
+    longBreakTime: 15,
+    stopwatch: 0,
+    is24Hour: true,
+    autoStartNext: false,
+  });
   // navigation
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -31,23 +26,53 @@ export default function Page() {
   const [showMusic, setShowMusic] = useState(false);
   // pomodoro
   const [pomodoroCount, setPomodoroCount] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(DEFAULT_TIMES[TIMER_MODES.FOCUS]);
+  const [timeLeft, setTimeLeft] = useState(settings["focusTime"]);
   const [isRunning, setIsRunning] = useState(false);
-  const [streak, setStreak] = useState(0);
+  const [progress, setProgress] = useState(0);
   //other
-  const [settings, setSettings] = useState({
-    focusTime: 0.1,
-    shortBreakTime: 0.1,
-    longBreakTime: 15,
-    is24Hour: false,
-  });
-  const [currentMode, setCurrentMode] = useState(TIMER_MODES.FOCUS);
-  const [currentTab, setCurrentTab] = useState("focus");
+  const [streak, setStreak] = useState(0);
+  const [currentMode, setCurrentMode] = useState("focusTime");
+  const [currentTab, setCurrentTab] = useState("focusTime");
   // stopwatch
   const [timeLeftStopwatch, setTimeLeftStopwatch] = useState(
-    DEFAULT_TIMES[TIMER_MODES.STOPWATCH]
+    settings["stopwatch"]
   );
   const [stopwatchIsRunning, setStopwatchIsRunning] = useState(false);
+  // localStorage
+
+  useEffect(() => {
+    const streakStore = localStorage.getItem("streak");
+    const settingsStore = localStorage.getItem("settings");
+
+    if (streakStore !== null) {
+      setStreak(JSON.parse(streakStore));
+    }
+    if (settingsStore !== null) {
+      setSettings(JSON.parse(settingsStore));
+    }
+    const tabStore = localStorage.getItem("currentTab");
+    if (tabStore !== null) {
+      setCurrentTab(JSON.parse(tabStore));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("currentTab", JSON.stringify(currentTab));
+  }, [currentTab]);
+
+  // settings
+  useEffect(() => {
+    const times = {
+      focusTime: settings.focusTime * 60,
+      shortBreakTime: settings.shortBreakTime * 60,
+      longBreakTime: settings.longBreakTime * 60,
+    };
+    setTimeLeft(times[currentMode]);
+  }, [
+    settings.focusTime,
+    settings.shortBreakTime,
+    settings.longBreakTime,
+    currentMode,
+  ]);
 
   // modal actions
   const toggleFullscreen = () => {
@@ -65,87 +90,100 @@ export default function Page() {
       completedRef.current = false;
     }
   }, [isRunning]);
+
   const handlePomodoroComplete = useCallback(() => {
     if (completedRef.current) return;
     completedRef.current = true;
     setIsRunning(false);
-    if (currentMode === TIMER_MODES.FOCUS) {
+    if (currentMode === "focusTime") {
       setPomodoroCount((prev) => prev + 1);
-      setStreak((prev) => prev + 1);
+      setStreak((prev) => {
+        const streak = prev + 1;
+        localStorage.setItem("streak", JSON.stringify(streak));
+        return streak;
+      });
+
       const mode =
-        (pomodoroCount + 1) % 4 === 0
-          ? TIMER_MODES.LONG_BREAK
-          : TIMER_MODES.SHORT_BREAK;
+        (pomodoroCount + 1) % 4 === 0 ? "longBreakTime" : "shortBreakTime";
       setCurrentMode(mode);
-      setTimeLeft(DEFAULT_TIMES[mode]);
+
+      setTimeLeft(settings[mode]);
     } else {
-      setCurrentMode(TIMER_MODES.FOCUS);
-      setTimeLeft(DEFAULT_TIMES[TIMER_MODES.FOCUS]);
+      setCurrentMode("focusTime");
+
+      setTimeLeft(settings["focusTime"]);
     }
-  }, [currentMode, pomodoroCount]);
+    // ! note: enable user add aut-start time & add countdown before autostart
+    if (settings.autoStartNext) {
+      setTimeout(() => setIsRunning(true), 3000);
+    }
+  }, [currentMode, pomodoroCount, settings]);
 
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    if (isRunning && timeLeft > 0) {
-      intervalRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            handlePomodoroComplete();
-
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    } else {
-      clearInterval(intervalRef.current);
-    }
+    if (!isRunning) return;
+    intervalRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          handlePomodoroComplete();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
     return () => clearInterval(intervalRef.current);
-  }, [isRunning, timeLeft, handlePomodoroComplete]);
+  }, [isRunning, handlePomodoroComplete]);
 
-  const getProgress = () => {
+  useEffect(() => {
     const totalTime = {
-      [TIMER_MODES.FOCUS]: settings.focusTime * 60,
-      [TIMER_MODES.SHORT_BREAK]: settings.shortBreakTime * 60,
-      [TIMER_MODES.LONG_BREAK]: settings.longBreakTime * 60,
+      focusTime: settings.focusTime * 60,
+      shortBreakTime: settings.shortBreakTime * 60,
+      longBreakTime: settings.longBreakTime * 60,
     }[currentMode];
+    if (!totalTime) return;
 
-    return ((totalTime - timeLeft) / totalTime) * 100;
-  };
-  const progress = getProgress();
+    setProgress(((totalTime - timeLeft) / totalTime) * 100);
+  }, [settings, currentMode, timeLeft]);
+
   const circumference = 2 * Math.PI * 180;
   const strokeDashoffset = circumference * (1 - progress / 100);
+
   const togglePomodoro = () => {
     setIsRunning(!isRunning);
   };
   const skipPomodoro = () => {
     setIsRunning(false);
-    if (currentMode === TIMER_MODES.FOCUS) {
+    if (currentMode === "focusTime") {
       setPomodoroCount((prev) => prev + 1);
       const mode =
-        (pomodoroCount + 1) % 4 === 0
-          ? TIMER_MODES.LONG_BREAK
-          : TIMER_MODES.SHORT_BREAK;
+        (pomodoroCount + 1) % 4 === 0 ? "longBreakTime" : "shortBreakTime";
       setCurrentMode(mode);
-      setTimeLeft(DEFAULT_TIMES[mode]);
+
+      setTimeLeft(settings[mode]);
     } else {
-      setCurrentMode(TIMER_MODES.FOCUS);
-      setTimeLeft(DEFAULT_TIMES[TIMER_MODES.FOCUS]);
+      setCurrentMode("focusTime");
+
+      setTimeLeft(settings["focusTime"]);
     }
   };
   const resetPomodoro = () => {
     setIsRunning(false);
-    setTimeLeft(DEFAULT_TIMES[currentMode]);
+    const totalTime = {
+      focusTime: settings.focusTime * 60,
+      shortBreakTime: settings.shortBreakTime * 60,
+      longBreakTime: settings.longBreakTime * 60,
+    }[currentMode];
+    setTimeLeft(totalTime);
   };
 
   //clock
-  const [dateTime, setDateTime] = useState(new Date());
+  const [dateTime, setDateTime] = useState("");
+
   useEffect(() => {
     const formatTime = () => {
-      const now = new Date();
-      return now.toLocaleTimeString("en-US", {
+      return new Date().toLocaleTimeString("en-US", {
         hour12: !settings.is24Hour,
         hour: settings.is24Hour ? "2-digit" : "numeric",
         minute: "2-digit",
@@ -181,7 +219,7 @@ export default function Page() {
   };
   const resetStopwatch = () => {
     setStopwatchIsRunning(false);
-    setTimeLeftStopwatch(DEFAULT_TIMES[TIMER_MODES.STOPWATCH]);
+    setTimeLeftStopwatch(settings["stopwatch"]);
   };
   // other
   const formatTime = (seconds) => {
@@ -192,8 +230,8 @@ export default function Page() {
       .padStart(2, "0")}`;
   };
   useEffect(() => {
-    if (currentTab !== "focus") setIsRunning(false);
-  }, [currentTab, isRunning]);
+    if (currentTab !== "focusTime") setIsRunning(false);
+  }, [currentTab]);
 
   return (
     <div>
@@ -208,8 +246,8 @@ export default function Page() {
       <main className="main-content">
         <div className="mode-tabs">
           <button
-            className={`mode-tab ${currentTab === "focus" ? "active" : ""}`}
-            onClick={() => setCurrentTab("focus")}>
+            className={`mode-tab ${currentTab === "focusTime" ? "active" : ""}`}
+            onClick={() => setCurrentTab("focusTime")}>
             Focus
           </button>
           <button
@@ -223,7 +261,7 @@ export default function Page() {
             Clock
           </button>
         </div>
-        {currentTab === "focus" ? (
+        {currentTab === "focusTime" ? (
           <Focus
             currentMode={currentMode}
             formatTime={formatTime}
@@ -247,9 +285,27 @@ export default function Page() {
           <Clock dateTime={dateTime} />
         )}
       </main>
-      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
-      {showTasks && <TaskModal onClose={() => setShowTasks(false)} />}
-      {showMusic && <MusicModal onClose={() => setShowMusic(false)} />}
+      {showSettings && (
+        <SettingsModal
+          setShowSettings={setShowSettings}
+          setSettings={setSettings}
+          settings={settings}
+        />
+      )}
+      {showTasks && (
+        <TaskModal
+          setShowSettings={setShowSettings}
+          setSettings={setSettings}
+          settings={settings}
+        />
+      )}
+      {showMusic && (
+        <MusicModal
+          setShowSettings={setShowSettings}
+          setSettings={setSettings}
+          settings={settings}
+        />
+      )}
     </div>
   );
 }

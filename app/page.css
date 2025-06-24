@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--color-background);
+  background: var(--color-background);
   z-index: -1;
 }
 
@@ -71,9 +71,8 @@
 }
 
 .progress-ring-progress {
-  stroke: var(--color-accent);
   stroke-linecap: round;
-  transition: stroke-linecap 1s ease-in-out;
+  transition: all 1.5s ease-in-out;
 }
 
 .timer-content {
@@ -133,11 +132,15 @@
 .control-button.primary {
   background-color: var(--color-button-bg);
   color: var(--color-button-text);
+  display: flex;
+  justify-content: center;
 }
 
 .control-button.secondary {
   background-color: var(--color-glass);
   color: var(--color-text);
+  display: flex;
+  justify-content: center;
 }
 
 .control-button:hover {
