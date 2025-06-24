@@ -11,17 +11,12 @@ import Clock from "./components/home/Clock";
 
 export default function Page() {
   //settings
-  const [settings, setSettings] = useState(() => {
-    const exists = localStorage.getItem("settings");
-    return exists
-      ? JSON.parse(exists)
-      : {
-          focusTime: 25,
-          shortBreakTime: 5,
-          longBreakTime: 15,
-          stopwatch: 0,
-          is24Hour: true,
-        };
+  const [settings, setSettings] = useState({
+    focusTime: 25,
+    shortBreakTime: 5,
+    longBreakTime: 15,
+    stopwatch: 0,
+    is24Hour: true,
   });
   // navigation
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -33,10 +28,19 @@ export default function Page() {
   const [timeLeft, setTimeLeft] = useState(settings["focusTime"]);
   const [isRunning, setIsRunning] = useState(false);
 
-  const [streak, setStreak] = useState(() => {
-    const exists = localStorage.getItem("streak");
-    return exists ? JSON.parse(exists) : 0;
-  });
+  const [streak, setStreak] = useState(0);
+
+  useEffect(() => {
+    const streakStore = localStorage.getItem("streak");
+    const settingsStore = localStorage.getItem("settings");
+    if (streakStore !== null) {
+      setStreak(JSON.parse(streakStore));
+    }
+    if (settingsStore !== null) {
+      setSettings(JSON.parse(settingsStore));
+    }
+  }, []);
+
   const [currentMode, setCurrentMode] = useState("focusTime");
   const [currentTab, setCurrentTab] = useState("focusTime");
   // stopwatch

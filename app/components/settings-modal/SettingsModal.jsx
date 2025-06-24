@@ -18,6 +18,7 @@ const SettingsModal = ({ setShowSettings, setSettings, settings }) => {
       return settings;
     });
   };
+
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
       <div
