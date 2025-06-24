@@ -17,6 +17,7 @@ export default function Page() {
     longBreakTime: 15,
     stopwatch: 0,
     is24Hour: true,
+    autoStartNext: false,
   });
   // navigation
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -86,7 +87,6 @@ export default function Page() {
     setIsRunning(false);
     if (currentMode === "focusTime") {
       setPomodoroCount((prev) => prev + 1);
-
       setStreak((prev) => {
         const streak = prev + 1;
         localStorage.setItem("streak", JSON.stringify(streak));
@@ -100,6 +100,10 @@ export default function Page() {
     } else {
       setCurrentMode("focusTime");
       setTimeLeft(settings["focusTime"]);
+    }
+    // ! note: enable user add aut-start time
+    if (settings.autoStartNext) {
+      setTimeout(() => setIsRunning(true), 3000);
     }
   }, [currentMode, pomodoroCount, settings]);
 

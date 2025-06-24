@@ -32,3 +32,33 @@
   color: var(--color-text);
   transition: var(--transition);
 }
+
+.setting-input:focus,
+.setting-select:focus,
+.setting-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+}
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 14px;
+}
