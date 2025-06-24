@@ -4,9 +4,10 @@
   --color-accent: #d5a9ef;
   --color-button-bg: #bfeae8;
   --color-button-text: #252525;
-  --color-glass: rgba(255, 255, 255, 0.2);
-  --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --color-glass: #ffffff33;
+  --color-modal: #fffffff2;
+  --shadow-light: 0 4px 12px #0000001a;
+  --shadow-medium: 0 8px 24px #00000026;
   --border-radius: 12px;
   --transition: all 0.3s ease-in-out;
 }

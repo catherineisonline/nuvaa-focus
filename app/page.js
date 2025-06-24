@@ -247,7 +247,7 @@ export default function Page() {
           <Clock dateTime={dateTime} />
         )}
       </main>
-      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
+      {showSettings && <SettingsModal setShowSettings={setShowSettings} />}
       {showTasks && <TaskModal onClose={() => setShowTasks(false)} />}
       {showMusic && <MusicModal onClose={() => setShowMusic(false)} />}
     </div>
