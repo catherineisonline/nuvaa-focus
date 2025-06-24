@@ -17,8 +17,8 @@ export const TIMER_MODES = {
   STOPWATCH: "stopwatch",
 };
 export const DEFAULT_TIMES = {
-  [TIMER_MODES.FOCUS]: 0.1 * 60,
-  [TIMER_MODES.SHORT_BREAK]: 0.1 * 60,
+  [TIMER_MODES.FOCUS]: 25 * 60,
+  [TIMER_MODES.SHORT_BREAK]: 5 * 60,
   [TIMER_MODES.LONG_BREAK]: 15 * 60,
   [TIMER_MODES.STOPWATCH]: 0,
 };
@@ -36,8 +36,8 @@ export default function Page() {
   const [streak, setStreak] = useState(0);
   //other
   const [settings, setSettings] = useState({
-    focusTime: 0.1,
-    shortBreakTime: 0.1,
+    focusTime: 25,
+    shortBreakTime: 5,
     longBreakTime: 15,
     is24Hour: false,
   });

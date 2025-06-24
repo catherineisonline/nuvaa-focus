@@ -19,3 +19,16 @@ body {
   position: relative;
   transition: var(--transition);
 }
+
+h1,
+h2,
+h3,
+h4,
+time {
+  font-family: var(--font-outfit);
+  font-weight: 800;
+}
+p {
+  font-family: var(--font-inter);
+  font-weight: 800;
+}
