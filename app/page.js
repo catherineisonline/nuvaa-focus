@@ -28,20 +28,9 @@ export default function Page() {
   const [pomodoroCount, setPomodoroCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(settings["focusTime"]);
   const [isRunning, setIsRunning] = useState(false);
-
+  const [progress, setProgress] = useState(0);
+  //other
   const [streak, setStreak] = useState(0);
-
-  useEffect(() => {
-    const streakStore = localStorage.getItem("streak");
-    const settingsStore = localStorage.getItem("settings");
-    if (streakStore !== null) {
-      setStreak(JSON.parse(streakStore));
-    }
-    if (settingsStore !== null) {
-      setSettings(JSON.parse(settingsStore));
-    }
-  }, []);
-
   const [currentMode, setCurrentMode] = useState("focusTime");
   const [currentTab, setCurrentTab] = useState("focusTime");
   // stopwatch
@@ -49,6 +38,27 @@ export default function Page() {
     settings["stopwatch"]
   );
   const [stopwatchIsRunning, setStopwatchIsRunning] = useState(false);
+  // localStorage
+
+  useEffect(() => {
+    const streakStore = localStorage.getItem("streak");
+    const settingsStore = localStorage.getItem("settings");
+
+    if (streakStore !== null) {
+      setStreak(JSON.parse(streakStore));
+    }
+    if (settingsStore !== null) {
+      setSettings(JSON.parse(settingsStore));
+    }
+    const tabStore = localStorage.getItem("currentTab");
+    if (tabStore !== null) {
+      setCurrentTab(JSON.parse(tabStore));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("currentTab", JSON.stringify(currentTab));
+  }, [currentTab]);
+
   // settings
   useEffect(() => {
     const times = {
@@ -96,12 +106,14 @@ export default function Page() {
       const mode =
         (pomodoroCount + 1) % 4 === 0 ? "longBreakTime" : "shortBreakTime";
       setCurrentMode(mode);
+
       setTimeLeft(settings[mode]);
     } else {
       setCurrentMode("focusTime");
+
       setTimeLeft(settings["focusTime"]);
     }
-    // ! note: enable user add aut-start time
+    // ! note: enable user add aut-start time & add countdown before autostart
     if (settings.autoStartNext) {
       setTimeout(() => setIsRunning(true), 3000);
     }
@@ -124,19 +136,20 @@ export default function Page() {
     return () => clearInterval(intervalRef.current);
   }, [isRunning, handlePomodoroComplete]);
 
-  const getProgress = () => {
+  useEffect(() => {
     const totalTime = {
       focusTime: settings.focusTime * 60,
       shortBreakTime: settings.shortBreakTime * 60,
       longBreakTime: settings.longBreakTime * 60,
     }[currentMode];
+    if (!totalTime) return;
 
-    return ((totalTime - timeLeft) / totalTime) * 100;
-  };
+    setProgress(((totalTime - timeLeft) / totalTime) * 100);
+  }, [settings, currentMode, timeLeft]);
 
-  const progress = getProgress();
   const circumference = 2 * Math.PI * 180;
   const strokeDashoffset = circumference * (1 - progress / 100);
+
   const togglePomodoro = () => {
     setIsRunning(!isRunning);
   };
@@ -147,9 +160,11 @@ export default function Page() {
       const mode =
         (pomodoroCount + 1) % 4 === 0 ? "longBreakTime" : "shortBreakTime";
       setCurrentMode(mode);
+
       setTimeLeft(settings[mode]);
     } else {
       setCurrentMode("focusTime");
+
       setTimeLeft(settings["focusTime"]);
     }
   };
@@ -164,12 +179,11 @@ export default function Page() {
   };
 
   //clock
-  const [dateTime, setDateTime] = useState(new Date());
+  const [dateTime, setDateTime] = useState("");
 
   useEffect(() => {
     const formatTime = () => {
-      const now = new Date();
-      return now.toLocaleTimeString("en-US", {
+      return new Date().toLocaleTimeString("en-US", {
         hour12: !settings.is24Hour,
         hour: settings.is24Hour ? "2-digit" : "numeric",
         minute: "2-digit",
