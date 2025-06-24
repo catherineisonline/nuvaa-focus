@@ -1,14 +1,22 @@
 import { SquareX } from "lucide-react";
 import "./settings.css";
 import { useState } from "react";
+import TimerTab from "./timer-tab/TimerTab";
 
-const SettingsModal = ({ setShowSettings }) => {
+const SettingsModal = ({ setShowSettings, setSettings, settings }) => {
   const [activeTab, setActiveTab] = useState("timer");
 
   const handleOutsideClick = (e) => {
     if (e.target === e.currentTarget) {
       setShowSettings(false);
     }
+  };
+  const updateSetting = (key, value) => {
+    setSettings((prev) => {
+      const settings = { ...prev, [key]: value };
+      localStorage.setItem("settings", JSON.stringify(settings));
+      return settings;
+    });
   };
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
@@ -26,8 +34,8 @@ const SettingsModal = ({ setShowSettings }) => {
             <SquareX size={24} />
           </button>
         </header>
-        <section className="modal-body single-column">
-          <div className="settings-tabs">
+        <div className="modal-body single-column">
+          <section className="settings-tabs">
             <button
               className={`tab-btn ${activeTab === "timer" ? "active" : ""}`}
               onClick={() => setActiveTab("timer")}>
@@ -55,8 +63,11 @@ const SettingsModal = ({ setShowSettings }) => {
               onClick={() => setActiveTab("account")}>
               Account
             </button>
-          </div>
-        </section>
+          </section>
+          {activeTab === "timer" && (
+            <TimerTab updateSetting={updateSetting} settings={settings} />
+          )}
+        </div>
       </div>
     </div>
   );

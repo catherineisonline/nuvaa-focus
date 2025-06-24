@@ -40,9 +40,9 @@ const Focus = ({
 
         <div className="timer-content">
           <p className="mode-label">
-            {currentMode === "short_break"
+            {currentMode === "shortBreakTime"
               ? "Short Break"
-              : currentMode === "long_break"
+              : currentMode === "longBreakTime"
               ? "Long Break"
               : "Focus"}
           </p>

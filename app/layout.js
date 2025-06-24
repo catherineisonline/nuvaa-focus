@@ -1,15 +1,17 @@
-import { Inter, Outfit } from "next/font/google";
+import { Lexend, Outfit } from "next/font/google";
 
-const inter = Inter({
+const lexend = Lexend({
   subsets: ["latin"],
   weight: ["400", "500", "800"],
-  variable: "--font-inter",
+  variable: "--font-lexend",
+  display: "swap",
 });
 
 const outfit = Outfit({
   subsets: ["latin"],
   weight: ["400", "500", "800"],
   variable: "--font-outfit",
+  display: "swap",
 });
 
 import "./globals.css";
@@ -22,7 +24,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${outfit.variable}`}>{children}</body>
+      <body className={`${lexend.variable} ${outfit.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
