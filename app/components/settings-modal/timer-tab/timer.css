@@ -23,11 +23,11 @@
 .setting-input,
 .setting-select,
 .setting-textarea {
-  width: 100%;
+  width: 4rem;
   padding: 0.5rem;
   border: 1px solid var(--shadow-light);
   border-radius: 8px;
-  background-color: var(--color-modal);
+  background-color: transparent;
   font-size: 1rem;
   color: var(--color-text);
   transition: var(--transition);
@@ -38,12 +38,12 @@
 .setting-textarea:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+  box-shadow: var(--color-focus);
 }
 
 .radio-group {
   display: flex;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .radio-label {
@@ -57,8 +57,7 @@
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.8rem;
   cursor: pointer;
-  font-weight: normal;
-  font-size: 14px;
+  font-size: 1rem;
 }

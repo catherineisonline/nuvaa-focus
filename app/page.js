@@ -29,6 +29,10 @@ export default function Page() {
   const [timeLeft, setTimeLeft] = useState(settings["focusTime"]);
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState(0);
+  // tasks
+  const [tasks, setTasks] = useState([]);
+  const [currentTask, setCurrentTask] = useState(null);
+
   //other
   const [streak, setStreak] = useState(0);
   const [currentMode, setCurrentMode] = useState("focusTime");
@@ -43,22 +47,32 @@ export default function Page() {
   useEffect(() => {
     const streakStore = localStorage.getItem("streak");
     const settingsStore = localStorage.getItem("settings");
-
+    const tabStore = localStorage.getItem("currentTab");
     if (streakStore !== null) {
       setStreak(JSON.parse(streakStore));
     }
     if (settingsStore !== null) {
       setSettings(JSON.parse(settingsStore));
     }
-    const tabStore = localStorage.getItem("currentTab");
     if (tabStore !== null) {
       setCurrentTab(JSON.parse(tabStore));
+    }
+    const tasksStore = localStorage.getItem("tasks");
+    if (tasksStore !== null) {
+      setTasks(JSON.parse(tasksStore));
+    }
+    const currentTaskStore = localStorage.getItem("currentTask");
+    if (currentTaskStore !== null) {
+      setCurrentTask(JSON.parse(currentTaskStore));
     }
   }, []);
   useEffect(() => {
     localStorage.setItem("currentTab", JSON.stringify(currentTab));
   }, [currentTab]);
-
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("currentTask", JSON.stringify(currentTask));
+  }, [tasks, currentTask]);
   // settings
   useEffect(() => {
     const times = {
@@ -263,6 +277,7 @@ export default function Page() {
         </div>
         {currentTab === "focusTime" ? (
           <Focus
+            currentTask={currentTask}
             currentMode={currentMode}
             formatTime={formatTime}
             timeLeft={timeLeft}
@@ -294,14 +309,18 @@ export default function Page() {
       )}
       {showTasks && (
         <TaskModal
-          setShowSettings={setShowSettings}
+          tasks={tasks}
+          setTasks={setTasks}
+          currentTask={currentTask}
+          setCurrentTask={setCurrentTask}
+          setShowTasks={setShowTasks}
           setSettings={setSettings}
           settings={settings}
         />
       )}
       {showMusic && (
         <MusicModal
-          setShowSettings={setShowSettings}
+          setShowMusic={setShowMusic}
           setSettings={setSettings}
           settings={settings}
         />
