@@ -117,20 +117,21 @@
   font-weight: 600;
 }
 
-.task-list {
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  gap: 1rem;
-  padding-left: 0;
-}
-
 .task-item {
   display: grid;
   grid-template-columns: 1rem 2rem 1fr;
   align-items: center;
   gap: 10px;
-  transition: var(--transition);
+}
+.drag-preview {
+  background-color: var(--color-glass);
+  display: grid;
+  grid-template-columns: 1rem 2rem 1fr;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.5;
+  margin-left: -210px;
+  margin-top: -5rem;
 }
 .task-item.edit {
   grid-template-columns: 1rem 1fr;

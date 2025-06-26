@@ -1,15 +1,27 @@
 import { useState } from "react";
-import {
-  SquareX,
-  Plus,
-  Trash2,
-  GripVertical,
-  Pencil,
-  CircleMinus,
-  Ban,
-  Check,
-} from "lucide-react";
+import { SquareX, Plus, Trash2, CircleMinus } from "lucide-react";
 import "./tasks.css";
+import {
+  DndContext,
+  useSensor,
+  useSensors,
+  PointerSensor,
+  KeyboardSensor,
+  closestCenter,
+  MouseSensor,
+  TouchSensor,
+  DragOverlay,
+} from "@dnd-kit/core";
+
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  sortableKeyboardCoordinates,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import SortableTask from "./SortableTask";
+import SortableTaskDrag from "./SortableDrag";
+
 const TaskModal = ({
   setShowTasks,
   tasks,
@@ -87,6 +99,42 @@ const TaskModal = ({
       setCurrentTask(null);
     }
   };
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    })
+  );
+  // drag
+  const [activeDrag, setActiveDrag] = useState(null);
+
+  const handleDragEnd = (e) => {
+    const { active, over } = e;
+    setActiveDrag(null);
+    if (active.id !== over.id) {
+      setTasks((items) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  };
+  function handleDrag(e) {
+    setActiveDrag(e.active);
+  }
+
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
       <div
@@ -141,83 +189,41 @@ const TaskModal = ({
             {activeTasks.length > 0 && (
               <div className="task-list-section">
                 <h3>Active Tasks ({activeTasks.length})</h3>
-                <div className="task-list">
-                  {activeTasks.map((task) => (
-                    <div
-                      key={task.id}
-                      className={`task-item ${editingId ? "edit" : ""}`}>
-                      <div className="task-drag-handle">
-                        <GripVertical size={24} />
-                      </div>
-
-                      {!editingId && (
-                        <input
-                          type="checkbox"
-                          checked={task.completed}
-                          onChange={() => toggleTask(task.id)}
-                          className="task-checkbox"
+                <DndContext
+                  collisionDetection={closestCenter}
+                  onDragStart={(e) => handleDrag(e)}
+                  onDragEnd={handleDragEnd}
+                  sensors={sensors}>
+                  <SortableContext
+                    items={activeTasks.map((task) => task.id.toString())}
+                    strategy={verticalListSortingStrategy}>
+                    <DragOverlay>
+                      {activeDrag && activeDrag.id ? (
+                        <SortableTaskDrag
+                          key={activeDrag.id}
+                          task={activeDrag.id}
+                          currentTask={currentTask}
                         />
-                      )}
-
-                      {editingId === task.id ? (
-                        <div className="task-edit">
-                          <input
-                            type="text"
-                            value={editText}
-                            onChange={(e) => setEditText(e.target.value)}
-                            className="task-edit-input"
-                          />
-                          <button
-                            aria-label="Save"
-                            onClick={saveEdit}
-                            className="save-edit-btn">
-                            <Check size={20} />
-                          </button>
-                          <button
-                            aria-label="Cancel"
-                            onClick={cancelEdit}
-                            className="cancel-edit-btn">
-                            <Ban size={20} />
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="task-nonedit">
-                          <p
-                            className={`task-text ${
-                              task.completed ? "completed" : ""
-                            } ${
-                              currentTask && currentTask.id === task.id
-                                ? "current"
-                                : ""
-                            }`}
-                            onClick={() => setAsCurrentTask(task)}>
-                            {task.text}
-                            {currentTask && currentTask.id === task.id && (
-                              <span className="current-indicator">
-                                (Current)
-                              </span>
-                            )}
-                          </p>
-
-                          <div className="task-actions">
-                            <button
-                              onClick={() => startEditing(task)}
-                              className="task-action-btn edit"
-                              aria-label="Edit task">
-                              <Pencil size={20} />
-                            </button>
-                            <button
-                              onClick={() => deleteTask(task.id)}
-                              className="task-action-btn delete"
-                              aria-label="Delete task">
-                              <Trash2 size={20} />
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                      ) : null}
+                    </DragOverlay>
+                    {activeTasks.map((task) => (
+                      <SortableTask
+                        key={task.id}
+                        editingId={editingId}
+                        task={task}
+                        toggleTask={toggleTask}
+                        setEditText={setEditText}
+                        cancelEdit={cancelEdit}
+                        editText={editText}
+                        setAsCurrentTask={setAsCurrentTask}
+                        currentTask={currentTask}
+                        startEditing={startEditing}
+                        deleteTask={deleteTask}
+                        saveEdit={saveEdit}
+                      />
+                    ))}
+                  </SortableContext>
+                </DndContext>
               </div>
             )}
 
