@@ -56,6 +56,12 @@ const SortableTask = ({
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
             className="task-edit-input"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                saveEdit();
+              }
+            }}
           />
           <button
             aria-label="Save"

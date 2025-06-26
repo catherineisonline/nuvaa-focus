@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SquareX, Plus, Trash2, CircleMinus } from "lucide-react";
+import { SquareX, Plus, Trash2, CircleMinus, X } from "lucide-react";
 import "./tasks.css";
 import {
   DndContext,
@@ -147,7 +147,7 @@ const TaskModal = ({
             className="close-btn"
             aria-label="Close"
             onClick={() => setShowTasks(false)}>
-            <SquareX size={24} />
+            <X size={32} />
           </button>
         </header>
 
@@ -160,7 +160,12 @@ const TaskModal = ({
               onFocus={cancelEdit}
               placeholder="Add a new task..."
               className="task-input"
-              onClick={addTask}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  addTask();
+                }
+              }}
             />
             <button
               onClick={addTask}

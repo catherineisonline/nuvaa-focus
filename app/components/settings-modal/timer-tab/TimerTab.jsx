@@ -53,7 +53,7 @@ const TimerTab = ({ updateSetting, settings }) => {
       </article>
 
       <article className="setting-group">
-        <p className="setting-label">Time Format</p>
+        <h3 className="setting-label">Time Format</h3>
         <div className="radio-group">
           <label htmlFor="is12Hour" className="radio-label">
             <input

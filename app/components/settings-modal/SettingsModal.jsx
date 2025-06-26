@@ -1,7 +1,8 @@
-import { SquareX } from "lucide-react";
+import { SquareX, X } from "lucide-react";
 import "./settings.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TimerTab from "./timer-tab/TimerTab";
+import { debounce } from "lodash";
 
 const SettingsModal = ({ setShowSettings, setSettings, settings }) => {
   const [activeTab, setActiveTab] = useState("timer");
@@ -17,7 +18,22 @@ const SettingsModal = ({ setShowSettings, setSettings, settings }) => {
       localStorage.setItem("settings", JSON.stringify(settings));
       return settings;
     });
+    showMessage();
   };
+  const [updateText, setUpdateText] = useState("");
+  const showMessage = debounce(() => {
+    setUpdateText("Successfully updated");
+  }, 1000);
+
+  useEffect(() => {
+    if (!updateText) return;
+
+    const timer = setTimeout(() => {
+      setUpdateText("");
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [updateText]);
 
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
@@ -27,12 +43,14 @@ const SettingsModal = ({ setShowSettings, setSettings, settings }) => {
         aria-modal="true"
         className="settings-modal single-column">
         <header className="modal-header">
-          <h2 id="settings-title">Settings</h2>
+          <h2 id="settings-title">
+            Settings{updateText && <span> {updateText}</span>}
+          </h2>
           <button
             className="close-btn"
             aria-label="Close"
             onClick={() => setShowSettings(false)}>
-            <SquareX size={24} />
+            <X size={32} />
           </button>
         </header>
         <div className="modal-body single-column">
