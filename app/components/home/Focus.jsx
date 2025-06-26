@@ -10,6 +10,7 @@ const Focus = ({
   isRunning,
   skipPomodoro,
   resetPomodoro,
+  currentTask,
 }) => {
   return (
     <div className="timer-container">
@@ -60,6 +61,9 @@ const Focus = ({
           <time className="timer-display">{formatTime(timeLeft)}</time>
         </div>
       </div>
+      {currentTask && (
+        <p className="mode-label-task">Working on: {currentTask.text}</p>
+      )}
       <div className="timer-controls">
         <button
           className="control-button primary"
