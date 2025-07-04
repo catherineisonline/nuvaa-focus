@@ -1,17 +1,22 @@
-import { SquareX, X } from "lucide-react";
+import { X } from "lucide-react";
 import "./settings.css";
 import { useEffect, useState } from "react";
 import TimerTab from "./timer-tab/TimerTab";
 import { debounce } from "lodash";
+import { useDispatch } from "react-redux";
+import { closeModal } from "@/app/redux/navigationSlice";
 
-const SettingsModal = ({ setShowSettings, setSettings, settings }) => {
+const SettingsModal = ({ setSettings, settings }) => {
   const [activeTab, setActiveTab] = useState("timer");
-
+  const dispatch = useDispatch();
   const handleOutsideClick = (e) => {
     if (e.target === e.currentTarget) {
-      setShowSettings(false);
+      dispatch(toggleModal({ target: "isSettingsActive" }));
     }
   };
+  function handleModalClose() {
+    dispatch(closeModal({ target: "isSettingsActive" }));
+  }
   const updateSetting = (key, value) => {
     setSettings((prev) => {
       const settings = { ...prev, [key]: value };
@@ -49,7 +54,7 @@ const SettingsModal = ({ setShowSettings, setSettings, settings }) => {
           <button
             className="close-btn"
             aria-label="Close"
-            onClick={() => setShowSettings(false)}>
+            onClick={handleModalClose}>
             <X size={32} />
           </button>
         </header>

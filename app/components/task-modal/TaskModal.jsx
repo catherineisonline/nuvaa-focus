@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SquareX, Plus, Trash2, CircleMinus, X } from "lucide-react";
+import { Plus, Trash2, CircleMinus, X } from "lucide-react";
 import "./tasks.css";
 import {
   DndContext,
@@ -21,24 +21,25 @@ import {
 } from "@dnd-kit/sortable";
 import SortableTask from "./SortableTask";
 import SortableTaskDrag from "./SortableDrag";
+import { useDispatch } from "react-redux";
+import { closeModal, toggleModal } from "@/app/redux/navigationSlice";
 
-const TaskModal = ({
-  setShowTasks,
-  tasks,
-  setTasks,
-  currentTask,
-  setCurrentTask,
-}) => {
+const TaskModal = ({ tasks, setTasks, currentTask, setCurrentTask }) => {
   const [newTaskText, setNewTaskText] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState("");
   const activeTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);
+
+  const dispatch = useDispatch();
   const handleOutsideClick = (e) => {
     if (e.target === e.currentTarget) {
-      setShowTasks(false);
+      dispatch(toggleModal({ target: "isTasksActive" }));
     }
   };
+  function handleModalClose() {
+    dispatch(closeModal({ target: "isTasksActive" }));
+  }
   const addTask = () => {
     if (newTaskText.trim()) {
       const newTask = {
@@ -134,7 +135,6 @@ const TaskModal = ({
   function handleDrag(e) {
     setActiveDrag(e.active);
   }
-
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
       <div
@@ -146,7 +146,7 @@ const TaskModal = ({
           <button
             className="close-btn"
             aria-label="Close"
-            onClick={() => setShowTasks(false)}>
+            onClick={handleModalClose}>
             <X size={32} />
           </button>
         </header>

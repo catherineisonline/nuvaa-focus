@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import "./header.css";
 import {
   Settings,
@@ -7,14 +8,23 @@ import {
   ListTodo,
   Flame,
 } from "lucide-react";
+import { toggleModal } from "@/app/redux/navigationSlice";
 
-const Header = ({
-  toggleFullscreen,
-  setShowSettings,
-  setShowTasks,
-  setShowMusic,
-  streak,
-}) => {
+const Header = ({ streak }) => {
+  const dispatch = useDispatch();
+  const isFullscreen = useSelector((state) => state.navigation.isFullscreen);
+  const handleFullscreen = () => {
+    dispatch(toggleModal({ target: "isFullscreen" }));
+  };
+  const handleTasks = () => {
+    dispatch(toggleModal({ target: "isTasksActive" }));
+  };
+  const handleMusic = () => {
+    dispatch(toggleModal({ target: "isMusicActive" }));
+  };
+  const handleSettings = () => {
+    dispatch(toggleModal({ target: "isSettingsActive" }));
+  };
   return (
     <header className="header">
       <h1>Nuvaa Focus</h1>
@@ -28,7 +38,7 @@ const Header = ({
           <li>
             <button
               className="icon-button"
-              onClick={() => setShowTasks(true)}
+              onClick={handleTasks}
               aria-label="Todo list">
               <ListTodo />
             </button>
@@ -36,7 +46,7 @@ const Header = ({
           <li>
             <button
               className="icon-button"
-              onClick={() => setShowMusic(true)}
+              onClick={handleMusic}
               aria-label="Music">
               <Music />
             </button>
@@ -44,17 +54,15 @@ const Header = ({
           <li>
             <button
               className="icon-button"
-              onClick={toggleFullscreen}
-              aria-label={
-                toggleFullscreen ? "Maximize screen" : "Minimize screen"
-              }>
-              {toggleFullscreen ? <Maximize /> : <Minimize />}
+              onClick={handleFullscreen}
+              aria-label={isFullscreen ? "Maximize screen" : "Minimize screen"}>
+              {isFullscreen ? <Maximize /> : <Minimize />}
             </button>
           </li>
           <li>
             <button
               className="icon-button"
-              onClick={() => setShowSettings(true)}
+              onClick={handleSettings}
               aria-label="Settings">
               <Settings />
             </button>
