@@ -1,6 +1,14 @@
+import { useDispatch, useSelector } from "react-redux";
 import "./timer.css";
+import { updateSettings } from "@/app/redux/settingsSlice";
 
-const TimerTab = ({ updateSetting, settings }) => {
+const TimerTab = () => {
+  const settings = useSelector((state) => state.settings);
+  const dispatch = useDispatch();
+  const updateSetting = (k, v) => {
+    dispatch(updateSettings({ key: k, value: v }));
+  };
+
   return (
     <section className="settings-content">
       <article className="setting-group">

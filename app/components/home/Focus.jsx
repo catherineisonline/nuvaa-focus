@@ -1,17 +1,23 @@
+import { togglePomodoro } from "@/app/redux/pomodoroSlice";
 import { Pause, Play, SkipForward, RefreshCcw } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Focus = ({
   currentMode,
   formatTime,
-  timeLeft,
   circumference,
   strokeDashoffset,
-  togglePomodoro,
-  isRunning,
   skipPomodoro,
   resetPomodoro,
   currentTask,
 }) => {
+  const dispatch = useDispatch();
+  const isRunning = useSelector((state) => state.pomodoro.isRunning);
+  const runPomodoro = () => {
+    dispatch(togglePomodoro());
+  };
+  const timeLeft = useSelector((state) => state.pomodoro.timeLeft);
+
   return (
     <div className="timer-container">
       <div className="timer-circle">
@@ -67,7 +73,7 @@ const Focus = ({
       <div className="timer-controls">
         <button
           className="control-button primary"
-          onClick={togglePomodoro}
+          onClick={runPomodoro}
           aria-label={isRunning ? "Pause" : "Start"}>
           {isRunning ? <Pause strokeWidth={2.8} /> : <Play strokeWidth={2.8} />}
         </button>

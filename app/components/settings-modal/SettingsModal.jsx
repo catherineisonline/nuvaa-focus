@@ -2,11 +2,10 @@ import { X } from "lucide-react";
 import "./settings.css";
 import { useEffect, useState } from "react";
 import TimerTab from "./timer-tab/TimerTab";
-import { debounce } from "lodash";
 import { useDispatch } from "react-redux";
-import { closeModal } from "@/app/redux/navigationSlice";
+import { closeModal, toggleModal } from "@/app/redux/navigationSlice";
 
-const SettingsModal = ({ setSettings, settings }) => {
+const SettingsModal = () => {
   const [activeTab, setActiveTab] = useState("timer");
   const dispatch = useDispatch();
   const handleOutsideClick = (e) => {
@@ -17,18 +16,12 @@ const SettingsModal = ({ setSettings, settings }) => {
   function handleModalClose() {
     dispatch(closeModal({ target: "isSettingsActive" }));
   }
-  const updateSetting = (key, value) => {
-    setSettings((prev) => {
-      const settings = { ...prev, [key]: value };
-      localStorage.setItem("settings", JSON.stringify(settings));
-      return settings;
-    });
-    showMessage();
-  };
+
   const [updateText, setUpdateText] = useState("");
-  const showMessage = debounce(() => {
-    setUpdateText("Successfully updated");
-  }, 1000);
+  // temp hide
+  // const showMessage = debounce(() => {
+  //   setUpdateText("Successfully updated");
+  // }, 1000);
 
   useEffect(() => {
     if (!updateText) return;
@@ -88,9 +81,7 @@ const SettingsModal = ({ setSettings, settings }) => {
               Account
             </button>
           </section>
-          {activeTab === "timer" && (
-            <TimerTab updateSetting={updateSetting} settings={settings} />
-          )}
+          {activeTab === "timer" && <TimerTab />}
         </div>
       </div>
     </div>
