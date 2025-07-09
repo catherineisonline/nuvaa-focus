@@ -1,23 +1,24 @@
-import { togglePomodoro } from "@/app/redux/slices/pomodoroSlice";
+import { pomodoroSelectors } from "@/app/redux/selectors/pomodoroSelectors";
+import { stopPomodoro, togglePomodoro } from "@/app/redux/slices/pomodoroSlice";
 import { Pause, Play, SkipForward, RefreshCcw } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Focus = ({
-  currentMode,
-  formatTime,
-  circumference,
-  strokeDashoffset,
-  skipPomodoro,
-  resetPomodoro,
-  currentTask,
-}) => {
+const Focus = ({ formatTime, skipPomodoro, totalTime, currentTask }) => {
   const dispatch = useDispatch();
+
+  const { progress, currentMode } = useSelector(pomodoroSelectors);
   const isRunning = useSelector((state) => state.pomodoro.isRunning);
+  const timeLeft = useSelector((state) => state.pomodoro.timeLeft);
+  const circumference = 2 * Math.PI * 180;
+  const strokeDashoffset = circumference * (1 - progress / 100);
+
   const runPomodoro = () => {
     dispatch(togglePomodoro());
   };
-  const timeLeft = useSelector((state) => state.pomodoro.timeLeft);
-
+  const resetPomodoro = () => {
+    dispatch(stopPomodoro());
+    dispatch(updateTimeLeft({ time: totalTime }));
+  };
   return (
     <div className="timer-container">
       <div className="timer-circle">

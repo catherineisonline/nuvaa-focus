@@ -44,7 +44,7 @@ export default function Page() {
     autoStartNext,
   } = useSelector(settingsSelectors);
 
-  const { pomodoroCount, timeLeft, isRunning, progress, currentMode } =
+  const { pomodoroCount, timeLeft, isRunning, currentMode } =
     useSelector(pomodoroSelectors);
   // tasks
   const [tasks, setTasks] = useState([]);
@@ -170,8 +170,6 @@ export default function Page() {
     dispatch(updateProgress({ time: progressT }));
   }, [dispatch, totalTime, timeLeft]);
 
-  const circumference = 2 * Math.PI * 180;
-  const strokeDashoffset = circumference * (1 - progress / 100);
   const skipPomodoro = () => {
     dispatch(stopPomodoro());
     const modeTime = getModeTime();
@@ -184,15 +182,6 @@ export default function Page() {
       dispatch(updateMode({ mode: "focusTime" }));
       dispatch(updateTimeLeft({ time: modeTime }));
     }
-  };
-  const resetPomodoro = () => {
-    dispatch(stopPomodoro());
-    const totalTime = {
-      focusTime: focusTime * 60,
-      shortBreakTime: shortBreakTime * 60,
-      longBreakTime: longBreakTime * 60,
-    }[currentMode];
-    dispatch(updateTimeLeft({ time: totalTime }));
   };
 
   // stopwatch actions
@@ -257,10 +246,8 @@ export default function Page() {
             currentTask={currentTask}
             currentMode={currentMode}
             formatTime={formatTime}
-            circumference={circumference}
-            strokeDashoffset={strokeDashoffset}
             skipPomodoro={skipPomodoro}
-            resetPomodoro={resetPomodoro}
+            totalTime={totalTime}
           />
         ) : currentTab === "stopwatch" ? (
           <StopWatch
