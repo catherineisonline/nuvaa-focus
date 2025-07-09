@@ -9,6 +9,7 @@ const tasksSlice = createSlice({
     editText: "",
     tasks: [],
     currentTaskId: null,
+    activeDrag: null,
   },
   reducers: {
     initTasks(state, action) {
@@ -61,6 +62,10 @@ const tasksSlice = createSlice({
       const id = action.payload.id;
       state.currentTaskId = id;
     },
+    setActiveDrag(state, action) {
+      const drag = action.payload.drag;
+      state.activeDrag = drag;
+    },
     moveTask(state, action) {
       const { activeId, overId } = action.payload;
 
@@ -86,4 +91,5 @@ export const {
   setEditingId,
   setCurrentTaskId,
   moveTask,
+  setActiveDrag,
 } = tasksSlice.actions;

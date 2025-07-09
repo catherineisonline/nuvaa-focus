@@ -10,9 +10,10 @@ import {
 } from "lucide-react";
 import { toggleModal } from "@/app/redux/slices/navigationSlice";
 
-const Header = ({ streak }) => {
+const Header = () => {
   const dispatch = useDispatch();
   const isFullscreen = useSelector((state) => state.navigation.isFullscreen);
+  const streak = useSelector((state) => state.app.streak);
   const handleFullscreen = () => {
     dispatch(toggleModal({ target: "isFullscreen" }));
   };

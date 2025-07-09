@@ -1,6 +1,7 @@
 "use client";
+
 import "./page.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Header from "./components/header/Header";
 import SettingsModal from "./components/settings-modal/SettingsModal";
 import TaskModal from "./components/task-modal/TaskModal";
@@ -13,6 +14,7 @@ import { setupSettings } from "./redux/slices/settingsSlice";
 import { stopPomodoro } from "./redux/slices/pomodoroSlice";
 import { initTasks, setCurrentTaskId } from "./redux/slices/tasksSlice";
 import { tasksSelectors } from "./redux/selectors/tasksSelectors";
+import { initStreak, setCurrentTab } from "./redux/slices/appSlice";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -22,10 +24,8 @@ export default function Page() {
     (state) => state.navigation.isSettingsActive
   );
   const isMusicActive = useSelector((state) => state.navigation.isMusicActive);
-
-  //other
-  const [streak, setStreak] = useState(0);
-  const [currentTab, setCurrentTab] = useState("focusTime");
+  const streak = useSelector((state) => state.app.streak);
+  const currentTab = useSelector((state) => state.app.currentTab);
   const { tasks, currentTaskId } = useSelector(tasksSelectors);
 
   useEffect(() => {
@@ -33,17 +33,16 @@ export default function Page() {
     const settingsStore = localStorage.getItem("settings");
     const tabStore = localStorage.getItem("currentTab");
     const currentTaskStore = localStorage.getItem("currentTaskId");
-
+    const tasksStore = localStorage.getItem("tasks");
     if (streakStore !== null) {
-      setStreak(JSON.parse(streakStore));
+      dispatch(initStreak({ value: JSON.parse(streakStore) }));
     }
     if (settingsStore !== null) {
       dispatch(setupSettings(JSON.parse(settingsStore)));
     }
     if (tabStore !== null) {
-      setCurrentTab(JSON.parse(tabStore));
+      dispatch(setCurrentTab({ tab: JSON.parse(tabStore) }));
     }
-    const tasksStore = localStorage.getItem("tasks");
     if (tasksStore !== null) {
       dispatch(initTasks(JSON.parse(tasksStore)));
     }
@@ -54,13 +53,19 @@ export default function Page() {
 
   useEffect(() => {
     localStorage.setItem("currentTab", JSON.stringify(currentTab));
-  }, [currentTab]);
-  useEffect(() => {
+    localStorage.setItem("streak", JSON.stringify(streak));
     localStorage.setItem("tasks", JSON.stringify(tasks));
     localStorage.setItem("currentTaskId", JSON.stringify(currentTaskId));
-  }, [tasks, currentTaskId]);
+  }, [currentTab, streak, tasks, currentTaskId]);
 
-  // other
+  useEffect(() => {
+    if (currentTab !== "focusTime") dispatch(stopPomodoro());
+  }, [currentTab, dispatch]);
+
+  const updateTab = (tab) => {
+    dispatch(setCurrentTab({ tab: tab }));
+  };
+
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -68,29 +73,26 @@ export default function Page() {
       .toString()
       .padStart(2, "0")}`;
   };
-  useEffect(() => {
-    if (currentTab !== "focusTime") dispatch(stopPomodoro());
-  }, [currentTab, dispatch]);
 
   return (
     <div>
       <div className="background-overlay"></div>
-      <Header streak={streak} />
+      <Header />
       <main className="main-content">
         <div className="mode-tabs">
           <button
             className={`mode-tab ${currentTab === "focusTime" ? "active" : ""}`}
-            onClick={() => setCurrentTab("focusTime")}>
+            onClick={() => updateTab("focusTime")}>
             Focus
           </button>
           <button
             className={`mode-tab ${currentTab === "stopwatch" ? "active" : ""}`}
-            onClick={() => setCurrentTab("stopwatch")}>
+            onClick={() => updateTab("stopwatch")}>
             Stopwatch
           </button>
           <button
             className={`mode-tab ${currentTab === "clock" ? "active" : ""}`}
-            onClick={() => setCurrentTab("clock")}>
+            onClick={() => updateTab("clock")}>
             Clock
           </button>
         </div>

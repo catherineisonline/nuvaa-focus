@@ -6,6 +6,7 @@ import settingsSlice from "./slices/settingsSlice";
 import clockSlice from "./slices/clockSlice";
 import stopwatchSlice from "./slices/stopwatchSlice";
 import tasksSlice from "./slices/tasksSlice";
+import appSLice from "./slices/appSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,5 +16,6 @@ export const store = configureStore({
     clock: clockSlice,
     stopwatch: stopwatchSlice,
     tasks: tasksSlice,
+    app: appSLice,
   },
 });

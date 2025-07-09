@@ -9,8 +9,13 @@ const settingsSlice = createSlice({
     stopwatch: 0,
     is24Hour: true,
     autoStartNext: false,
+    settingsTab: "timer",
   },
   reducers: {
+    updateSettingsTab(state, action) {
+      const tab = action.payload.tab;
+      state.settingsTab = tab;
+    },
     updateSettings(state, action) {
       const { key, value } = action.payload;
       state[key] = value;
@@ -22,4 +27,5 @@ const settingsSlice = createSlice({
   },
 });
 export default settingsSlice.reducer;
-export const { updateSettings, setupSettings } = settingsSlice.actions;
+export const { updateSettings, setupSettings, updateSettingsTab } =
+  settingsSlice.actions;

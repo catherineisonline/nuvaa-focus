@@ -1,6 +1,7 @@
 import { usePomodoroMode } from "@/app/hooks/usePomodoroMode";
 import { pomodoroSelectors } from "@/app/redux/selectors/pomodoroSelectors";
 import { settingsSelectors } from "@/app/redux/selectors/settingsSelectors";
+import { setStreak } from "@/app/redux/slices/appSlice";
 import {
   stopPomodoro,
   timeTick,
@@ -75,13 +76,7 @@ const Focus = ({ formatTime }) => {
     const modeTime = getModeTime();
     if (currentMode === "focusTime") {
       dispatch(updateCount());
-      // ! ADD THIS TO REDUX
-      // setStreak((prev) => {
-      //   const streak = prev + 1;
-      //   localStorage.setItem("streak", JSON.stringify(streak));
-      //   return streak;
-      // });
-
+      dispatch(setStreak());
       const mode = getMode();
       dispatch(updateMode({ mode: mode }));
       dispatch(updateTimeLeft({ time: modeTime }));

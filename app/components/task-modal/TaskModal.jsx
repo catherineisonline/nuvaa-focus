@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Plus, Trash2, CircleMinus, X } from "lucide-react";
 import "./tasks.css";
 import {
@@ -17,7 +16,6 @@ import {
   SortableContext,
   verticalListSortingStrategy,
   sortableKeyboardCoordinates,
-  arrayMove,
 } from "@dnd-kit/sortable";
 import SortableTask from "./SortableTask";
 import SortableTaskDrag from "./SortableDrag";
@@ -27,6 +25,7 @@ import {
   deleteTask,
   moveTask,
   resetTaskfield,
+  setActiveDrag,
   setCurrentTaskId,
   setEditingId,
   setEditText,
@@ -37,7 +36,9 @@ import {
 import { tasksSelectors } from "@/app/redux/selectors/tasksSelectors";
 
 const TaskModal = () => {
-  const { editingId, newTaskText, tasks } = useSelector(tasksSelectors);
+  const dispatch = useDispatch();
+  const { editingId, newTaskText, tasks, activeDrag } =
+    useSelector(tasksSelectors);
   const currentTask = useSelector((state) =>
     state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId)
   );
@@ -45,15 +46,14 @@ const TaskModal = () => {
   const activeTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);
 
-  const dispatch = useDispatch();
   const handleOutsideClick = (e) => {
     if (e.target === e.currentTarget) {
       dispatch(toggleModal({ target: "isTasksActive" }));
     }
   };
-  function handleModalClose() {
+  const handleModalClose = () => {
     dispatch(closeModal({ target: "isTasksActive" }));
-  }
+  };
   const addTask = () => {
     if (newTaskText.trim()) {
       const newTask = {
@@ -103,19 +103,17 @@ const TaskModal = () => {
       },
     })
   );
-  // drag
-  const [activeDrag, setActiveDrag] = useState(null);
 
   const handleDragEnd = (e) => {
     const { active, over } = e;
-    setActiveDrag(null);
+    dispatch(setActiveDrag({ drag: null }));
     if (active.id.id !== over.id.id) {
       dispatch(moveTask({ activeId: active.id.id, overId: over.id.id }));
     }
   };
-  function handleDrag(e) {
-    setActiveDrag(e.active);
-  }
+  const handleDrag = (e) => {
+    dispatch(setActiveDrag({ drag: e.active.id }));
+  };
   const handleTaskChange = (e) => {
     dispatch(updateTaskfield({ text: e.target.value }));
   };
@@ -188,15 +186,15 @@ const TaskModal = () => {
                   <SortableContext
                     items={activeTasks.map((task) => task.id.toString())}
                     strategy={verticalListSortingStrategy}>
-                    <DragOverlay>
-                      {activeDrag && activeDrag.id ? (
+                    {activeDrag && (
+                      <DragOverlay>
                         <SortableTaskDrag
                           key={activeDrag.id}
                           task={activeDrag.id}
                           currentTask={currentTask}
                         />
-                      ) : null}
-                    </DragOverlay>
+                      </DragOverlay>
+                    )}
                     {activeTasks.map((task) => (
                       <SortableTask
                         key={task.id}
