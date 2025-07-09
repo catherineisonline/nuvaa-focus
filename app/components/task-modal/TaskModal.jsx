@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { SquareX, Plus, Trash2, CircleMinus, X } from "lucide-react";
+import { Plus, Trash2, CircleMinus, X } from "lucide-react";
 import "./tasks.css";
 import {
   DndContext,
@@ -17,27 +16,43 @@ import {
   SortableContext,
   verticalListSortingStrategy,
   sortableKeyboardCoordinates,
-  arrayMove,
 } from "@dnd-kit/sortable";
 import SortableTask from "./SortableTask";
 import SortableTaskDrag from "./SortableDrag";
-
-const TaskModal = ({
-  setShowTasks,
-  tasks,
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal, toggleModal } from "@/app/redux/slices/navigationSlice";
+import {
+  deleteTask,
+  moveTask,
+  resetTaskfield,
+  setActiveDrag,
+  setCurrentTaskId,
+  setEditingId,
+  setEditText,
   setTasks,
-  currentTask,
-  setCurrentTask,
-}) => {
-  const [newTaskText, setNewTaskText] = useState("");
-  const [editingId, setEditingId] = useState(null);
-  const [editText, setEditText] = useState("");
+  toggleTaskAsComplete,
+  updateTaskfield,
+} from "@/app/redux/slices/tasksSlice";
+import { tasksSelectors } from "@/app/redux/selectors/tasksSelectors";
+
+const TaskModal = () => {
+  const dispatch = useDispatch();
+  const { editingId, newTaskText, tasks, activeDrag } =
+    useSelector(tasksSelectors);
+  const currentTask = useSelector((state) =>
+    state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId)
+  );
+
   const activeTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);
+
   const handleOutsideClick = (e) => {
     if (e.target === e.currentTarget) {
-      setShowTasks(false);
+      dispatch(toggleModal({ target: "isTasksActive" }));
     }
+  };
+  const handleModalClose = () => {
+    dispatch(closeModal({ target: "isTasksActive" }));
   };
   const addTask = () => {
     if (newTaskText.trim()) {
@@ -45,59 +60,31 @@ const TaskModal = ({
         id: Date.now(),
         text: newTaskText.trim(),
         completed: false,
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
       };
-      setTasks((prev) => [...prev, newTask]);
-      setNewTaskText("");
+      dispatch(setTasks({ task: newTask }));
+      dispatch(resetTaskfield());
     }
   };
 
   const toggleTask = (id) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-    removeCurrentTask(id);
-  };
-
-  const startEditing = (task) => {
-    setEditingId(task.id);
-    setEditText(task.text);
-  };
-
-  const saveEdit = () => {
-    if (editText.trim()) {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === editingId ? { ...task, text: editText.trim() } : task
-        )
-      );
-    }
-    setEditingId(null);
-    setEditText("");
+    dispatch(toggleTaskAsComplete({ id: id }));
+    removeCurrentTask();
   };
 
   const cancelEdit = () => {
-    setEditingId(null);
-    setEditText("");
+    dispatch(setEditingId({ id: null }));
+    dispatch(setEditText({ text: "" }));
   };
 
-  const deleteTask = (id) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+  const handleDelete = (id) => {
+    dispatch(deleteTask({ id: id }));
     if (currentTask && currentTask.id === id) {
-      setCurrentTask(null);
+      dispatch(setCurrentTaskId({ id: null }));
     }
   };
-
-  const setAsCurrentTask = (task) => {
-    if (task.completed) return;
-    setCurrentTask(task);
-  };
-  const removeCurrentTask = (id) => {
-    if (currentTask.id === id) {
-      setCurrentTask(null);
-    }
+  const removeCurrentTask = () => {
+    dispatch(setCurrentTaskId({ id: null }));
   };
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -116,25 +103,20 @@ const TaskModal = ({
       },
     })
   );
-  // drag
-  const [activeDrag, setActiveDrag] = useState(null);
 
   const handleDragEnd = (e) => {
     const { active, over } = e;
-    setActiveDrag(null);
-    if (active.id !== over.id) {
-      setTasks((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
-
-        return arrayMove(items, oldIndex, newIndex);
-      });
+    dispatch(setActiveDrag({ drag: null }));
+    if (active.id.id !== over.id.id) {
+      dispatch(moveTask({ activeId: active.id.id, overId: over.id.id }));
     }
   };
-  function handleDrag(e) {
-    setActiveDrag(e.active);
-  }
-
+  const handleDrag = (e) => {
+    dispatch(setActiveDrag({ drag: e.active.id }));
+  };
+  const handleTaskChange = (e) => {
+    dispatch(updateTaskfield({ text: e.target.value }));
+  };
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
       <div
@@ -146,7 +128,7 @@ const TaskModal = ({
           <button
             className="close-btn"
             aria-label="Close"
-            onClick={() => setShowTasks(false)}>
+            onClick={handleModalClose}>
             <X size={32} />
           </button>
         </header>
@@ -156,7 +138,7 @@ const TaskModal = ({
             <input
               type="text"
               value={newTaskText}
-              onChange={(e) => setNewTaskText(e.target.value)}
+              onChange={(e) => handleTaskChange(e)}
               onFocus={cancelEdit}
               placeholder="Add a new task..."
               className="task-input"
@@ -181,12 +163,14 @@ const TaskModal = ({
                 <h3>Current Task</h3>
                 <div className="current-task-item">
                   <span>{currentTask.text}</span>
-                  <button
-                    aria-label="Remove current task"
-                    onClick={() => setCurrentTask(null)}
-                    className="remove-current-btn">
-                    <CircleMinus size={20} />
-                  </button>
+                  {!editingId && (
+                    <button
+                      aria-label="Remove current task"
+                      onClick={removeCurrentTask}
+                      className="remove-current-btn">
+                      <CircleMinus size={20} />
+                    </button>
+                  )}
                 </div>
               </div>
             )}
@@ -197,34 +181,29 @@ const TaskModal = ({
                 <DndContext
                   collisionDetection={closestCenter}
                   onDragStart={(e) => handleDrag(e)}
-                  onDragEnd={handleDragEnd}
+                  onDragEnd={(e) => handleDragEnd(e)}
                   sensors={sensors}>
                   <SortableContext
                     items={activeTasks.map((task) => task.id.toString())}
                     strategy={verticalListSortingStrategy}>
-                    <DragOverlay>
-                      {activeDrag && activeDrag.id ? (
+                    {activeDrag && (
+                      <DragOverlay>
                         <SortableTaskDrag
                           key={activeDrag.id}
                           task={activeDrag.id}
                           currentTask={currentTask}
                         />
-                      ) : null}
-                    </DragOverlay>
+                      </DragOverlay>
+                    )}
                     {activeTasks.map((task) => (
                       <SortableTask
                         key={task.id}
                         editingId={editingId}
                         task={task}
                         toggleTask={toggleTask}
-                        setEditText={setEditText}
                         cancelEdit={cancelEdit}
-                        editText={editText}
-                        setAsCurrentTask={setAsCurrentTask}
                         currentTask={currentTask}
-                        startEditing={startEditing}
-                        deleteTask={deleteTask}
-                        saveEdit={saveEdit}
+                        deleteTask={handleDelete}
                       />
                     ))}
                   </SortableContext>
@@ -246,7 +225,7 @@ const TaskModal = ({
                       />
                       <span className="task-text completed">{task.text}</span>
                       <button
-                        onClick={() => deleteTask(task.id)}
+                        onClick={() => handleDelete(task.id)}
                         className="task-action-btn delete"
                         aria-label="Delete task">
                         <Trash2 size={24} />
@@ -256,7 +235,6 @@ const TaskModal = ({
                 </ul>
               </section>
             )}
-
             {tasks.length === 0 && <p>No tasks yet. Add your first task 💪🏻</p>}
           </section>
         </div>

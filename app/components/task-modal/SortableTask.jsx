@@ -2,18 +2,22 @@ import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Ban, Check, GripVertical, Pencil, Trash2 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCurrentTaskId,
+  setEditingId,
+  setEditText,
+  toggleEdit,
+  updatedEdit,
+} from "@/app/redux/slices/tasksSlice";
+import { tasksSelectors } from "@/app/redux/selectors/tasksSelectors";
 
 const SortableTask = ({
   editingId,
   task,
   toggleTask,
-  setEditText,
-  setAsCurrentTask,
   currentTask,
   deleteTask,
-  startEditing,
-  saveEdit,
-  editText,
   cancelEdit,
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -29,7 +33,26 @@ const SortableTask = ({
     transform: CSS.Transform.toString(transform),
     transition,
   };
+  const dispatch = useDispatch();
+  const handleTaskEdit = (e) => {
+    dispatch(setEditText({ text: e.target.value }));
+  };
 
+  const { editText } = useSelector(tasksSelectors);
+  const setAsCurrentTask = (task) => {
+    if (task && task.completed) return;
+    dispatch(setCurrentTaskId({ id: task.id }));
+  };
+  const saveEdit = () => {
+    if (editText.trim()) {
+      dispatch(updatedEdit());
+    }
+    dispatch(setEditingId({ id: null }));
+    dispatch(setEditText({ text: "" }));
+  };
+  const startEditing = (task) => {
+    dispatch(toggleEdit({ id: task.id, text: task.text }));
+  };
   return (
     <div
       ref={setNodeRef}
@@ -54,7 +77,7 @@ const SortableTask = ({
           <input
             type="text"
             value={editText}
-            onChange={(e) => setEditText(e.target.value)}
+            onChange={(e) => handleTaskEdit(e)}
             className="task-edit-input"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
