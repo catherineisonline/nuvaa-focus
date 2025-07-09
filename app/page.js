@@ -1,6 +1,6 @@
 "use client";
 import "./page.css";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/header/Header";
 import SettingsModal from "./components/settings-modal/SettingsModal";
 import TaskModal from "./components/task-modal/TaskModal";
@@ -11,6 +11,7 @@ import Clock from "./components/home/Clock";
 import { useDispatch, useSelector } from "react-redux";
 import { setupSettings } from "./redux/slices/settingsSlice";
 import { stopPomodoro } from "./redux/slices/pomodoroSlice";
+import { initTasks, setCurrentTaskId } from "./redux/slices/tasksSlice";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -21,21 +22,19 @@ export default function Page() {
   );
   const isMusicActive = useSelector((state) => state.navigation.isMusicActive);
 
-  // tasks
-  const [tasks, setTasks] = useState([]);
-  const [currentTask, setCurrentTask] = useState(null);
   //other
   const [streak, setStreak] = useState(0);
   const [currentTab, setCurrentTab] = useState("focusTime");
-  // stopwatch
-  const [timeLeftStopwatch, setTimeLeftStopwatch] = useState(0);
-  const [stopwatchIsRunning, setStopwatchIsRunning] = useState(false);
   // localStorage
+  const tasks = useSelector((state) => state.tasks.tasks);
+  const currentTaskId = useSelector((state) => state.tasks.currentTaskId);
 
   useEffect(() => {
     const streakStore = localStorage.getItem("streak");
     const settingsStore = localStorage.getItem("settings");
     const tabStore = localStorage.getItem("currentTab");
+    const currentTaskStore = localStorage.getItem("currentTaskId");
+
     if (streakStore !== null) {
       setStreak(JSON.parse(streakStore));
     }
@@ -47,44 +46,21 @@ export default function Page() {
     }
     const tasksStore = localStorage.getItem("tasks");
     if (tasksStore !== null) {
-      setTasks(JSON.parse(tasksStore));
+      dispatch(initTasks(JSON.parse(tasksStore)));
     }
-    const currentTaskStore = localStorage.getItem("currentTask");
     if (currentTaskStore !== null) {
-      setCurrentTask(JSON.parse(currentTaskStore));
+      dispatch(setCurrentTaskId({ id: JSON.parse(currentTaskStore) }));
     }
   }, []);
+
   useEffect(() => {
     localStorage.setItem("currentTab", JSON.stringify(currentTab));
   }, [currentTab]);
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
-    localStorage.setItem("currentTask", JSON.stringify(currentTask));
-  }, [tasks, currentTask]);
+    localStorage.setItem("currentTaskId", JSON.stringify(currentTaskId));
+  }, [tasks, currentTaskId]);
 
-  // stopwatch actions
-  const stopwatchRef = useRef(null);
-  useEffect(() => {
-    if (stopwatchIsRunning) {
-      stopwatchRef.current = setInterval(() => {
-        setTimeLeftStopwatch((prev) => {
-          return prev + 1;
-        });
-      }, 1000);
-    } else {
-      clearInterval(stopwatchRef.current);
-    }
-
-    return () => clearInterval(stopwatchRef.current);
-  }, [stopwatchIsRunning, timeLeftStopwatch]);
-
-  const toggleStopwatch = () => {
-    setStopwatchIsRunning(!stopwatchIsRunning);
-  };
-  const resetStopwatch = () => {
-    setStopwatchIsRunning(false);
-    setTimeLeftStopwatch(settings["stopwatch"]);
-  };
   // other
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -120,28 +96,15 @@ export default function Page() {
           </button>
         </div>
         {currentTab === "focusTime" ? (
-          <Focus formatTime={formatTime} currentTask={currentTask} />
+          <Focus formatTime={formatTime} />
         ) : currentTab === "stopwatch" ? (
-          <StopWatch
-            formatTime={formatTime}
-            timeLeftStopwatch={timeLeftStopwatch}
-            toggleStopwatch={toggleStopwatch}
-            stopwatchIsRunning={stopwatchIsRunning}
-            resetStopwatch={resetStopwatch}
-          />
+          <StopWatch formatTime={formatTime} />
         ) : (
           <Clock />
         )}
       </main>
       {isSettingsActive && <SettingsModal />}
-      {isTasksActive && (
-        <TaskModal
-          tasks={tasks}
-          setTasks={setTasks}
-          currentTask={currentTask}
-          setCurrentTask={setCurrentTask}
-        />
-      )}
+      {isTasksActive && <TaskModal />}
       {isMusicActive && <MusicModal />}
     </div>
   );

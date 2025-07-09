@@ -14,7 +14,7 @@ import { Pause, Play, SkipForward, RefreshCcw } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Focus = ({ formatTime, currentTask }) => {
+const Focus = ({ formatTime }) => {
   const dispatch = useDispatch();
   const completedRef = useRef(false);
   const intervalRef = useRef(null);
@@ -24,6 +24,9 @@ const Focus = ({ formatTime, currentTask }) => {
     useSelector(pomodoroSelectors);
   const { autoStartNext, focusTime, shortBreakTime, longBreakTime } =
     useSelector(settingsSelectors);
+  const currentTask = useSelector((state) =>
+    state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId)
+  );
 
   const isRunning = useSelector((state) => state.pomodoro.isRunning);
   const timeLeft = useSelector((state) => state.pomodoro.timeLeft);
