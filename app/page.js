@@ -1,12 +1,6 @@
 "use client";
 import "./page.css";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./components/header/Header";
 import SettingsModal from "./components/settings-modal/SettingsModal";
 import TaskModal from "./components/task-modal/TaskModal";
@@ -16,42 +10,22 @@ import StopWatch from "./components/home/Stopwatch";
 import Clock from "./components/home/Clock";
 import { useDispatch, useSelector } from "react-redux";
 import { setupSettings } from "./redux/slices/settingsSlice";
-import {
-  stopPomodoro,
-  timeTick,
-  togglePomodoro,
-  updateCount,
-  updateMode,
-  updateProgress,
-  updateTimeLeft,
-} from "./redux/slices/pomodoroSlice";
-import { pomodoroSelectors } from "./redux/selectors/pomodoroSelectors";
-import { settingsSelectors } from "./redux/selectors/settingsSelectors";
+import { stopPomodoro } from "./redux/slices/pomodoroSlice";
 
 export default function Page() {
   const dispatch = useDispatch();
+
   const isTasksActive = useSelector((state) => state.navigation.isTasksActive);
   const isSettingsActive = useSelector(
     (state) => state.navigation.isSettingsActive
   );
   const isMusicActive = useSelector((state) => state.navigation.isMusicActive);
-  const {
-    focusTime,
-    shortBreakTime,
-    longBreakTime,
-    stopwatch,
-    is24Hour,
-    autoStartNext,
-  } = useSelector(settingsSelectors);
 
-  const { pomodoroCount, timeLeft, isRunning, currentMode } =
-    useSelector(pomodoroSelectors);
   // tasks
   const [tasks, setTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState(null);
   //other
   const [streak, setStreak] = useState(0);
-
   const [currentTab, setCurrentTab] = useState("focusTime");
   // stopwatch
   const [timeLeftStopwatch, setTimeLeftStopwatch] = useState(0);
@@ -87,102 +61,6 @@ export default function Page() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
     localStorage.setItem("currentTask", JSON.stringify(currentTask));
   }, [tasks, currentTask]);
-  // settings
-  const times = useMemo(
-    () => ({
-      focusTime: focusTime * 60,
-      shortBreakTime: shortBreakTime * 60,
-      longBreakTime: longBreakTime * 60,
-    }),
-    [focusTime, shortBreakTime, longBreakTime]
-  );
-  useEffect(() => {
-    dispatch(updateTimeLeft({ time: times[currentMode] }));
-  }, [dispatch, times, currentMode]);
-
-  // pomodoro actions
-  const completedRef = useRef(false);
-  useEffect(() => {
-    if (isRunning) {
-      completedRef.current = false;
-    }
-  }, [isRunning]);
-  const getMode = () => {
-    return (pomodoroCount + 1) % 4 === 0 ? "longBreakTime" : "shortBreakTime";
-  };
-  const getModeTime = () => {
-    const mode = getMode();
-    return mode === "longBreakTime" ? longBreakTime : shortBreakTime;
-  };
-  const handlePomodoroComplete = useCallback(() => {
-    if (completedRef.current) return;
-    completedRef.current = true;
-    dispatch(stopPomodoro());
-    const modeTime = getModeTime();
-    if (currentMode === "focusTime") {
-      dispatch(updateCount());
-      setStreak((prev) => {
-        const streak = prev + 1;
-        localStorage.setItem("streak", JSON.stringify(streak));
-        return streak;
-      });
-
-      const mode = getMode();
-      dispatch(updateMode({ mode: mode }));
-      dispatch(updateTimeLeft({ time: modeTime }));
-    } else {
-      dispatch(updateMode({ mode: "focusTime" }));
-      dispatch(updateTimeLeft({ time: modeTime }));
-    }
-    // ! note: enable user add aut-start time & add countdown before autostart
-    if (autoStartNext) {
-      setTimeout(
-        () => dispatch(togglePomodoro()),
-
-        3000
-      );
-    }
-  }, [dispatch, currentMode, autoStartNext, pomodoroCount]);
-
-  const intervalRef = useRef(null);
-
-  useEffect(() => {
-    if (!isRunning) return;
-    intervalRef.current = setInterval(() => {
-      dispatch(timeTick());
-      if (timeLeft <= 1) {
-        handlePomodoroComplete();
-      }
-    }, 1000);
-
-    return () => clearInterval(intervalRef.current);
-  }, [dispatch, timeLeft, isRunning, handlePomodoroComplete]);
-  const totalTime = useMemo(() => {
-    return {
-      focusTime: focusTime * 60,
-      shortBreakTime: shortBreakTime * 60,
-      longBreakTime: longBreakTime * 60,
-    }[currentMode];
-  }, [focusTime, shortBreakTime, longBreakTime, currentMode]);
-  useEffect(() => {
-    if (!totalTime) return;
-    const progressT = ((totalTime - timeLeft) / totalTime) * 100;
-    dispatch(updateProgress({ time: progressT }));
-  }, [dispatch, totalTime, timeLeft]);
-
-  const skipPomodoro = () => {
-    dispatch(stopPomodoro());
-    const modeTime = getModeTime();
-    if (currentMode === "focusTime") {
-      dispatch(updateCount());
-      const mode = getMode();
-      dispatch(updateMode({ mode: mode }));
-      dispatch(updateTimeLeft({ time: modeTime }));
-    } else {
-      dispatch(updateMode({ mode: "focusTime" }));
-      dispatch(updateTimeLeft({ time: modeTime }));
-    }
-  };
 
   // stopwatch actions
   const stopwatchRef = useRef(null);
@@ -242,13 +120,7 @@ export default function Page() {
           </button>
         </div>
         {currentTab === "focusTime" ? (
-          <Focus
-            currentTask={currentTask}
-            currentMode={currentMode}
-            formatTime={formatTime}
-            skipPomodoro={skipPomodoro}
-            totalTime={totalTime}
-          />
+          <Focus formatTime={formatTime} currentTask={currentTask} />
         ) : currentTab === "stopwatch" ? (
           <StopWatch
             formatTime={formatTime}
