@@ -3,7 +3,7 @@ import "./settings.css";
 import { useEffect, useState } from "react";
 import TimerTab from "./timer-tab/TimerTab";
 import { useDispatch } from "react-redux";
-import { closeModal, toggleModal } from "@/app/redux/navigationSlice";
+import { closeModal, toggleModal } from "@/app/redux/slices/navigationSlice";
 
 const SettingsModal = () => {
   const [activeTab, setActiveTab] = useState("timer");

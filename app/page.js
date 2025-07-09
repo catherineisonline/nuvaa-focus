@@ -1,6 +1,12 @@
 "use client";
 import "./page.css";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Header from "./components/header/Header";
 import SettingsModal from "./components/settings-modal/SettingsModal";
 import TaskModal from "./components/task-modal/TaskModal";
@@ -9,7 +15,7 @@ import Focus from "./components/home/Focus";
 import StopWatch from "./components/home/Stopwatch";
 import Clock from "./components/home/Clock";
 import { useDispatch, useSelector } from "react-redux";
-import { setupSettings } from "./redux/settingsSlice";
+import { setupSettings } from "./redux/slices/settingsSlice";
 import {
   stopPomodoro,
   timeTick,
@@ -18,7 +24,7 @@ import {
   updateMode,
   updateProgress,
   updateTimeLeft,
-} from "./redux/pomodoroSlice";
+} from "./redux/slices/pomodoroSlice";
 import { pomodoroSelectors } from "./redux/selectors/pomodoroSelectors";
 import { settingsSelectors } from "./redux/selectors/settingsSelectors";
 
@@ -82,14 +88,17 @@ export default function Page() {
     localStorage.setItem("currentTask", JSON.stringify(currentTask));
   }, [tasks, currentTask]);
   // settings
-  useEffect(() => {
-    const times = {
+  const times = useMemo(
+    () => ({
       focusTime: focusTime * 60,
       shortBreakTime: shortBreakTime * 60,
       longBreakTime: longBreakTime * 60,
-    };
+    }),
+    [focusTime, shortBreakTime, longBreakTime]
+  );
+  useEffect(() => {
     dispatch(updateTimeLeft({ time: times[currentMode] }));
-  }, [dispatch, focusTime, shortBreakTime, longBreakTime, currentMode]);
+  }, [dispatch, times, currentMode]);
 
   // pomodoro actions
   const completedRef = useRef(false);
@@ -148,24 +157,18 @@ export default function Page() {
 
     return () => clearInterval(intervalRef.current);
   }, [dispatch, timeLeft, isRunning, handlePomodoroComplete]);
-
-  useEffect(() => {
-    const totalTime = {
+  const totalTime = useMemo(() => {
+    return {
       focusTime: focusTime * 60,
       shortBreakTime: shortBreakTime * 60,
       longBreakTime: longBreakTime * 60,
     }[currentMode];
+  }, [focusTime, shortBreakTime, longBreakTime, currentMode]);
+  useEffect(() => {
     if (!totalTime) return;
     const progressT = ((totalTime - timeLeft) / totalTime) * 100;
     dispatch(updateProgress({ time: progressT }));
-  }, [
-    dispatch,
-    focusTime,
-    shortBreakTime,
-    longBreakTime,
-    currentMode,
-    timeLeft,
-  ]);
+  }, [dispatch, totalTime, timeLeft]);
 
   const circumference = 2 * Math.PI * 180;
   const strokeDashoffset = circumference * (1 - progress / 100);
@@ -191,26 +194,6 @@ export default function Page() {
     }[currentMode];
     dispatch(updateTimeLeft({ time: totalTime }));
   };
-
-  //clock
-  const [dateTime, setDateTime] = useState("");
-
-  useEffect(() => {
-    const formatTime = () => {
-      return new Date().toLocaleTimeString("en-US", {
-        hour12: !is24Hour,
-        hour: is24Hour ? "2-digit" : "numeric",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-    };
-
-    const interval = setInterval(() => {
-      setDateTime(formatTime());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [is24Hour]);
 
   // stopwatch actions
   const stopwatchRef = useRef(null);
@@ -288,7 +271,7 @@ export default function Page() {
             resetStopwatch={resetStopwatch}
           />
         ) : (
-          <Clock dateTime={dateTime} />
+          <Clock />
         )}
       </main>
       {isSettingsActive && <SettingsModal />}

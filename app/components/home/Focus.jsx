@@ -1,4 +1,4 @@
-import { togglePomodoro } from "@/app/redux/pomodoroSlice";
+import { togglePomodoro } from "@/app/redux/slices/pomodoroSlice";
 import { Pause, Play, SkipForward, RefreshCcw } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 

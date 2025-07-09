@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./timer.css";
-import { updateSettings } from "@/app/redux/settingsSlice";
+import { updateSettings } from "@/app/redux/slices/settingsSlice";
 
 const TimerTab = () => {
   const settings = useSelector((state) => state.settings);

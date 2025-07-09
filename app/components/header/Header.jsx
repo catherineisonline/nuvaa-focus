@@ -1,3 +1,4 @@
+
 import { useDispatch, useSelector } from "react-redux";
 import "./header.css";
 import {
@@ -8,7 +9,7 @@ import {
   ListTodo,
   Flame,
 } from "lucide-react";
-import { toggleModal } from "@/app/redux/navigationSlice";
+import { toggleModal } from "@/app/redux/slices/navigationSlice";
 
 const Header = ({ streak }) => {
   const dispatch = useDispatch();

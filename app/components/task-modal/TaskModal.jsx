@@ -22,7 +22,7 @@ import {
 import SortableTask from "./SortableTask";
 import SortableTaskDrag from "./SortableDrag";
 import { useDispatch } from "react-redux";
-import { closeModal, toggleModal } from "@/app/redux/navigationSlice";
+import { closeModal, toggleModal } from "@/app/redux/slices/navigationSlice";
 
 const TaskModal = ({ tasks, setTasks, currentTask, setCurrentTask }) => {
   const [newTaskText, setNewTaskText] = useState("");
