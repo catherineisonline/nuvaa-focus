@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setupSettings } from "./redux/slices/settingsSlice";
 import { stopPomodoro } from "./redux/slices/pomodoroSlice";
 import { initTasks, setCurrentTaskId } from "./redux/slices/tasksSlice";
+import { tasksSelectors } from "./redux/selectors/tasksSelectors";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -25,9 +26,7 @@ export default function Page() {
   //other
   const [streak, setStreak] = useState(0);
   const [currentTab, setCurrentTab] = useState("focusTime");
-  // localStorage
-  const tasks = useSelector((state) => state.tasks.tasks);
-  const currentTaskId = useSelector((state) => state.tasks.currentTaskId);
+  const { tasks, currentTaskId } = useSelector(tasksSelectors);
 
   useEffect(() => {
     const streakStore = localStorage.getItem("streak");
@@ -51,7 +50,7 @@ export default function Page() {
     if (currentTaskStore !== null) {
       dispatch(setCurrentTaskId({ id: JSON.parse(currentTaskStore) }));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     localStorage.setItem("currentTab", JSON.stringify(currentTab));

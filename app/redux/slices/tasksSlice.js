@@ -1,4 +1,5 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { arrayMove } from "@dnd-kit/sortable";
+import { createSlice } from "@reduxjs/toolkit";
 
 const tasksSlice = createSlice({
   name: "tasks",
@@ -60,6 +61,15 @@ const tasksSlice = createSlice({
       const id = action.payload.id;
       state.currentTaskId = id;
     },
+    moveTask(state, action) {
+      const { activeId, overId } = action.payload;
+
+      const oldIndex = state.tasks.findIndex((task) => task.id === activeId);
+      const newIndex = state.tasks.findIndex((task) => task.id === overId);
+      if (oldIndex !== -1 && newIndex !== -1) {
+        state.tasks = arrayMove(state.tasks, oldIndex, newIndex);
+      }
+    },
   },
 });
 export default tasksSlice.reducer;
@@ -75,4 +85,5 @@ export const {
   deleteTask,
   setEditingId,
   setCurrentTaskId,
+  moveTask,
 } = tasksSlice.actions;

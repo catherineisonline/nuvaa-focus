@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, toggleModal } from "@/app/redux/slices/navigationSlice";
 import {
   deleteTask,
+  moveTask,
   resetTaskfield,
   setCurrentTaskId,
   setEditingId,
@@ -33,11 +34,10 @@ import {
   toggleTaskAsComplete,
   updateTaskfield,
 } from "@/app/redux/slices/tasksSlice";
+import { tasksSelectors } from "@/app/redux/selectors/tasksSelectors";
 
 const TaskModal = () => {
-  const editingId = useSelector((state) => state.tasks.editingId);
-  const newTaskText = useSelector((state) => state.tasks.newTaskText);
-  const tasks = useSelector((state) => state.tasks.tasks);
+  const { editingId, newTaskText, tasks } = useSelector(tasksSelectors);
   const currentTask = useSelector((state) =>
     state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId)
   );
@@ -109,13 +109,8 @@ const TaskModal = () => {
   const handleDragEnd = (e) => {
     const { active, over } = e;
     setActiveDrag(null);
-    if (active.id !== over.id) {
-      setTasks((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
-
-        return arrayMove(items, oldIndex, newIndex);
-      });
+    if (active.id.id !== over.id.id) {
+      dispatch(moveTask({ activeId: active.id.id, overId: over.id.id }));
     }
   };
   function handleDrag(e) {
@@ -188,7 +183,7 @@ const TaskModal = () => {
                 <DndContext
                   collisionDetection={closestCenter}
                   onDragStart={(e) => handleDrag(e)}
-                  onDragEnd={handleDragEnd}
+                  onDragEnd={(e) => handleDragEnd(e)}
                   sensors={sensors}>
                   <SortableContext
                     items={activeTasks.map((task) => task.id.toString())}

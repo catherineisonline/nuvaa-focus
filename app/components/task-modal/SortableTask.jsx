@@ -10,6 +10,7 @@ import {
   toggleEdit,
   updatedEdit,
 } from "@/app/redux/slices/tasksSlice";
+import { tasksSelectors } from "@/app/redux/selectors/tasksSelectors";
 
 const SortableTask = ({
   editingId,
@@ -36,7 +37,8 @@ const SortableTask = ({
   const handleTaskEdit = (e) => {
     dispatch(setEditText({ text: e.target.value }));
   };
-  const editText = useSelector((state) => state.tasks.editText);
+
+  const { editText } = useSelector(tasksSelectors);
   const setAsCurrentTask = (task) => {
     if (task && task.completed) return;
     dispatch(setCurrentTaskId({ id: task.id }));
