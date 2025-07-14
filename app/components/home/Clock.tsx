@@ -1,11 +1,12 @@
-import { settingsSelectors } from "@/app/redux/selectors/settingsSelectors";
-import { setupDateTime } from "@/app/redux/slices/clockSlice";
+import { settingsSelectors } from "../../redux/selectors/settingsSelectors";
+import { setupDateTime } from "../../redux/slices/clockSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Clock = () => {
   const dispatch = useDispatch();
-  const dateTime = useSelector((state) => state.clock.dateTime);
+  const dateTime = useSelector((state: RootState) => state.clock.dateTime);
   const { is24Hour } = useSelector(settingsSelectors);
   useEffect(() => {
     const formatTime = () => {

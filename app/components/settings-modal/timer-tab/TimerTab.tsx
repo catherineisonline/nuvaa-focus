@@ -1,15 +1,18 @@
 import "./timer.css";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSettings } from "@/app/redux/slices/settingsSlice";
-import { updateChangesSavedMsg } from "@/app/redux/slices/appSlice";
+import { updateSettings } from "../../../redux/slices/settingsSlice";
+import { updateChangesSavedMsg } from "../../../redux/slices/appSlice";
 import { debounce } from "lodash";
 import { useEffect } from "react";
+import { RootState } from "../../../redux/store";
 
 const TimerTab = () => {
   const dispatch = useDispatch();
-  const settings = useSelector((state) => state.settings);
-  const changesSavedMsg = useSelector((state) => state.app.changesSavedMsg);
-  const updateSetting = (k, v) => {
+  const settings = useSelector((state: RootState) => state.settings);
+  const changesSavedMsg = useSelector(
+    (state: RootState) => state.app.changesSavedMsg
+  );
+  const updateSetting = (k: string, v: number | boolean) => {
     dispatch(updateSettings({ key: k, value: v }));
     showMessage();
   };
@@ -24,7 +27,7 @@ const TimerTab = () => {
       dispatch(updateChangesSavedMsg({ msg: "" }));
     }, 2000);
     return () => clearTimeout(timer);
-  }, [changesSavedMsg]);
+  }, [changesSavedMsg, dispatch]);
   return (
     <form className="settings-content">
       <div className="setting-group">

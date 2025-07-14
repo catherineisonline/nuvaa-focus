@@ -15,17 +15,22 @@ import { stopPomodoro } from "./redux/slices/pomodoroSlice";
 import { initTasks, setCurrentTaskId } from "./redux/slices/tasksSlice";
 import { tasksSelectors } from "./redux/selectors/tasksSelectors";
 import { initStreak, setCurrentTab } from "./redux/slices/appSlice";
+import { RootState } from "./redux/store";
 
 export default function Page() {
   const dispatch = useDispatch();
 
-  const isTasksActive = useSelector((state) => state.navigation.isTasksActive);
-  const isSettingsActive = useSelector(
-    (state) => state.navigation.isSettingsActive
+  const isTasksActive = useSelector(
+    (state: RootState) => state.navigation.isTasksActive
   );
-  const isMusicActive = useSelector((state) => state.navigation.isMusicActive);
-  const streak = useSelector((state) => state.app.streak);
-  const currentTab = useSelector((state) => state.app.currentTab);
+  const isSettingsActive = useSelector(
+    (state: RootState) => state.navigation.isSettingsActive
+  );
+  const isMusicActive = useSelector(
+    (state: RootState) => state.navigation.isMusicActive
+  );
+  const streak = useSelector((state: RootState) => state.app.streak);
+  const currentTab = useSelector((state: RootState) => state.app.currentTab);
   const { tasks, currentTaskId } = useSelector(tasksSelectors);
 
   useEffect(() => {
@@ -62,11 +67,11 @@ export default function Page() {
     if (currentTab !== "focusTime") dispatch(stopPomodoro());
   }, [currentTab, dispatch]);
 
-  const updateTab = (tab) => {
+  const updateTab = (tab: string) => {
     dispatch(setCurrentTab({ tab: tab }));
   };
 
-  const formatTime = (seconds) => {
+  const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, "0")}:${secs

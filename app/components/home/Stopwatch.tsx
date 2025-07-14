@@ -3,19 +3,22 @@ import {
   toggleStopwatch,
   tickStopwatchTime,
   updateStopwatchTime,
-} from "@/app/redux/slices/stopwatchSlice";
+} from "../../redux/slices/stopwatchSlice";
 import { Pause, Play, RefreshCcw } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 const StopWatch = ({ formatTime }) => {
   const dispatch = useDispatch();
   const timeLeftStopwatch = useSelector(
-    (state) => state.stopwatch.timeLeftStopwatch
+    (state: RootState) => state.stopwatch.timeLeftStopwatch
   );
   const stopwatchIsRunning = useSelector(
-    (state) => state.stopwatch.stopwatchIsRunning
+    (state: RootState) => state.stopwatch.stopwatchIsRunning
   );
-  const stopwatchInitialTime = useSelector((state) => state.settings.stopwatch);
+  const stopwatchInitialTime = useSelector(
+    (state: RootState) => state.settings.stopwatch
+  );
   const stopwatchRef = useRef(null);
   useEffect(() => {
     if (stopwatchIsRunning) {
@@ -27,7 +30,7 @@ const StopWatch = ({ formatTime }) => {
     }
 
     return () => clearInterval(stopwatchRef.current);
-  }, [stopwatchIsRunning, timeLeftStopwatch]);
+  }, [stopwatchIsRunning, timeLeftStopwatch, dispatch]);
 
   const resetStopwatch = () => {
     dispatch(stopStopwatch());

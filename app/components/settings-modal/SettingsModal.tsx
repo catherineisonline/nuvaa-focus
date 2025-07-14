@@ -2,19 +2,24 @@ import "./settings.css";
 import { X } from "lucide-react";
 import TimerTab from "./timer-tab/TimerTab";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal, toggleModal } from "@/app/redux/slices/navigationSlice";
-import { updateSettingsTab } from "@/app/redux/slices/settingsSlice";
+import { closeModal, toggleModal } from "../../redux/slices/navigationSlice";
+import { updateSettingsTab } from "../../redux/slices/settingsSlice";
+import { RootState } from "../../redux/store";
 
 const SettingsModal = () => {
   const dispatch = useDispatch();
-  const settingsTab = useSelector((state) => state.settings.settingsTab);
-  const changesSavedMsg = useSelector((state) => state.app.changesSavedMsg);
+  const settingsTab = useSelector(
+    (state: RootState) => state.settings.settingsTab
+  );
+  const changesSavedMsg = useSelector(
+    (state: RootState) => state.app.changesSavedMsg
+  );
 
-  const handleSettingsTab = (tab) => {
+  const handleSettingsTab = (tab: string) => {
     dispatch(updateSettingsTab({ tab: tab }));
   };
 
-  const handleOutsideClick = (e) => {
+  const handleOutsideClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       dispatch(toggleModal({ target: "isSettingsActive" }));
     }

@@ -10,6 +10,8 @@ import {
   MouseSensor,
   TouchSensor,
   DragOverlay,
+  DragStartEvent,
+  DragEndEvent,
 } from "@dnd-kit/core";
 
 import {
@@ -20,7 +22,7 @@ import {
 import SortableTask from "./SortableTask";
 import SortableTaskDrag from "./SortableDrag";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal, toggleModal } from "@/app/redux/slices/navigationSlice";
+import { closeModal, toggleModal } from "../../redux/slices/navigationSlice";
 import {
   deleteTask,
   moveTask,
@@ -32,21 +34,22 @@ import {
   setTasks,
   toggleTaskAsComplete,
   updateTaskfield,
-} from "@/app/redux/slices/tasksSlice";
-import { tasksSelectors } from "@/app/redux/selectors/tasksSelectors";
+} from "../../redux/slices/tasksSlice";
+import { tasksSelectors } from "../../redux/selectors/tasksSelectors";
+import { RootState } from "../../redux/store";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
   const { editingId, newTaskText, tasks, activeDrag } =
     useSelector(tasksSelectors);
-  const currentTask = useSelector((state) =>
+  const currentTask = useSelector((state: RootState) =>
     state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId)
   );
 
   const activeTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);
 
-  const handleOutsideClick = (e) => {
+  const handleOutsideClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       dispatch(toggleModal({ target: "isTasksActive" }));
     }
@@ -67,7 +70,7 @@ const TaskModal = () => {
     }
   };
 
-  const toggleTask = (id) => {
+  const toggleTask = (id: string) => {
     dispatch(toggleTaskAsComplete({ id: id }));
     removeCurrentTask();
   };
@@ -77,7 +80,8 @@ const TaskModal = () => {
     dispatch(setEditText({ text: "" }));
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
+    console.log(id);
     dispatch(deleteTask({ id: id }));
     if (currentTask && currentTask.id === id) {
       dispatch(setCurrentTaskId({ id: null }));
@@ -104,18 +108,19 @@ const TaskModal = () => {
     })
   );
 
-  const handleDragEnd = (e) => {
+  const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
     dispatch(setActiveDrag({ drag: null }));
-    if (active.id.id !== over.id.id) {
-      dispatch(moveTask({ activeId: active.id.id, overId: over.id.id }));
+    if (active.id !== over.id) {
+      dispatch(moveTask({ activeId: active.id, overId: over.id }));
     }
   };
-  const handleDrag = (e) => {
+  const handleDrag = (e: DragStartEvent) => {
     dispatch(setActiveDrag({ drag: e.active.id }));
   };
-  const handleTaskChange = (e) => {
-    dispatch(updateTaskfield({ text: e.target.value }));
+  const handleTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    dispatch(updateTaskfield({ text: input }));
   };
   return (
     <div className="modal-overlay" onClick={handleOutsideClick}>
