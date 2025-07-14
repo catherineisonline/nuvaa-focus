@@ -34,8 +34,10 @@ const SortableTask = ({
     transition,
   };
   const dispatch = useDispatch();
+
   const handleTaskEdit = (e) => {
-    dispatch(setEditText({ text: e.target.value }));
+    const input = e.target.value.trim();
+    dispatch(setEditText({ text: input }));
   };
 
   const { editText } = useSelector(tasksSelectors);
@@ -44,7 +46,7 @@ const SortableTask = ({
     dispatch(setCurrentTaskId({ id: task.id }));
   };
   const saveEdit = () => {
-    if (editText.trim()) {
+    if (editText) {
       dispatch(updatedEdit());
     }
     dispatch(setEditingId({ id: null }));

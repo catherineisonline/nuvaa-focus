@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import "./header.css";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Settings,
   Minimize,
@@ -28,7 +28,12 @@ const Header = () => {
   };
   return (
     <header className="header">
-      <h1>Nuvaa Focus</h1>
+      <h1 translate="no">
+        Nuvaa
+        <span>
+          Foc<span>us</span>
+        </span>
+      </h1>
 
       <nav>
         <p className="pomodoro-counter">
@@ -38,7 +43,7 @@ const Header = () => {
         <ul className="header-controls">
           <li>
             <button
-              className="icon-button"
+              className="icon-button neu-button"
               onClick={handleTasks}
               aria-label="Todo list">
               <ListTodo />
@@ -46,7 +51,7 @@ const Header = () => {
           </li>
           <li>
             <button
-              className="icon-button"
+              className="icon-button neu-button"
               onClick={handleMusic}
               aria-label="Music">
               <Music />
@@ -54,7 +59,7 @@ const Header = () => {
           </li>
           <li>
             <button
-              className="icon-button"
+              className="icon-button neu-button"
               onClick={handleFullscreen}
               aria-label={isFullscreen ? "Maximize screen" : "Minimize screen"}>
               {isFullscreen ? <Maximize /> : <Minimize />}
@@ -62,7 +67,7 @@ const Header = () => {
           </li>
           <li>
             <button
-              className="icon-button"
+              className="icon-button neu-button"
               onClick={handleSettings}
               aria-label="Settings">
               <Settings />

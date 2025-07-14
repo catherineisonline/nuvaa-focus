@@ -79,7 +79,7 @@ export default function Page() {
       <div className="background-overlay"></div>
       <Header />
       <main className="main-content">
-        <div className="mode-tabs">
+        <div className="mode-tabs neu-mode-inner">
           <button
             className={`mode-tab ${currentTab === "focusTime" ? "active" : ""}`}
             onClick={() => updateTab("focusTime")}>

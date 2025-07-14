@@ -45,7 +45,9 @@ const StopWatch = ({ formatTime }) => {
 
       <div className="timer-controls">
         <button
-          className="control-button primary"
+          className={`control-button primary ${
+            stopwatchIsRunning ? " neu-button-active" : "neu-button"
+          }`}
           onClick={handleStopwatch}
           aria-label={stopwatchIsRunning ? "Pause" : "Start"}>
           {stopwatchIsRunning ? (
@@ -55,7 +57,7 @@ const StopWatch = ({ formatTime }) => {
           )}
         </button>
         <button
-          className="control-button secondary"
+          className="control-button secondary neu-button"
           onClick={resetStopwatch}
           aria-label="Reset">
           <RefreshCcw strokeWidth={2.8} />

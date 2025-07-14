@@ -31,7 +31,7 @@ const Focus = ({ formatTime }) => {
 
   const isRunning = useSelector((state) => state.pomodoro.isRunning);
   const timeLeft = useSelector((state) => state.pomodoro.timeLeft);
-  const circumference = 2 * Math.PI * 180;
+  const circumference = 2 * Math.PI * 190;
   const strokeDashoffset = circumference * (1 - progress / 100);
 
   const totalTime = useMemo(() => {
@@ -84,7 +84,7 @@ const Focus = ({ formatTime }) => {
       dispatch(updateMode({ mode: "focusTime" }));
       dispatch(updateTimeLeft({ time: modeTime }));
     }
-    // ! note: enable user add aut-start time & add countdown before autostart
+    // ! note: add countdown before autostart
     if (autoStartNext) {
       setTimeout(() => dispatch(togglePomodoro()), 3000);
     }
@@ -120,15 +120,15 @@ const Focus = ({ formatTime }) => {
   }, [dispatch, totalTime, timeLeft]);
   return (
     <div className="timer-container">
-      <div className="timer-circle">
+      <div className="timer-circle neu-circle">
         <svg className="progress-ring" width="400" height="400">
           <circle
             className="progress-ring-background"
             strokeWidth="20"
             fill="transparent"
-            r="180"
-            cx="190"
-            cy="190"
+            r="190"
+            cx="200"
+            cy="200"
           />
           <defs>
             <linearGradient
@@ -137,8 +137,8 @@ const Focus = ({ formatTime }) => {
               y1="0%"
               x2="100%"
               y2="0%">
-              <stop offset="0%" stopColor="#4740a1" />
-              <stop offset="100%" stopColor="#b59dee" />
+              <stop offset="0%" stopColor="#b62c0a" />
+              <stop offset="100%" stopColor="#b62c0a" />
             </linearGradient>
           </defs>
           <circle
@@ -146,9 +146,9 @@ const Focus = ({ formatTime }) => {
             stroke="url(#progressGradient)"
             strokeWidth="20"
             fill="transparent"
-            r="180"
-            cx="190"
-            cy="190"
+            r="190"
+            cx="200"
+            cy="200"
             style={{
               strokeDasharray: circumference,
               strokeDashoffset: strokeDashoffset,
@@ -156,7 +156,7 @@ const Focus = ({ formatTime }) => {
           />
         </svg>
 
-        <div className="timer-content">
+        <div className="timer-content neu-circle-inner">
           <p className="mode-label">
             {currentMode === "shortBreakTime"
               ? "Short Break"
@@ -172,22 +172,24 @@ const Focus = ({ formatTime }) => {
       )}
       <div className="timer-controls">
         <button
-          className="control-button primary"
+          className={`control-button ${
+            isRunning ? " neu-button-active" : "neu-button"
+          }`}
           onClick={runPomodoro}
           aria-label={isRunning ? "Pause" : "Start"}>
-          {isRunning ? <Pause strokeWidth={2.8} /> : <Play strokeWidth={2.8} />}
+          {isRunning ? <Pause strokeWidth={2.2} /> : <Play strokeWidth={2.2} />}
         </button>
         <button
-          className="control-button secondary"
+          className="control-button neu-button"
           onClick={skipPomodoro}
           aria-label="Skip">
-          <SkipForward strokeWidth={2.8} />
+          <SkipForward strokeWidth={2.2} />
         </button>
         <button
-          className="control-button secondary"
+          className="control-button neu-button"
           onClick={resetPomodoro}
           aria-label="Reset">
-          <RefreshCcw strokeWidth={2.8} />
+          <RefreshCcw strokeWidth={2.2} />
         </button>
       </div>
     </div>

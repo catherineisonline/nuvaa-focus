@@ -9,11 +9,11 @@ const TimerTab = () => {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const changesSavedMsg = useSelector((state) => state.app.changesSavedMsg);
-
   const updateSetting = (k, v) => {
     dispatch(updateSettings({ key: k, value: v }));
     showMessage();
   };
+
   const showMessage = debounce(() => {
     dispatch(updateChangesSavedMsg({ msg: "Successfully updated" }));
   }, 1000);
@@ -26,63 +26,75 @@ const TimerTab = () => {
     return () => clearTimeout(timer);
   }, [changesSavedMsg]);
   return (
-    <section className="settings-content">
-      <article className="setting-group">
+    <form className="settings-content">
+      <div className="setting-group">
         <label htmlFor="focusTime" className="setting-label">
-          Focus Time (minutes)
+          Focus Time
         </label>
-        <input
-          id="focusTime"
-          type="number"
-          min="1"
-          max="120"
-          value={settings.focusTime}
-          onChange={(e) => updateSetting("focusTime", parseInt(e.target.value))}
+        <select
           className="setting-input"
-        />
-      </article>
+          id="focusTime"
+          name="focusTime"
+          value={settings.focusTime}
+          onChange={(e) =>
+            updateSetting("focusTime", parseInt(e.target.value))
+          }>
+          {Array.from({ length: 480 }, (_, i) => (
+            <option key={i + 1} value={i + 1}>
+              {i + 1} Minutes
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <article className="setting-group">
+      <div className="setting-group">
         <label htmlFor="shortBreakTime" className="setting-label">
-          Short Break (minutes)
+          Short Break
         </label>
-        <input
+        <select
+          className="setting-input"
           id="shortBreakTime"
-          type="number"
-          min="1"
-          max="120"
+          name="shortBreakTime"
           value={settings.shortBreakTime}
           onChange={(e) =>
             updateSetting("shortBreakTime", parseInt(e.target.value))
-          }
-          className="setting-input"
-        />
-      </article>
+          }>
+          {Array.from({ length: 480 }, (_, i) => (
+            <option key={i + 1} value={i + 1}>
+              {i + 1} Minutes
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <article className="setting-group">
+      <div className="setting-group">
         <label htmlFor="longBreakTime" className="setting-label">
-          Long Break (minutes)
+          Long Break
         </label>
-        <input
+        <select
+          className="setting-input"
           id="longBreakTime"
-          type="number"
-          min="1"
-          max="120"
+          name="longBreakTime"
           value={settings.longBreakTime}
           onChange={(e) =>
             updateSetting("longBreakTime", parseInt(e.target.value))
-          }
-          className="setting-input"
-        />
-      </article>
+          }>
+          {Array.from({ length: 480 }, (_, i) => (
+            <option key={i + 1} value={i + 1}>
+              {i + 1} Minutes
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <article className="setting-group">
+      <div className="setting-group">
         <h3 className="setting-label">Time Format</h3>
         <div className="radio-group">
           <label htmlFor="is12Hour" className="radio-label">
             <input
               id="is12Hour"
               type="radio"
+              name="is24Hour"
               checked={!settings.is24Hour}
               onChange={() => updateSetting("is24Hour", false)}
             />
@@ -92,26 +104,28 @@ const TimerTab = () => {
             <input
               id="is24Hour"
               type="radio"
+              name="is24Hour"
               checked={settings.is24Hour}
               onChange={() => updateSetting("is24Hour", true)}
             />
             24 Hour
           </label>
         </div>
-      </article>
+      </div>
 
-      <article className="setting-group">
+      <div className="setting-group">
         <label htmlFor="autoStartNext" className="checkbox-label">
           <input
             id="autoStartNext"
             type="checkbox"
+            name="autoStartNext"
             checked={settings.autoStartNext}
             onChange={(e) => updateSetting("autoStartNext", e.target.checked)}
           />
           Auto-start next interval
         </label>
-      </article>
-    </section>
+      </div>
+    </form>
   );
 };
 

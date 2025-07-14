@@ -1,21 +1,18 @@
 .settings-content {
-  flex: 1;
-  padding: 2rem;
   overflow-y: auto;
 }
 
-.single-column .settings-content {
-  padding: 2rem;
-}
-
 .setting-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 
 .setting-label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--color-text);
   font-size: 1.2rem;
   font-family: var(--font-outfit);
@@ -33,13 +30,16 @@
   color: var(--color-text);
   transition: var(--transition);
 }
-
+.setting-input {
+  width: 10rem;
+  cursor: pointer;
+}
 .setting-input:focus,
 .setting-select:focus,
 .setting-textarea:focus {
   outline: none;
-  border-color: var(--color-accent);
-  box-shadow: var(--color-focus);
+  border-color: var(--color-highlight);
+  box-shadow: var(--color-highlight);
 }
 
 .radio-group {
