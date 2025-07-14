@@ -1,7 +1,7 @@
-import { usePomodoroMode } from "@/app/hooks/usePomodoroMode";
-import { pomodoroSelectors } from "@/app/redux/selectors/pomodoroSelectors";
-import { settingsSelectors } from "@/app/redux/selectors/settingsSelectors";
-import { setStreak } from "@/app/redux/slices/appSlice";
+import { usePomodoroMode } from "../../hooks/usePomodoroMode";
+import { pomodoroSelectors } from "../../redux/selectors/pomodoroSelectors";
+import { settingsSelectors } from "../../redux/selectors/settingsSelectors";
+import { setStreak } from "../../redux/slices/appSlice";
 import {
   stopPomodoro,
   timeTick,
@@ -10,10 +10,11 @@ import {
   updateMode,
   updateProgress,
   updateTimeLeft,
-} from "@/app/redux/slices/pomodoroSlice";
+} from "../../redux/slices/pomodoroSlice";
 import { Pause, Play, SkipForward, RefreshCcw } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Focus = ({ formatTime }) => {
   const dispatch = useDispatch();
@@ -25,12 +26,12 @@ const Focus = ({ formatTime }) => {
     useSelector(pomodoroSelectors);
   const { autoStartNext, focusTime, shortBreakTime, longBreakTime } =
     useSelector(settingsSelectors);
-  const currentTask = useSelector((state) =>
+  const currentTask = useSelector((state: RootState) =>
     state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId)
   );
 
-  const isRunning = useSelector((state) => state.pomodoro.isRunning);
-  const timeLeft = useSelector((state) => state.pomodoro.timeLeft);
+  const isRunning = useSelector((state: RootState) => state.pomodoro.isRunning);
+  const timeLeft = useSelector((state: RootState) => state.pomodoro.timeLeft);
   const circumference = 2 * Math.PI * 190;
   const strokeDashoffset = circumference * (1 - progress / 100);
 
@@ -88,7 +89,7 @@ const Focus = ({ formatTime }) => {
     if (autoStartNext) {
       setTimeout(() => dispatch(togglePomodoro()), 3000);
     }
-  }, [dispatch, currentMode, autoStartNext, pomodoroCount]);
+  }, [dispatch, currentMode, autoStartNext, getModeTime, getMode]);
 
   useEffect(() => {
     if (!isRunning) return;

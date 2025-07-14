@@ -19,3 +19,6 @@ export const store = configureStore({
     app: appSLice,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

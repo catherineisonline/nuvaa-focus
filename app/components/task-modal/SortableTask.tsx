@@ -9,9 +9,14 @@ import {
   setEditText,
   toggleEdit,
   updatedEdit,
-} from "@/app/redux/slices/tasksSlice";
-import { tasksSelectors } from "@/app/redux/selectors/tasksSelectors";
+} from "../../redux/slices/tasksSlice";
+import { tasksSelectors } from "../../redux/selectors/tasksSelectors";
 
+type Task = {
+  text: string;
+  id: string;
+  completed: boolean;
+};
 const SortableTask = ({
   editingId,
   task,
@@ -35,13 +40,13 @@ const SortableTask = ({
   };
   const dispatch = useDispatch();
 
-  const handleTaskEdit = (e) => {
+  const handleTaskEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     dispatch(setEditText({ text: input }));
   };
 
   const { editText } = useSelector(tasksSelectors);
-  const setAsCurrentTask = (task) => {
+  const setAsCurrentTask = (task: Task) => {
     if (task && task.completed) return;
     dispatch(setCurrentTaskId({ id: task.id }));
   };
@@ -52,7 +57,7 @@ const SortableTask = ({
     dispatch(setEditingId({ id: null }));
     dispatch(setEditText({ text: "" }));
   };
-  const startEditing = (task) => {
+  const startEditing = (task: Task) => {
     dispatch(toggleEdit({ id: task.id, text: task.text }));
   };
   return (

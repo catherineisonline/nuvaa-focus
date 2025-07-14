@@ -8,12 +8,15 @@ import {
   ListTodo,
   Flame,
 } from "lucide-react";
-import { toggleModal } from "@/app/redux/slices/navigationSlice";
+import { toggleModal } from "../../redux/slices/navigationSlice";
+import { RootState } from "../../redux/store";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const isFullscreen = useSelector((state) => state.navigation.isFullscreen);
-  const streak = useSelector((state) => state.app.streak);
+  const isFullscreen = useSelector(
+    (state: RootState) => state.navigation.isFullscreen
+  );
+  const streak = useSelector((state: RootState) => state.app.streak);
   const handleFullscreen = () => {
     dispatch(toggleModal({ target: "isFullscreen" }));
   };
