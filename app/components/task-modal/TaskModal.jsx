@@ -122,7 +122,7 @@ const TaskModal = () => {
       <div
         role="dialog"
         aria-labelledby="tasks-title"
-        className="task-modal single-column">
+        className="modal neu-modal">
         <header className="modal-header">
           <h2 id="tasks-title">Tasks</h2>
           <button
@@ -133,7 +133,7 @@ const TaskModal = () => {
           </button>
         </header>
 
-        <div className="modal-body single-column">
+        <div className="modal-body-tasks single-column">
           <section className="add-task-section">
             <input
               type="text"
@@ -141,7 +141,7 @@ const TaskModal = () => {
               onChange={(e) => handleTaskChange(e)}
               onFocus={cancelEdit}
               placeholder="Add a new task..."
-              className="task-input"
+              className="task-input neu-input-inner "
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();

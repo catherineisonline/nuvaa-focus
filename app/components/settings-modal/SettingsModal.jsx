@@ -29,7 +29,7 @@ const SettingsModal = () => {
         role="dialog"
         aria-labelledby="settings-title"
         aria-modal="true"
-        className="settings-modal single-column">
+        className="modal neu-modal">
         <header className="modal-header">
           <h2 id="settings-title">
             Settings{changesSavedMsg && <span> {changesSavedMsg}</span>}
@@ -42,7 +42,7 @@ const SettingsModal = () => {
           </button>
         </header>
         <div className="modal-body single-column">
-          <section className="settings-tabs">
+          <section className="settings-tabs neu-mode-inner">
             <button
               className={`tab-btn ${settingsTab === "timer" ? "active" : ""}`}
               onClick={() => handleSettingsTab("timer")}>
