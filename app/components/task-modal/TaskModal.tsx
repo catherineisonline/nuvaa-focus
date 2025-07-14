@@ -142,6 +142,7 @@ const TaskModal = () => {
           <section className="add-task-section">
             <input
               type="text"
+              autoFocus={true}
               value={newTaskText}
               onChange={(e) => handleTaskChange(e)}
               onFocus={cancelEdit}
