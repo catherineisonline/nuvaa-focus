@@ -48,7 +48,7 @@ const tasksSlice = createSlice({
     },
     updatedEdit(state) {
       const id = state.editingId;
-      const input = state.editText;
+      const input = state.editText.trim();
       state.tasks = state.tasks.map((task) =>
         task.id === id ? { ...task, text: input } : task
       );

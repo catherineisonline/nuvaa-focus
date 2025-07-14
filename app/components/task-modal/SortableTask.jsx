@@ -36,7 +36,7 @@ const SortableTask = ({
   const dispatch = useDispatch();
 
   const handleTaskEdit = (e) => {
-    const input = e.target.value.trim();
+    const input = e.target.value;
     dispatch(setEditText({ text: input }));
   };
 
