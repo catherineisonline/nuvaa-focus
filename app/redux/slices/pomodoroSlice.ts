@@ -5,7 +5,7 @@ const pomodoroSlice = createSlice({
   name: "pomodoro",
   initialState: {
     pomodoroCount: 0,
-    timeLeft: 25, // settings["focusTime"]
+    timeLeft: 1500,
     isRunning: false,
     progress: 0,
     currentMode: "focusTime",

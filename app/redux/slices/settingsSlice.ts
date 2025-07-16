@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const settingsSlice = createSlice({
   name: "settings",
   initialState: {
-    focusTime: 25,
-    shortBreakTime: 5,
-    longBreakTime: 15,
+    focusTime: 1500,
+    shortBreakTime: 300,
+    longBreakTime: 900,
     stopwatch: 0,
     is24Hour: true,
     autoStartNext: false,
@@ -18,6 +18,7 @@ const settingsSlice = createSlice({
     },
     updateSettings(state, action) {
       const { key, value } = action.payload;
+      console.log(value);
       state[key] = value;
     },
     setupSettings(state, action) {

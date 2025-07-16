@@ -43,7 +43,7 @@ const TimerTab = () => {
             updateSetting("focusTime", parseInt(e.target.value))
           }>
           {Array.from({ length: 480 }, (_, i) => (
-            <option key={i + 1} value={i + 1}>
+            <option key={i + 1} value={(i + 1) * 60}>
               {i + 1} Minutes
             </option>
           ))}
@@ -63,7 +63,7 @@ const TimerTab = () => {
             updateSetting("shortBreakTime", parseInt(e.target.value))
           }>
           {Array.from({ length: 480 }, (_, i) => (
-            <option key={i + 1} value={i + 1}>
+            <option key={i + 1} value={(i + 1) * 60}>
               {i + 1} Minutes
             </option>
           ))}
@@ -83,7 +83,7 @@ const TimerTab = () => {
             updateSetting("longBreakTime", parseInt(e.target.value))
           }>
           {Array.from({ length: 480 }, (_, i) => (
-            <option key={i + 1} value={i + 1}>
+            <option key={i + 1} value={(i + 1) * 60}>
               {i + 1} Minutes
             </option>
           ))}
