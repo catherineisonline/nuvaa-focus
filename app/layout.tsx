@@ -26,8 +26,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${lexend.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${lexend.variable} ${outfit.variable}`}>
+      <body className="font-lexend">
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
