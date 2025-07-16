@@ -11,11 +11,12 @@ import StopWatch from "./components/home/Stopwatch";
 import Clock from "./components/home/Clock";
 import { useDispatch, useSelector } from "react-redux";
 import { setupSettings } from "./redux/slices/settingsSlice";
-import { stopPomodoro } from "./redux/slices/pomodoroSlice";
+import { togglePomodoro } from "./redux/slices/pomodoroSlice";
 import { initTasks, setCurrentTaskId } from "./redux/slices/tasksSlice";
 import { tasksSelectors } from "./redux/selectors/tasksSelectors";
 import { initStreak, setCurrentTab } from "./redux/slices/appSlice";
 import { RootState } from "./redux/store";
+import { toggleStopwatch } from "./redux/slices/stopwatchSlice";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -28,6 +29,10 @@ export default function Page() {
   );
   const isMusicActive = useSelector(
     (state: RootState) => state.navigation.isMusicActive
+  );
+  const isRunning = useSelector((state: RootState) => state.pomodoro.isRunning);
+  const isRunningStopwatch = useSelector(
+    (state: RootState) => state.stopwatch.stopwatchIsRunning
   );
   const streak = useSelector((state: RootState) => state.app.streak);
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
@@ -63,11 +68,12 @@ export default function Page() {
     localStorage.setItem("currentTaskId", JSON.stringify(currentTaskId));
   }, [currentTab, streak, tasks, currentTaskId]);
 
-  useEffect(() => {
-    if (currentTab !== "focusTime") dispatch(stopPomodoro());
-  }, [currentTab, dispatch]);
-
   const updateTab = (tab: string) => {
+    if (currentTab === "focusTime" && isRunning) {
+      dispatch(togglePomodoro());
+    } else if (currentTab === "stopwatch" && isRunningStopwatch) {
+      dispatch(toggleStopwatch());
+    }
     dispatch(setCurrentTab({ tab: tab }));
   };
 

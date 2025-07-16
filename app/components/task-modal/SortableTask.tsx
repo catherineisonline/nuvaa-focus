@@ -84,6 +84,7 @@ const SortableTask = ({
           <input
             type="text"
             value={editText}
+            autoFocus={true}
             onChange={(e) => handleTaskEdit(e)}
             className="task-edit-input"
             onKeyDown={(e) => {

@@ -22,8 +22,7 @@ const Focus = ({ formatTime }) => {
   const intervalRef = useRef(null);
   const { getMode, getModeTime } = usePomodoroMode();
 
-  const { progress, currentMode, pomodoroCount } =
-    useSelector(pomodoroSelectors);
+  const { progress, currentMode } = useSelector(pomodoroSelectors);
   const { autoStartNext, focusTime, shortBreakTime, longBreakTime } =
     useSelector(settingsSelectors);
   const currentTask = useSelector((state: RootState) =>
@@ -37,9 +36,9 @@ const Focus = ({ formatTime }) => {
 
   const totalTime = useMemo(() => {
     return {
-      focusTime: focusTime * 60,
-      shortBreakTime: shortBreakTime * 60,
-      longBreakTime: longBreakTime * 60,
+      focusTime: focusTime,
+      shortBreakTime: shortBreakTime,
+      longBreakTime: longBreakTime,
     }[currentMode];
   }, [focusTime, shortBreakTime, longBreakTime, currentMode]);
 
@@ -52,15 +51,15 @@ const Focus = ({ formatTime }) => {
   };
   const skipPomodoro = () => {
     dispatch(stopPomodoro());
-    const modeTime = getModeTime();
     if (currentMode === "focusTime") {
-      dispatch(updateCount());
       const mode = getMode();
+      const modeTime = getModeTime();
+      dispatch(updateCount());
       dispatch(updateMode({ mode: mode }));
       dispatch(updateTimeLeft({ time: modeTime }));
     } else {
       dispatch(updateMode({ mode: "focusTime" }));
-      dispatch(updateTimeLeft({ time: modeTime }));
+      dispatch(updateTimeLeft({ time: focusTime }));
     }
   };
 
@@ -74,51 +73,72 @@ const Focus = ({ formatTime }) => {
     if (completedRef.current) return;
     completedRef.current = true;
     dispatch(stopPomodoro());
-    const modeTime = getModeTime();
+
     if (currentMode === "focusTime") {
       dispatch(updateCount());
       dispatch(setStreak());
       const mode = getMode();
+      const modeTime = getModeTime();
       dispatch(updateMode({ mode: mode }));
       dispatch(updateTimeLeft({ time: modeTime }));
     } else {
       dispatch(updateMode({ mode: "focusTime" }));
-      dispatch(updateTimeLeft({ time: modeTime }));
+      dispatch(updateTimeLeft({ time: focusTime }));
     }
     // ! note: add countdown before autostart
     if (autoStartNext) {
       setTimeout(() => dispatch(togglePomodoro()), 3000);
     }
-  }, [dispatch, currentMode, autoStartNext, getModeTime, getMode]);
+  }, [dispatch, currentMode, autoStartNext, focusTime, getModeTime, getMode]);
+  const timeLeftRef = useRef(timeLeft);
+
+  useEffect(() => {
+    timeLeftRef.current = timeLeft;
+  }, [timeLeft]);
 
   useEffect(() => {
     if (!isRunning) return;
+    clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
+      const next = timeLeftRef.current - 1;
       dispatch(timeTick());
-      if (timeLeft <= 1) {
+      if (next <= 1) {
+        clearInterval(intervalRef.current);
         handlePomodoroComplete();
       }
+      timeLeftRef.current = next;
     }, 1000);
-
     return () => clearInterval(intervalRef.current);
-  }, [dispatch, timeLeft, isRunning, handlePomodoroComplete]);
+  }, [dispatch, isRunning, handlePomodoroComplete]);
+
   const times = useMemo(
     () => ({
-      focusTime: focusTime * 60,
-      shortBreakTime: shortBreakTime * 60,
-      longBreakTime: longBreakTime * 60,
+      focusTime: focusTime,
+      shortBreakTime: shortBreakTime,
+      longBreakTime: longBreakTime,
     }),
     [focusTime, shortBreakTime, longBreakTime]
   );
+
+  const prevTimesRef = useRef(times);
   useEffect(() => {
-    dispatch(updateTimeLeft({ time: times[currentMode] }));
-  }, [dispatch, times, currentMode]);
+    const previous = prevTimesRef.current[currentMode];
+    const current = times[currentMode];
+
+    if (previous !== current && timeLeft > 0) {
+      dispatch(updateTimeLeft({ time: current }));
+    }
+
+    prevTimesRef.current = times;
+  }, [dispatch, times, currentMode, timeLeft]);
 
   useEffect(() => {
     if (!totalTime) return;
     const progressT = ((totalTime - timeLeft) / totalTime) * 100;
+
     dispatch(updateProgress({ time: progressT }));
   }, [dispatch, totalTime, timeLeft]);
+
   return (
     <div className="timer-container">
       <div className="timer-circle neu-circle">

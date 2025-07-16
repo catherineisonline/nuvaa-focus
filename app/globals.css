@@ -95,7 +95,9 @@ p {
   border-radius: 30px;
   box-shadow: inset 5px 5px 10px #e1e0e0, inset -5px -5px 10px #f9f8f8;
 }
-
+.neu-input-inner:focus {
+  box-shadow: inset 5px 5px 10px #c7c7c7, inset -5px -5px 10px #e8e8e8;
+}
 .neu-modal {
   background: linear-gradient(145deg, #f8f8f8, #ededed);
   box-shadow: 12px 12px 27px #adacac, -12px -12px 27px #dedede;
