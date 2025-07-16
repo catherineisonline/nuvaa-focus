@@ -70,26 +70,14 @@
 }
 
 .tab-btn {
-  background-color: none;
   border: none;
-  text-align: left;
   cursor: pointer;
   transition: var(--transition);
-  color: var(--color-text);
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 20px;
   border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: var(--transition);
   color: var(--color-text);
-  font-weight: 500;
+  font-family: var(--font-outfit);
   font-size: 1.1rem;
   font-weight: 800;
-  font-family: var(--font-outfit);
-}
-
-.single-column .tab-btn {
   padding: 1rem;
   white-space: nowrap;
   min-width: 5rem;
