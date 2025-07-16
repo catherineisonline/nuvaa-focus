@@ -81,7 +81,6 @@ const TaskModal = () => {
   };
 
   const handleDelete = (id: string) => {
-    console.log(id);
     dispatch(deleteTask({ id: id }));
     if (currentTask && currentTask.id === id) {
       dispatch(setCurrentTaskId({ id: null }));
@@ -146,6 +145,7 @@ const TaskModal = () => {
               onChange={(e) => handleTaskChange(e)}
               onFocus={cancelEdit}
               placeholder="Add a new task..."
+              autoFocus={true}
               className="task-input neu-input-inner "
               onKeyDown={(e) => {
                 if (e.key === "Enter") {

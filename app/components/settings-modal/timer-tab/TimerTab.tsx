@@ -44,7 +44,7 @@ const TimerTab = () => {
           }>
           {Array.from({ length: 480 }, (_, i) => (
             <option key={i + 1} value={(i + 1) * 60}>
-              {i + 1} Minutes
+              {i + 1} {i === 0 ? "Minute" : "Minutes"}
             </option>
           ))}
         </select>
@@ -64,7 +64,7 @@ const TimerTab = () => {
           }>
           {Array.from({ length: 480 }, (_, i) => (
             <option key={i + 1} value={(i + 1) * 60}>
-              {i + 1} Minutes
+              {i + 1} {i === 0 ? "Minute" : "Minutes"}
             </option>
           ))}
         </select>
@@ -84,7 +84,7 @@ const TimerTab = () => {
           }>
           {Array.from({ length: 480 }, (_, i) => (
             <option key={i + 1} value={(i + 1) * 60}>
-              {i + 1} Minutes
+              {i + 1} {i === 0 ? "Minute" : "Minutes"}
             </option>
           ))}
         </select>

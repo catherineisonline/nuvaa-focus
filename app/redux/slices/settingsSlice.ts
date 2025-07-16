@@ -18,7 +18,6 @@ const settingsSlice = createSlice({
     },
     updateSettings(state, action) {
       const { key, value } = action.payload;
-      console.log(value);
       state[key] = value;
     },
     setupSettings(state, action) {

@@ -19,6 +19,9 @@ const outfit = Outfit({
 export const metadata = {
   title: "Nuvaa Focus",
   description: "Your productivity buddy",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }) {
