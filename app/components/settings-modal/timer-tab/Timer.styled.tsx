@@ -1,27 +1,27 @@
-.settings-content {
-  overflow-y: auto;
-}
+"use client";
+import styled from "styled-components";
 
-.setting-group {
+export const SettingsContent = styled.form`
+  overflow-y: auto;
+`;
+
+export const SettingGroup = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
-}
+`;
 
-.setting-label {
+export const SettingLabel = styled.label`
   display: block;
   font-weight: 400;
   color: var(--color-text);
   font-size: 1.2rem;
   font-family: var(--font-outfit);
-}
+`;
 
-.setting-input,
-.setting-select,
-.setting-textarea {
-  width: 4rem;
+export const Input = styled.select`
   padding: 0.5rem;
   border: 1px solid var(--shadow-light);
   border-radius: 8px;
@@ -29,36 +29,32 @@
   font-size: 1rem;
   color: var(--color-text);
   transition: var(--transition);
-}
-.setting-input {
   width: 10rem;
   cursor: pointer;
-}
-.setting-input:focus,
-.setting-select:focus,
-.setting-textarea:focus {
-  outline: none;
-  border-color: var(--color-highlight);
-  box-shadow: var(--color-highlight);
-}
+  &:focus {
+    outline: none;
+    border-color: var(--color-highlight);
+    box-shadow: var(--color-highlight);
+  }
+`;
 
-.radio-group {
+export const RadioGroup = styled.div`
   display: flex;
   gap: 1rem;
-}
+`;
 
-.radio-label {
+export const RadioLabel = styled.label`
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   font-weight: normal;
-}
+`;
 
-.checkbox-label {
+export const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
   gap: 0.8rem;
   cursor: pointer;
   font-size: 1rem;
-}
+`;

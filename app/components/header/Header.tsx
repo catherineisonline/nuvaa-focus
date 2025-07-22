@@ -1,25 +1,26 @@
-import "./header.css";
+import "./Header.styled.tsx";
 import { Flame } from "lucide-react";
 import { Controls } from "./Controls";
 import { Streak } from "./Streak";
+import { HeaderMain, Nav, PomodoroCounter, Title } from "./Header.styled";
 
 const Header = () => {
   return (
-    <header className="header">
-      <h1 translate="no">
+    <HeaderMain>
+      <Title translate="no">
         Nuvaa
         <span>
           Foc<span>us</span>
         </span>
-      </h1>
-      <nav>
-        <p className="pomodoro-counter">
+      </Title>
+      <Nav>
+        <PomodoroCounter>
           <Flame />
           <Streak />
-        </p>
+        </PomodoroCounter>
         <Controls />
-      </nav>
-    </header>
+      </Nav>
+    </HeaderMain>
   );
 };
 

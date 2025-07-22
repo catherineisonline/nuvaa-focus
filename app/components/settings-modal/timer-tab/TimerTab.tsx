@@ -1,10 +1,19 @@
-import "./timer.css";
+import "./Timer.styled.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSettings } from "../../../redux/slices/settingsSlice";
 import { updateChangesSavedMsg } from "../../../redux/slices/appSlice";
 import { debounce } from "lodash";
 import { useEffect } from "react";
 import { RootState } from "../../../redux/store";
+import {
+  CheckboxLabel,
+  Input,
+  RadioGroup,
+  RadioLabel,
+  SettingGroup,
+  SettingLabel,
+  SettingsContent,
+} from "./Timer.styled";
 
 const TimerTab = () => {
   const dispatch = useDispatch();
@@ -29,13 +38,10 @@ const TimerTab = () => {
     return () => clearTimeout(timer);
   }, [changesSavedMsg, dispatch]);
   return (
-    <form className="settings-content">
-      <div className="setting-group">
-        <label htmlFor="focusTime" className="setting-label">
-          Focus Time
-        </label>
-        <select
-          className="setting-input"
+    <SettingsContent>
+      <SettingGroup>
+        <SettingLabel htmlFor="focusTime">Focus Time</SettingLabel>
+        <Input
           id="focusTime"
           name="focusTime"
           value={settings.focusTime}
@@ -47,15 +53,12 @@ const TimerTab = () => {
               {i + 1} {i === 0 ? "Minute" : "Minutes"}
             </option>
           ))}
-        </select>
-      </div>
+        </Input>
+      </SettingGroup>
 
-      <div className="setting-group">
-        <label htmlFor="shortBreakTime" className="setting-label">
-          Short Break
-        </label>
-        <select
-          className="setting-input"
+      <SettingGroup>
+        <SettingLabel htmlFor="shortBreakTime">Short Break</SettingLabel>
+        <Input
           id="shortBreakTime"
           name="shortBreakTime"
           value={settings.shortBreakTime}
@@ -67,15 +70,12 @@ const TimerTab = () => {
               {i + 1} {i === 0 ? "Minute" : "Minutes"}
             </option>
           ))}
-        </select>
-      </div>
+        </Input>
+      </SettingGroup>
 
-      <div className="setting-group">
-        <label htmlFor="longBreakTime" className="setting-label">
-          Long Break
-        </label>
-        <select
-          className="setting-input"
+      <SettingGroup>
+        <SettingLabel htmlFor="longBreakTime">Long Break</SettingLabel>
+        <Input
           id="longBreakTime"
           name="longBreakTime"
           value={settings.longBreakTime}
@@ -87,13 +87,13 @@ const TimerTab = () => {
               {i + 1} {i === 0 ? "Minute" : "Minutes"}
             </option>
           ))}
-        </select>
-      </div>
+        </Input>
+      </SettingGroup>
 
-      <div className="setting-group">
-        <h3 className="setting-label">Time Format</h3>
-        <div className="radio-group">
-          <label htmlFor="is12Hour" className="radio-label">
+      <SettingGroup>
+        <SettingLabel as="h3">Time Format</SettingLabel>
+        <RadioGroup>
+          <RadioLabel htmlFor="is12Hour">
             <input
               id="is12Hour"
               type="radio"
@@ -102,8 +102,8 @@ const TimerTab = () => {
               onChange={() => updateSetting("is24Hour", false)}
             />
             12 Hour
-          </label>
-          <label htmlFor="is24Hour" className="radio-label">
+          </RadioLabel>
+          <RadioLabel htmlFor="is24Hour">
             <input
               id="is24Hour"
               type="radio"
@@ -112,12 +112,12 @@ const TimerTab = () => {
               onChange={() => updateSetting("is24Hour", true)}
             />
             24 Hour
-          </label>
-        </div>
-      </div>
+          </RadioLabel>
+        </RadioGroup>
+      </SettingGroup>
 
-      <div className="setting-group">
-        <label htmlFor="autoStartNext" className="checkbox-label">
+      <SettingGroup>
+        <CheckboxLabel htmlFor="autoStartNext">
           <input
             id="autoStartNext"
             type="checkbox"
@@ -126,9 +126,9 @@ const TimerTab = () => {
             onChange={(e) => updateSetting("autoStartNext", e.target.checked)}
           />
           Auto-start next interval
-        </label>
-      </div>
-    </form>
+        </CheckboxLabel>
+      </SettingGroup>
+    </SettingsContent>
   );
 };
 

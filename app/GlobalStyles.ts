@@ -157,7 +157,7 @@ p {
 }
 
 .neu-mode-inner {
-  background: #e0e0e0;
+  background: #f4f4f4ff;
   box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
 }
 

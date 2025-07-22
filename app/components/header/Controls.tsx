@@ -4,6 +4,7 @@ import { Settings, Minimize, Music, Maximize, ListTodo } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../redux/slices/navigationSlice";
 import { RootState } from "../../redux/store";
+import { HeaderControls, IconButton } from "./Header.styled";
 export const Controls = () => {
   const dispatch = useDispatch();
   const isFullscreen = useSelector(
@@ -22,39 +23,29 @@ export const Controls = () => {
     dispatch(toggleModal({ target: "isSettingsActive" }));
   };
   return (
-    <ul className="header-controls">
+    <HeaderControls>
       <li>
-        <button
-          className="icon-button neu-button"
-          onClick={handleTasks}
-          aria-label="Todo list">
+        <IconButton onClick={handleTasks} aria-label="Todo list">
           <ListTodo />
-        </button>
+        </IconButton>
       </li>
       <li>
-        <button
-          className="icon-button neu-button"
-          onClick={handleMusic}
-          aria-label="Music">
+        <IconButton onClick={handleMusic} aria-label="Music">
           <Music />
-        </button>
+        </IconButton>
       </li>
       <li>
-        <button
-          className="icon-button neu-button"
+        <IconButton
           onClick={handleFullscreen}
           aria-label={isFullscreen ? "Maximize screen" : "Minimize screen"}>
           {isFullscreen ? <Maximize /> : <Minimize />}
-        </button>
+        </IconButton>
       </li>
       <li>
-        <button
-          className="icon-button neu-button"
-          onClick={handleSettings}
-          aria-label="Settings">
+        <IconButton onClick={handleSettings} aria-label="Settings">
           <Settings />
-        </button>
+        </IconButton>
       </li>
-    </ul>
+    </HeaderControls>
   );
 };

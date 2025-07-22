@@ -63,7 +63,7 @@
 
 .single-column .settings-tabs {
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   min-width: auto;
   margin-bottom: 10rem;
   border-radius: var(--border-radius);
@@ -75,6 +75,7 @@
   transition: var(--transition);
   border-radius: var(--border-radius);
   color: var(--color-text);
+  background-color: transparent;
   font-family: var(--font-outfit);
   font-size: 1.1rem;
   font-weight: 800;
