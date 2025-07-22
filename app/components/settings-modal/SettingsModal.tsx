@@ -1,3 +1,4 @@
+"use client";
 import "./settings.css";
 import { X } from "lucide-react";
 import TimerTab from "./timer-tab/TimerTab";

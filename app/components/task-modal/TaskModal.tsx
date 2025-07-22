@@ -1,3 +1,4 @@
+"use client";
 import { Plus, Trash2, CircleMinus, X } from "lucide-react";
 import "./tasks.css";
 import {

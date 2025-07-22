@@ -5,6 +5,7 @@ import { RootState } from "../../redux/store";
 import { toggleStopwatch } from "../../redux/slices/stopwatchSlice";
 import { setCurrentTab } from "../../redux/slices/appSlice";
 import { togglePomodoro } from "../../redux/slices/pomodoroSlice";
+import { ModeTabs, ModeTabButton } from "./Page.styled";
 
 export const ModeTab = () => {
   const dispatch = useDispatch();
@@ -24,22 +25,22 @@ export const ModeTab = () => {
     dispatch(setCurrentTab({ tab: tab }));
   };
   return (
-    <div className="mode-tabs neu-mode-inner">
-      <button
-        className={`mode-tab ${currentTab === "focusTime" ? "active" : ""}`}
+    <ModeTabs>
+      <ModeTabButton
+        $active={currentTab === "focusTime"}
         onClick={() => updateTab("focusTime")}>
         Focus
-      </button>
-      <button
-        className={`mode-tab ${currentTab === "stopwatch" ? "active" : ""}`}
+      </ModeTabButton>
+      <ModeTabButton
+        $active={currentTab === "stopwatch"}
         onClick={() => updateTab("stopwatch")}>
         Stopwatch
-      </button>
-      <button
-        className={`mode-tab ${currentTab === "clock" ? "active" : ""}`}
+      </ModeTabButton>
+      <ModeTabButton
+        $active={currentTab === "clock"}
         onClick={() => updateTab("clock")}>
         Clock
-      </button>
-    </div>
+      </ModeTabButton>
+    </ModeTabs>
   );
 };

@@ -1,3 +1,4 @@
+"use client";
 const MusicModal = () => {
   return <div>Music modal</div>;
 };

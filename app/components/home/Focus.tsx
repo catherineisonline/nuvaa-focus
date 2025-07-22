@@ -15,6 +15,20 @@ import { Pause, Play, SkipForward, RefreshCcw } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import {
+  ControlButton,
+  ModeLabel,
+  ModeLabelTask,
+  ProgressRing,
+  ProgressRingBackground,
+  ProgressRingProgress,
+  TimerCircle,
+  TimerContainer,
+  TimerContent,
+  TimerContentCircle,
+  TimerControls,
+  TimerDisplay,
+} from "./Page.styled";
 
 const Focus = ({ formatTime }) => {
   const dispatch = useDispatch();
@@ -140,11 +154,10 @@ const Focus = ({ formatTime }) => {
   }, [dispatch, totalTime, timeLeft]);
 
   return (
-    <div className="timer-container">
-      <div className="timer-circle neu-circle">
-        <svg className="progress-ring" width="400" height="400">
-          <circle
-            className="progress-ring-background"
+    <TimerContainer>
+      <TimerCircle>
+        <ProgressRing width="400" height="400">
+          <ProgressRingBackground
             strokeWidth="20"
             fill="transparent"
             r="190"
@@ -162,8 +175,7 @@ const Focus = ({ formatTime }) => {
               <stop offset="100%" stopColor="#b62c0a" />
             </linearGradient>
           </defs>
-          <circle
-            className="progress-ring-progress"
+          <ProgressRingProgress
             stroke="url(#progressGradient)"
             strokeWidth="20"
             fill="transparent"
@@ -175,45 +187,37 @@ const Focus = ({ formatTime }) => {
               strokeDashoffset: strokeDashoffset,
             }}
           />
-        </svg>
+        </ProgressRing>
 
-        <div className="timer-content neu-circle-inner">
-          <p className="mode-label">
+        <TimerContentCircle>
+          <ModeLabel>
             {currentMode === "shortBreakTime"
               ? "Short Break"
               : currentMode === "longBreakTime"
               ? "Long Break"
               : "Focus"}
-          </p>
-          <time className="timer-display">{formatTime(timeLeft)}</time>
-        </div>
-      </div>
+          </ModeLabel>
+          <TimerDisplay>{formatTime(timeLeft)}</TimerDisplay>
+        </TimerContentCircle>
+      </TimerCircle>
       {currentTask && (
-        <p className="mode-label-task">Working on: {currentTask.text}</p>
+        <ModeLabelTask>Working on: {currentTask.text}</ModeLabelTask>
       )}
-      <div className="timer-controls">
-        <button
-          className={`control-button ${
-            isRunning ? " neu-button-active" : "neu-button"
-          }`}
+      <TimerControls>
+        <ControlButton
+          $active={isRunning}
           onClick={runPomodoro}
           aria-label={isRunning ? "Pause" : "Start"}>
-          {isRunning ? <Pause strokeWidth={2.2} /> : <Play strokeWidth={2.2} />}
-        </button>
-        <button
-          className="control-button neu-button"
-          onClick={skipPomodoro}
-          aria-label="Skip">
-          <SkipForward strokeWidth={2.2} />
-        </button>
-        <button
-          className="control-button neu-button"
-          onClick={resetPomodoro}
-          aria-label="Reset">
-          <RefreshCcw strokeWidth={2.2} />
-        </button>
-      </div>
-    </div>
+          {isRunning ? <Pause strokeWidth={2.8} /> : <Play strokeWidth={2.8} />}
+        </ControlButton>
+        <ControlButton onClick={skipPomodoro} aria-label="Skip">
+          <SkipForward strokeWidth={2.8} />
+        </ControlButton>
+        <ControlButton onClick={resetPomodoro} aria-label="Reset">
+          <RefreshCcw strokeWidth={2.8} />
+        </ControlButton>
+      </TimerControls>
+    </TimerContainer>
   );
 };
 export default Focus;

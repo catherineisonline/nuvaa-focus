@@ -8,6 +8,15 @@ import { Pause, Play, RefreshCcw } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import {
+  ControlButton,
+  ControlButtonSecondary,
+  ModeLabel,
+  StopwatchContent,
+  TimerContainer,
+  TimerControls,
+  TimerDisplay,
+} from "./Page.styled";
 const StopWatch = ({ formatTime }) => {
   const dispatch = useDispatch();
   const timeLeftStopwatch = useSelector(
@@ -40,17 +49,15 @@ const StopWatch = ({ formatTime }) => {
     dispatch(toggleStopwatch());
   };
   return (
-    <div className="timer-container">
-      <div className="stopwatch-content">
-        <p className="mode-label">Stopwatch</p>
-        <time className="timer-display">{formatTime(timeLeftStopwatch)}</time>
-      </div>
+    <TimerContainer>
+      <StopwatchContent>
+        <ModeLabel>Stopwatch</ModeLabel>
+        <TimerDisplay>{formatTime(timeLeftStopwatch)}</TimerDisplay>
+      </StopwatchContent>
 
-      <div className="timer-controls">
-        <button
-          className={`control-button primary ${
-            stopwatchIsRunning ? " neu-button-active" : "neu-button"
-          }`}
+      <TimerControls>
+        <ControlButton
+          $active={stopwatchIsRunning}
           onClick={handleStopwatch}
           aria-label={stopwatchIsRunning ? "Pause" : "Start"}>
           {stopwatchIsRunning ? (
@@ -58,15 +65,15 @@ const StopWatch = ({ formatTime }) => {
           ) : (
             <Play strokeWidth={2.8} />
           )}
-        </button>
-        <button
-          className="control-button secondary neu-button"
+        </ControlButton>
+        <ControlButtonSecondary
+          $active={false}
           onClick={resetStopwatch}
           aria-label="Reset">
           <RefreshCcw strokeWidth={2.8} />
-        </button>
-      </div>
-    </div>
+        </ControlButtonSecondary>
+      </TimerControls>
+    </TimerContainer>
   );
 };
 export default StopWatch;
