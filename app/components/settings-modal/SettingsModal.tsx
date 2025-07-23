@@ -1,10 +1,21 @@
-import "./settings.css";
+"use client";
+import "./Settings.styled.tsx";
 import { X } from "lucide-react";
 import TimerTab from "./timer-tab/TimerTab";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, toggleModal } from "../../redux/slices/navigationSlice";
 import { updateSettingsTab } from "../../redux/slices/settingsSlice";
 import { RootState } from "../../redux/store";
+import {
+  CloseButton,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalTitle,
+  Overlay,
+  SettingsTabs,
+  TabButton,
+} from "./Settings.styled";
 
 const SettingsModal = () => {
   const dispatch = useDispatch();
@@ -29,61 +40,48 @@ const SettingsModal = () => {
   };
 
   return (
-    <div className="modal-overlay" onClick={handleOutsideClick}>
-      <div
-        role="dialog"
-        aria-labelledby="settings-title"
-        aria-modal="true"
-        className="modal neu-modal">
-        <header className="modal-header">
-          <h2 id="settings-title">
+    <Overlay onClick={handleOutsideClick}>
+      <Modal role="dialog" aria-labelledby="settings-title" aria-modal="true">
+        <ModalHeader>
+          <ModalTitle id="settings-title">
             Settings{changesSavedMsg && <span> {changesSavedMsg}</span>}
-          </h2>
-          <button
-            className="close-btn"
-            aria-label="Close"
-            onClick={handleModalClose}>
+          </ModalTitle>
+          <CloseButton aria-label="Close" onClick={handleModalClose}>
             <X size={32} />
-          </button>
-        </header>
-        <div className="modal-body single-column">
-          <section className="settings-tabs neu-mode-inner">
-            <button
-              className={`tab-btn ${settingsTab === "timer" ? "active" : ""}`}
+          </CloseButton>
+        </ModalHeader>
+        <ModalBody>
+          <SettingsTabs>
+            <TabButton
+              $active={settingsTab === "timer"}
               onClick={() => handleSettingsTab("timer")}>
               Timer
-            </button>
-            <button
-              className={`tab-btn ${
-                settingsTab === "appearance" ? "active" : ""
-              }`}
+            </TabButton>
+            <TabButton
+              $active={settingsTab === "appearance"}
               onClick={() => handleSettingsTab("appearance")}>
               Appearance
-            </button>
-            <button
-              className={`tab-btn ${
-                settingsTab === "features" ? "active" : ""
-              }`}
+            </TabButton>
+            <TabButton
+              $active={settingsTab === "features"}
               onClick={() => handleSettingsTab("features")}>
               Features
-            </button>
-            <button
-              className={`tab-btn ${
-                settingsTab === "analytics" ? "active" : ""
-              }`}
+            </TabButton>
+            <TabButton
+              $active={settingsTab === "analytics"}
               onClick={() => handleSettingsTab("analytics")}>
               Analytics
-            </button>
-            <button
-              className={`tab-btn ${settingsTab === "account" ? "active" : ""}`}
+            </TabButton>
+            <TabButton
+              $active={settingsTab === "account"}
               onClick={() => handleSettingsTab("account")}>
               Account
-            </button>
-          </section>
+            </TabButton>
+          </SettingsTabs>
           {settingsTab === "timer" && <TimerTab />}
-        </div>
-      </div>
-    </div>
+        </ModalBody>
+      </Modal>
+    </Overlay>
   );
 };
 

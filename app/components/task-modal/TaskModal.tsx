@@ -1,5 +1,6 @@
+"use client";
 import { Plus, Trash2, CircleMinus, X } from "lucide-react";
-import "./tasks.css";
+import "./Tasks.styled.tsx";
 import {
   DndContext,
   useSensor,
@@ -37,6 +38,27 @@ import {
 } from "../../redux/slices/tasksSlice";
 import { tasksSelectors } from "../../redux/selectors/tasksSelectors";
 import { RootState } from "../../redux/store";
+import {
+  AddTaskButton,
+  AddTaskSection,
+  CloseBtn,
+  CompletedSection,
+  CurrentTaskItem,
+  CurrentTaskSection,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Overlay,
+  RemoveCurrentBtn,
+  TaskActionBtn,
+  TaskCheckbox,
+  TaskInput,
+  TaskItem,
+  TaskList,
+  TaskListSection,
+  TasksSection,
+  TaskText,
+} from "./Tasks.styled";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
@@ -122,31 +144,24 @@ const TaskModal = () => {
     dispatch(updateTaskfield({ text: input }));
   };
   return (
-    <div className="modal-overlay" onClick={handleOutsideClick}>
-      <div
-        role="dialog"
-        aria-labelledby="tasks-title"
-        className="modal neu-modal">
-        <header className="modal-header">
+    <Overlay onClick={handleOutsideClick}>
+      <Modal role="dialog" aria-labelledby="tasks-title">
+        <ModalHeader>
           <h2 id="tasks-title">Tasks</h2>
-          <button
-            className="close-btn"
-            aria-label="Close"
-            onClick={handleModalClose}>
+          <CloseBtn aria-label="Close" onClick={handleModalClose}>
             <X size={32} />
-          </button>
-        </header>
+          </CloseBtn>
+        </ModalHeader>
 
-        <div className="modal-body-tasks single-column">
-          <section className="add-task-section">
-            <input
+        <ModalBody>
+          <AddTaskSection>
+            <TaskInput
               type="text"
               value={newTaskText}
               onChange={(e) => handleTaskChange(e)}
               onFocus={cancelEdit}
               placeholder="Add a new task..."
               autoFocus={true}
-              className="task-input neu-input-inner "
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -154,34 +169,30 @@ const TaskModal = () => {
                 }
               }}
             />
-            <button
-              onClick={addTask}
-              className="add-task-btn"
-              disabled={!newTaskText.trim()}>
+            <AddTaskButton onClick={addTask} disabled={!newTaskText.trim()}>
               <Plus size={20} />
-            </button>
-          </section>
+            </AddTaskButton>
+          </AddTaskSection>
 
-          <section className="tasks-section">
+          <TasksSection>
             {currentTask && (
-              <div className="current-task-section">
+              <CurrentTaskSection>
                 <h3>Current Task</h3>
-                <div className="current-task-item">
+                <CurrentTaskItem>
                   <span>{currentTask.text}</span>
                   {!editingId && (
-                    <button
+                    <RemoveCurrentBtn
                       aria-label="Remove current task"
-                      onClick={removeCurrentTask}
-                      className="remove-current-btn">
+                      onClick={removeCurrentTask}>
                       <CircleMinus size={20} />
-                    </button>
+                    </RemoveCurrentBtn>
                   )}
-                </div>
-              </div>
+                </CurrentTaskItem>
+              </CurrentTaskSection>
             )}
 
             {activeTasks.length > 0 && (
-              <div className="task-list-section">
+              <TaskListSection>
                 <h3>Active Tasks ({activeTasks.length})</h3>
                 <DndContext
                   collisionDetection={closestCenter}
@@ -213,38 +224,37 @@ const TaskModal = () => {
                     ))}
                   </SortableContext>
                 </DndContext>
-              </div>
+              </TaskListSection>
             )}
 
             {completedTasks.length > 0 && (
-              <section className="task-list-section completed-section">
+              <CompletedSection>
                 <h3>Completed ({completedTasks.length})</h3>
-                <ul className="task-list">
+                <TaskList>
                   {completedTasks.map((task) => (
-                    <li key={task.id} className="task-item completed">
-                      <input
+                    <TaskItem $completed={true} key={task.id}>
+                      <TaskCheckbox
                         type="checkbox"
                         checked={task.completed}
                         onChange={() => toggleTask(task.id)}
-                        className="task-checkbox"
                       />
-                      <span className="task-text completed">{task.text}</span>
-                      <button
+                      <TaskText $completed={true}>{task.text}</TaskText>
+                      <TaskActionBtn
+                        $type="delete"
                         onClick={() => handleDelete(task.id)}
-                        className="task-action-btn delete"
                         aria-label="Delete task">
                         <Trash2 size={24} />
-                      </button>
-                    </li>
+                      </TaskActionBtn>
+                    </TaskItem>
                   ))}
-                </ul>
-              </section>
+                </TaskList>
+              </CompletedSection>
             )}
             {tasks.length === 0 && <p>No tasks yet. Add your first task 💪🏻</p>}
-          </section>
-        </div>
-      </div>
-    </div>
+          </TasksSection>
+        </ModalBody>
+      </Modal>
+    </Overlay>
   );
 };
 

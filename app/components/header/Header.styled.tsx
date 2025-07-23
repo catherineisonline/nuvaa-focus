@@ -1,12 +1,16 @@
-.header {
+"use client";
+import styled from "styled-components";
+
+export const HeaderMain = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
   position: relative;
   z-index: 100;
-}
-h1 {
+`;
+
+export const Title = styled.h1`
   display: flex;
   flex-direction: column;
   line-height: 1.7rem;
@@ -14,57 +18,61 @@ h1 {
   font-family: var(--font-lexend);
   font-weight: 800;
   color: var(--color-text);
-}
-h1 span {
-  font-size: 2.3rem;
-}
-h1 span span {
-  font-size: 2.3rem;
-  color: var(--color-highlight);
-}
-nav {
+
+  span {
+    font-size: 2.3rem;
+
+    span {
+      font-size: 2.3rem;
+      color: var(--color-highlight);
+    }
+  }
+`;
+
+export const Nav = styled.nav`
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-.header-controls {
+`;
+
+export const HeaderControls = styled.ul`
   display: flex;
   align-items: center;
   list-style: none;
   gap: 1rem;
-}
+`;
 
-.pomodoro-counter {
+export const PomodoroCounter = styled.p`
   display: flex;
   align-items: center;
   gap: 4px;
   font-weight: 600;
   color: var(--color-text);
   font-size: 1.5rem;
-}
-.pomodoro-counter svg {
-  fill: var(--color-highlight);
-  stroke: var(--color-highlight);
-}
 
-.icon-button {
+  svg {
+    fill: var(--color-highlight);
+    stroke: var(--color-highlight);
+  }
+`;
+
+export const IconButton = styled.button`
   border: none;
   padding: 1rem;
   border-radius: var(--border-radius);
   cursor: pointer;
   backdrop-filter: blur(10px);
   color: var(--color-text);
-}
-.neu-button {
+  background: none;
   background: #e7e6e6;
   box-shadow: 10px 10px 20px #989797, -10px -10px 22px #eeeded;
-}
-.icon-button:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-medium);
-}
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+  }
 
-.icon-button:focus {
-  background: #e9e6e6;
-  box-shadow: inset 6px 6px 13px #c8c6c6, inset -6px -6px 13px #faf8f8;
-}
+  &:focus {
+    background: #e9e6e6;
+    box-shadow: inset 6px 6px 13px #c8c6c6, inset -6px -6px 13px #faf8f8;
+  }
+`;

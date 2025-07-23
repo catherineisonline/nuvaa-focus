@@ -1,4 +1,6 @@
-import "./globals.css";
+import "./GlobalStyles.ts";
+import { GlobalStyles } from "./GlobalStyles";
+import StyledComponentsRegistry from "./lib/registry";
 import ReduxProvider from "./redux/ReduxProvider";
 import { Lexend, Outfit } from "next/font/google";
 
@@ -28,7 +30,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${lexend.variable} ${outfit.variable}`}>
       <body className="font-lexend">
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <StyledComponentsRegistry>
+            <GlobalStyles />
+            {children}
+          </StyledComponentsRegistry>
+        </ReduxProvider>
       </body>
     </html>
   );

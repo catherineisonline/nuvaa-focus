@@ -3,6 +3,12 @@ import { setupDateTime } from "../../redux/slices/clockSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import {
+  ModeLabel,
+  TimerContainer,
+  TimerContent,
+  TimerDisplay,
+} from "./Page.styled";
 
 const Clock = () => {
   const dispatch = useDispatch();
@@ -26,12 +32,12 @@ const Clock = () => {
   }, [dispatch, is24Hour]);
   if (!dateTime) return null;
   return (
-    <div className="timer-container">
-      <div className="timer-content">
-        <p className="mode-label">Current Time</p>
-        <time className="timer-display">{dateTime}</time>
-      </div>
-    </div>
+    <TimerContainer>
+      <TimerContent>
+        <ModeLabel>Current Time</ModeLabel>
+        <TimerDisplay>{dateTime}</TimerDisplay>
+      </TimerContent>
+    </TimerContainer>
   );
 };
 export default Clock;
