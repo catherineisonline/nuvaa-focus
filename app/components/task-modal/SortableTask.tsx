@@ -11,6 +11,20 @@ import {
   updatedEdit,
 } from "../../redux/slices/tasksSlice";
 import { tasksSelectors } from "../../redux/selectors/tasksSelectors";
+import {
+  CancelEditBtn,
+  CurrentIndicator,
+  SaveEditBtn,
+  TaskActionBtn,
+  TaskActions,
+  TaskCheckbox,
+  TaskDragHandle,
+  TaskEdit,
+  TaskEditInput,
+  TaskItem,
+  TaskNonEdit,
+  TaskText,
+} from "./Tasks.styled";
 
 type Task = {
   text: string;
@@ -61,32 +75,31 @@ const SortableTask = ({
     dispatch(toggleEdit({ id: task.id, text: task.text }));
   };
   return (
-    <div
+    <TaskItem
+      as="div"
+      $edit={editingId}
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      className={`task-item ${editingId ? "edit" : ""}`}>
-      <div className="task-drag-handle" {...listeners}>
+      {...attributes}>
+      <TaskDragHandle {...listeners}>
         <GripVertical size={24} />
-      </div>
+      </TaskDragHandle>
 
       {!editingId && (
-        <input
+        <TaskCheckbox
           type="checkbox"
           checked={task.completed}
           onChange={() => toggleTask(task.id)}
-          className="task-checkbox"
         />
       )}
 
       {editingId === task.id ? (
-        <div className="task-edit">
-          <input
+        <TaskEdit>
+          <TaskEditInput
             type="text"
             value={editText}
             autoFocus={true}
             onChange={(e) => handleTaskEdit(e)}
-            className="task-edit-input"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
@@ -94,49 +107,42 @@ const SortableTask = ({
               }
             }}
           />
-          <button
-            aria-label="Save"
-            onClick={saveEdit}
-            className="save-edit-btn">
+          <SaveEditBtn aria-label="Save" onClick={saveEdit}>
             <Check size={20} />
-          </button>
-          <button
-            aria-label="Cancel"
-            onClick={cancelEdit}
-            className="cancel-edit-btn">
+          </SaveEditBtn>
+          <CancelEditBtn aria-label="Cancel" onClick={cancelEdit}>
             <Ban size={20} />
-          </button>
-        </div>
+          </CancelEditBtn>
+        </TaskEdit>
       ) : (
-        <div className="task-nonedit">
-          <p
-            className={`task-text ${task.completed ? "completed" : ""} ${
-              currentTask && currentTask.id === task.id ? "current" : ""
-            }`}
+        <TaskNonEdit>
+          <TaskText
+            $completed={task.completed}
+            $current={currentTask && currentTask.id === task.id}
             onClick={() => setAsCurrentTask(task)}>
             {task.text}
             {currentTask && currentTask.id === task.id && (
-              <span className="current-indicator">&#40;Current&#41;</span>
+              <CurrentIndicator>&#40;Current&#41;</CurrentIndicator>
             )}
-          </p>
+          </TaskText>
 
-          <div className="task-actions">
-            <button
+          <TaskActions>
+            <TaskActionBtn
+              $type="edit"
               onClick={() => startEditing(task)}
-              className="task-action-btn edit"
               aria-label="Edit task">
               <Pencil size={20} />
-            </button>
-            <button
+            </TaskActionBtn>
+            <TaskActionBtn
+              $type="delete"
               onClick={() => deleteTask(task.id)}
-              className="task-action-btn delete"
               aria-label="Delete task">
               <Trash2 size={20} />
-            </button>
-          </div>
-        </div>
+            </TaskActionBtn>
+          </TaskActions>
+        </TaskNonEdit>
       )}
-    </div>
+    </TaskItem>
   );
 };
 

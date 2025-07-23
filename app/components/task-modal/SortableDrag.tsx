@@ -1,22 +1,30 @@
 import React from "react";
 import { GripVertical } from "lucide-react";
+import {
+  CurrentIndicator,
+  DragPreview,
+  TaskCheckbox,
+  TaskDragHandle,
+  TaskNonEdit,
+  TaskText,
+} from "./Tasks.styled";
 
 const SortableTaskDrag = ({ task, currentTask }) => {
   return (
-    <div className="drag-preview" aria-hidden="true">
-      <div className="task-drag-handle">
+    <DragPreview aria-hidden="true">
+      <TaskDragHandle>
         <GripVertical size={24} />
-      </div>
-      <input type="checkbox" className="task-checkbox" />
-      <div className="task-nonedit">
-        <p className={`task-text`}>
+      </TaskDragHandle>
+      <TaskCheckbox type="checkbox" />
+      <TaskNonEdit>
+        <TaskText>
           {task.text}
           {currentTask && currentTask.id === task.id && (
-            <span className="current-indicator">&#40;Current&#41;</span>
+            <CurrentIndicator>&#40;Current&#41;</CurrentIndicator>
           )}
-        </p>
-      </div>
-    </div>
+        </TaskText>
+      </TaskNonEdit>
+    </DragPreview>
   );
 };
 
