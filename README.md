@@ -1,10 +1,10 @@
-# Nuvaa Focus [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+# Nuvaa Focus [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/) [![GitHub issues](https://img.shields.io/github/issues/catherineisonline/pizza-time-with-react)](https://github.com/catherineisonline/travel-with-catherine/issues)[![GitHub stars](https://img.shields.io/github/stars/catherineisonline/pizza-time-with-react)](https://github.com/catherineisonline/travel-with-catherine/stargazers)
 
 **Nuvaa Focus** is a Pomodoro timer app designed to help users stay focused and manage their time effectively. It offers a clean, distraction-free interface and a range of features to optimize productivity, including customizable timers, task management, and ADHD-friendly themes.
 
 ## ✨ Features
 
-### 🕒 Pomodoro Timer
+### Pomodoro Timer
 
 - **Focus Time** - Track focused work sessions using the Pomodoro technique
 - **Short Break** - Set a short break after each focus session
@@ -12,7 +12,7 @@
 - **Custom Time** - Customize focus and break durations to fit your preferences
 - **Auto-Continue** - Automatically transition between focus, short break, and long break
 
-### ✅ Task Management
+### Task Management
 
 - **Add Tasks** - Create new tasks
 - **Edit Tasks** - Update existing task details
@@ -20,12 +20,12 @@
 - **Mark as Complete** - Track completed tasks
 - **Current Task Highlighting** - See your active task while focusing
 
-### ⏱️ Stopwatch & Time Display
+### Stopwatch & Time Display
 
 - **Stopwatch Mode** - Track time outside of Pomodoro mode
 - **Regular Clock** - Display current time in the interface
 
-### 🎨 Themes
+### Themes
 
 - Choose between **soft, ADHD-friendly color themes** to personalize your experience
 
