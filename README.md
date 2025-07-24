@@ -44,39 +44,31 @@
 
 ## 🚀 Getting Started
 
-### 📦 Prerequisites
+### Prerequisites
 
 - Node.js and npm (or Yarn) installed on your machine
 
-### 📥 Installation
+### Installation
 
-git clone https://github.com/your-username/nuvaa-focus.git
-cd nuvaa-focus
+`git clone https://github.com/your-username/nuvaa-focus.git`
+`cd nuvaa-focus`
 
 # Install dependencies
 
-npm install
+`npm install` or `yarn install`
 
-# or
+### Start Development
 
-yarn install
+`npm run dev` or `yarn dev`
 
-### ▶️ Start Development
+Open `http://localhost:3000` to view it in your browser.
 
-npm run dev
+### Available Scripts
 
-# or
-
-yarn dev
-
-Open http://localhost:3000 to view it in your browser.
-
-### 📜 Available Scripts
-
-npm run dev # Start development server
-npm run build # Build the app for production
-npm run start # Run the app in production mode
-npm run lint # Run ESLint for code checking
+- `npm run dev` # Start development server
+- `npm run build` # Build the app for production
+- `npm run start` # Run the app in production mode
+- `npm run lint` # Run ESLint for code checking
 
 ## 🚫 License & Usage Notice
 
