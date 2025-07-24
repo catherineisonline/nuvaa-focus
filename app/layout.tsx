@@ -1,8 +1,8 @@
-import "./GlobalStyles.ts";
-import { GlobalStyles } from "./GlobalStyles";
 import StyledComponentsRegistry from "./lib/registry";
 import ReduxProvider from "./redux/ReduxProvider";
 import { Lexend, Outfit } from "next/font/google";
+import ThemeWrapper from "./components/ThemeWrapper";
+import { GlobalStyles } from "./styles/GlobalStyles";
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -32,8 +32,10 @@ export default function RootLayout({ children }) {
       <body className="font-lexend">
         <ReduxProvider>
           <StyledComponentsRegistry>
-            <GlobalStyles />
-            {children}
+            <ThemeWrapper>
+              <GlobalStyles />
+              {children}
+            </ThemeWrapper>
           </StyledComponentsRegistry>
         </ReduxProvider>
       </body>

@@ -17,14 +17,14 @@ export const Title = styled.h1`
   font-size: 2rem;
   font-family: var(--font-lexend);
   font-weight: 800;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
 
   span {
     font-size: 2.3rem;
 
     span {
       font-size: 2.3rem;
-      color: var(--color-highlight);
+      color: ${({ theme }) => theme.highlight};
     }
   }
 `;
@@ -47,12 +47,12 @@ export const PomodoroCounter = styled.p`
   align-items: center;
   gap: 4px;
   font-weight: 600;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   font-size: 1.5rem;
 
   svg {
-    fill: var(--color-highlight);
-    stroke: var(--color-highlight);
+    fill: ${({ theme }) => theme.highlight};
+    stroke: ${({ theme }) => theme.highlight};
   }
 `;
 
@@ -62,17 +62,16 @@ export const IconButton = styled.button`
   border-radius: var(--border-radius);
   cursor: pointer;
   backdrop-filter: blur(10px);
-  color: var(--color-text);
-  background: none;
-  background: #e7e6e6;
-  box-shadow: 10px 10px 20px #989797, -10px -10px 22px #eeeded;
+  color: ${({ theme }) => theme.text};
+  background-color: ${({ theme }) => theme.background};
+  box-shadow: ${({ theme }) => theme.boxShadowOuter};
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-medium);
   }
 
   &:focus {
-    background: #e9e6e6;
-    box-shadow: inset 6px 6px 13px #c8c6c6, inset -6px -6px 13px #faf8f8;
+    background-color: ${({ theme }) => theme.buttonBackgroundActive};
+    box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   }
 `;

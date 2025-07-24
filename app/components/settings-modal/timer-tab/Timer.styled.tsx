@@ -16,7 +16,7 @@ export const SettingGroup = styled.div`
 export const SettingLabel = styled.label`
   display: block;
   font-weight: 400;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   font-size: 1.2rem;
   font-family: var(--font-outfit);
 `;
@@ -27,14 +27,14 @@ export const Input = styled.select`
   border-radius: 8px;
   background-color: transparent;
   font-size: 1rem;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   transition: var(--transition);
   width: 10rem;
   cursor: pointer;
   &:focus {
     outline: none;
-    border-color: var(--color-highlight);
-    box-shadow: var(--color-highlight);
+    border-color: ${({ theme }) => theme.highlight};
+    box-shadow: ${({ theme }) => theme.highlight};
   }
 `;
 

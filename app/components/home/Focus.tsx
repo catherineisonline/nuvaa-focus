@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
   ControlButton,
+  GradientStop,
   ModeLabel,
   ModeLabelTask,
   ProgressRing,
@@ -171,8 +172,8 @@ const Focus = ({ formatTime }) => {
               y1="0%"
               x2="100%"
               y2="0%">
-              <stop offset="0%" stopColor="#b62c0a" />
-              <stop offset="100%" stopColor="#b62c0a" />
+              <GradientStop offset="0%" />
+              <GradientStop offset="100%" />
             </linearGradient>
           </defs>
           <ProgressRingProgress
