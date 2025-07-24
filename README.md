@@ -1,4 +1,4 @@
-# Nuvaa Focus [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/) [![GitHub issues](https://img.shields.io/github/issues/catherineisonline/pizza-time-with-react)](https://github.com/catherineisonline/travel-with-catherine/issues)[![GitHub stars](https://img.shields.io/github/stars/catherineisonline/pizza-time-with-react)](https://github.com/catherineisonline/travel-with-catherine/stargazers)
+# Nuvaa Focus [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/) [![GitHub issues](https://github.com/catherineisonline/nuvaa-focus/issues)](https://github.com/catherineisonline/nuvaa-focus/issues) [![GitHub stars](https://img.shields.io/github/stars/catherineisonline/nuvaa-focus)](https://github.com/catherineisonline/nuvaa-focus/stargazers)
 
 **Nuvaa Focus** is a Pomodoro timer app designed to help users stay focused and manage their time effectively. It offers a clean, distraction-free interface and a range of features to optimize productivity, including customizable timers, task management, and ADHD-friendly themes.
 
@@ -29,7 +29,7 @@
 
 - Choose between **soft, ADHD-friendly color themes** to personalize your experience
 
-### 💾 Persistent Storage
+### Persistent Storage
 
 - **Local Storage** - All settings, tasks, and preferences are saved in your browser
 - **State Management** - Powered by Redux Toolkit for consistent performance
