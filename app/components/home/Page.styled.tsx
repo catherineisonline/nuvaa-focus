@@ -13,8 +13,8 @@ export const ModeTabs = styled.div`
   display: flex;
   border-radius: var(--border-radius);
   padding: 10px;
-  background: #e0e0e0;
-  box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+  background-color: ${({ theme }) => theme.background};
+  box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
 `;
 
 export const ModeTabButton = styled.button<{ $active?: boolean }>`
@@ -22,19 +22,18 @@ export const ModeTabButton = styled.button<{ $active?: boolean }>`
   padding: 20px;
   cursor: pointer;
   transition: var(--transition);
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   min-width: 6rem;
   font-size: 1.1rem;
   font-weight: 800;
   font-family: var(--font-outfit);
-  background: ${(props) => (props.$active ? "#dfdede" : "transparent")};
+  background-color: ${({ $active, theme }) =>
+    $active ? theme.buttonBackgroundActive : "transparent"};
   border-radius: var(--border-radius);
-  box-shadow: ${(props) =>
-    props.$active
-      ? "18px 18px 22px #989797, -10px -10px 22px #eeeded"
-      : undefined};
+  box-shadow: ${({ $active, theme }) =>
+    $active ? theme.boxShadowOuterStrong : undefined};
   &:hover {
-    color: ${(props) => (props.$active ? undefined : "black")};
+    color: ${({ $active }) => ($active ? undefined : "black")};
   }
 `;
 
@@ -46,8 +45,8 @@ export const TimerCircle = styled.div`
   width: 400px;
   height: 400px;
   border-radius: 50%;
-  background: #edecec;
-  box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+  background-color: ${({ theme }) => theme.background};
+  box-shadow: ${({ theme }) => theme.boxShadowTimer};
 `;
 
 export const ProgressRing = styled.svg`
@@ -59,7 +58,9 @@ export const ProgressRing = styled.svg`
 export const ProgressRingBackground = styled.circle`
   stroke-linecap: round;
 `;
-
+export const GradientStop = styled.stop`
+  stop-color: ${({ theme }) => theme.highlight};
+`;
 export const ProgressRingProgress = styled.circle`
   stroke-linecap: round;
   transition: all 1.5s ease-in-out;
@@ -81,12 +82,12 @@ export const TimerContentCircle = styled(TimerContent)`
   justify-content: center;
   height: 362px;
   width: 362px;
-  background: linear-gradient(145deg, #f1efef, #cbc9c9);
-  box-shadow: 15px 15px 30px #b6b6b6, -5px -5px 30px #e4e4e4;
+  background: ${({ theme }) => theme.backgroundGradientTimer};
+  box-shadow: ${({ theme }) => theme.boxShadowTimerStrong};
 `;
 export const ModeLabel = styled.p`
   font-size: 1.5rem;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   font-weight: 800;
   text-transform: uppercase;
 `;
@@ -101,7 +102,7 @@ export const ModeLabelTask = styled.p`
 export const TimerDisplay = styled.time`
   font-size: 5rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
 `;
 
 export const TimerControls = styled.div`
@@ -121,24 +122,23 @@ export const ControlButton = styled.button<{ $active?: boolean }>`
   cursor: pointer;
   transition: var(--transition);
   min-width: 7rem;
-  color: var(--color-button-text);
+  color: ${({ theme }) => theme.buttonText};
   justify-content: center;
   border-radius: var(--border-radius);
-  background: ${(props) => (props.$active ? "#e1dfdf" : "#e7e6e6")};
-  box-shadow: ${(props) =>
-    props.$active
-      ? "inset 6px 6px 13px #c8c6c6, inset -6px -6px 13px #faf8f8"
-      : "10px 10px 20px #989797, -10px -10px 22px #eeeded"};
+  background-color: ${({ $active, theme }) =>
+    $active ? theme.buttonBackgroundActive : theme.background};
+  box-shadow: ${({ $active, theme }) =>
+    $active ? theme.boxShadowInsetSoft : theme.boxShadowOuter};
   &:hover {
     transform: translateY(-2px);
   }
   &:active {
-    background: #e9e6e6;
-    box-shadow: inset 6px 6px 13px #c8c6c6, inset -6px -6px 13px #faf8f8;
+    background-color: ${({ theme }) => theme.buttonBackgroundActive};
+    box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   }
 `;
 export const ControlButtonSecondary = styled(ControlButton)`
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   display: flex;
   justify-content: center;
 `;

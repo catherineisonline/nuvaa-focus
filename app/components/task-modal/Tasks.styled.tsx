@@ -23,8 +23,8 @@ export const Modal = styled.div`
   border-radius: 1rem;
   padding: 1rem;
   overflow: hidden;
-  background: linear-gradient(145deg, #f8f8f8, #ededed);
-  box-shadow: 12px 12px 27px #adacac, -12px -12px 27px #dedede;
+  background: ${({ theme }) => theme.backgroundGradient};
+  box-shadow: ${({ theme }) => theme.boxShadowOuter};
 `;
 export const ModalHeader = styled.header`
   display: flex;
@@ -39,7 +39,7 @@ export const ModalHeader = styled.header`
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    color: var(--color-text);
+    color: ${({ theme }) => theme.text};
     font-size: 2rem;
     font-weight: 600;
   }
@@ -58,48 +58,46 @@ export const AddTaskSection = styled.section`
 
 export const TaskInput = styled.input`
   flex: 1;
-  padding: 19px 10px;
+  padding: 15px 10px;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   transition: var(--transition);
-  border-radius: 30px;
-  box-shadow: inset 5px 5px 10px #e1e0e0, inset -5px -5px 10px #f9f8f8;
+  border-radius: var(--border-radius);
+  background-color: ${({ theme }) => theme.inputInner};
+  box-shadow: ${({ theme }) => theme.boxShadowInputDisabled};
   &:focus {
     outline: none;
-    box-shadow: inset 5px 5px 10px #c7c7c7, inset -5px -5px 10px #e8e8e8;
+    box-shadow: ${({ theme }) => theme.boxShadowInput};
   }
 `;
 
 export const AddTaskButton = styled.button`
-  color: var(--color-button-text);
+  color: ${({ theme }) => theme.buttonText};
   border: none;
   width: 50px;
-  height: 50px;
+  height: auto;
   cursor: pointer;
   transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--border-radius);
-  background-color: #f3f2f2;
-  box-shadow: 3px 3px 10px #bebebe, -5px -5px 10px #f9f8f8;
+  background-color: ${({ theme }) => theme.backgroundSecondary};
+  box-shadow: ${({ theme }) => theme.boxShadowOuter};
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
   }
 
-  &:active {
-    background: #e9e6e6;
-    box-shadow: inset 6px 6px 13px #dad8d8, inset -6px -6px 13px #faf8f8;
-  }
-
   &:disabled {
-    color: var(--color-button-text-disabled);
+    color: ${({ theme }) => theme.buttonTextDisabled};
     cursor: not-allowed;
-    background: #e7e6e6;
-    box-shadow: 1px 1px 2px #989797, -1px -1px 2px #eeeded;
+    opacity: 0.5;
+  }
+  &:focus:not(:disabled) {
+    box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   }
 `;
 
@@ -119,7 +117,7 @@ export const CurrentTaskSection = styled.div`
   h3 {
     margin: 0 0 12px 0;
     font-size: 1.2rem;
-    color: var(--color-text);
+    color: ${({ theme }) => theme.text};
     font-weight: 600;
   }
 `;
@@ -128,8 +126,8 @@ export const CurrentTaskItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #edececaa;
-  color: var(--color-button-text);
+  background-color: ${({ theme }) => theme.backgroundSecondary};
+  color: ${({ theme }) => theme.buttonText};
   font-family: var(--font-outfit);
   padding: 19px;
   border-radius: 8px;
@@ -139,7 +137,7 @@ export const CurrentTaskItem = styled.div`
 
 export const RemoveCurrentBtn = styled.button`
   background-color: transparent;
-  color: var(--color-button-text);
+  color: ${({ theme }) => theme.buttonText};
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
@@ -155,7 +153,7 @@ export const TaskListSection = styled.section`
   h3 {
     margin: 0 0 12px 0;
     font-size: 1.2rem;
-    color: var(--color-text);
+    color: ${({ theme }) => theme.text};
     font-weight: 600;
   }
 `;
@@ -184,7 +182,7 @@ export const DragPreview = styled.div`
 `;
 
 export const TaskDragHandle = styled.div`
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   cursor: grab;
   display: flex;
   align-items: center;
@@ -205,8 +203,7 @@ export const TaskText = styled.span<{
   $current?: boolean;
 }>`
   font-size: 1rem;
-  color: ${({ $current }) =>
-    $current ? "var(--color-button-text)" : "var(--color-text)"};
+  color: ${({ theme, $current }) => ($current ? theme.buttonText : theme.text)};
   cursor: pointer;
   transition: var(--transition);
   font-family: var(--font-outfit);
@@ -219,7 +216,7 @@ export const TaskText = styled.span<{
   opacity: ${({ $completed }) => ($completed ? 0.6 : 1)};
 
   &:hover {
-    color: var(--color-highlight);
+    color: ${({ theme }) => theme.highlight};
   }
 `;
 
@@ -243,11 +240,11 @@ export const TaskNonEdit = styled.div`
 
 export const TaskEditInput = styled.input`
   padding: 12px 16px;
-  border: 1px solid var(--color-highlight);
-  border-radius: 4px;
-  background-color: var(--color-modal);
+  border: 1px solid ${({ theme }) => theme.highlight};
+  border-radius: var(--border-radius);
+  background-color: ${({ theme }) => theme.inputInner};
   font-size: 0.8rem;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
 
   &:focus {
     outline: none;
@@ -260,7 +257,7 @@ export const SaveEditBtn = styled.button`
   border-radius: 4px;
   cursor: pointer;
   transition: var(--transition);
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
 
   &:hover {
     transform: translateY(-1px);
@@ -268,7 +265,7 @@ export const SaveEditBtn = styled.button`
 `;
 
 export const CancelEditBtn = styled(SaveEditBtn)`
-  color: var(--color-highlight);
+  color: ${({ theme }) => theme.highlight};
 `;
 
 export const TaskActions = styled.div`
@@ -292,11 +289,11 @@ export const TaskActionBtn = styled.button<{ $type?: "edit" | "delete" }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ $type }) =>
+  color: ${({ $type, theme }) =>
     $type === "edit"
-      ? "var(--color-button-text)"
+      ? theme.buttonText
       : $type === "delete"
-      ? "var(--color-highlight)"
+      ? theme.highlight
       : "inherit"};
 `;
 
@@ -322,7 +319,7 @@ export const CloseBtn = styled.button`
   cursor: pointer;
   border-radius: 8px;
   transition: var(--transition);
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
 
   &:hover {
     background-color: var(--color-glass);

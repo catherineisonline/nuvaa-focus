@@ -3,13 +3,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 :root {
-  --color-text: #333333;
-  --color-highlight: #b62c0a;
-  --color-button-text: #252525;
-  --color-button-text-disabled: #969494f2;
   --color-glass: #ffffff33;
-  --color-modal: #fffffff2;
-  --clor-alert: rgb(250, 19, 19);
   --shadow-light: 0 4px 12px #0000001a;
   --shadow-medium: 0 8px 24px #00000026;
   --border-radius: 12px;
@@ -82,8 +76,8 @@ h6 {
 
 body {
   min-height: 100vh;
-  background-color: #e1dfdf;
-  color: var(--color-text);
+  background-color: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.text};
   position: relative;
   transition: var(--transition);
 }

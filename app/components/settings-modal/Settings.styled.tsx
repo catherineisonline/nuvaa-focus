@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 export const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -21,8 +22,8 @@ export const Modal = styled.div`
   border-radius: 1rem;
   padding: 1rem;
   overflow: hidden;
-  background: linear-gradient(145deg, #f8f8f8, #ededed);
-  box-shadow: 12px 12px 27px #adacac, -12px -12px 27px #dedede;
+  background: ${({ theme }) => theme.backgroundGradient};
+  box-shadow: ${({ theme }) => theme.boxShadowOuter};
 `;
 export const ModalHeader = styled.div`
   display: flex;
@@ -38,7 +39,7 @@ export const ModalTitle = styled.h2`
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
   font-size: 2rem;
   font-weight: 600;
 
@@ -56,7 +57,7 @@ export const CloseButton = styled.button`
   cursor: pointer;
   border-radius: 8px;
   transition: var(--transition);
-  color: var(--color-text);
+  color: ${({ theme }) => theme.text};
 
   &:hover {
     background-color: var(--color-glass);
@@ -83,8 +84,8 @@ export const SettingsTabs = styled.section`
   min-width: auto;
   margin-bottom: 10rem;
   border-radius: var(--border-radius);
-  background: #f4f4f4ff;
-  box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+  background-color: ${({ theme }) => theme.backgroundSecondary};
+  box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
 `;
 
 export const TabButton = styled.button<{ $active?: boolean }>`
@@ -92,8 +93,9 @@ export const TabButton = styled.button<{ $active?: boolean }>`
   cursor: pointer;
   transition: var(--transition);
   border-radius: var(--border-radius);
-  color: var(--color-text);
-  background-color: transparent;
+  color: ${({ $active, theme }) => ($active ? theme.highlight : theme.text)};
+  background-color: ${({ $active, theme }) =>
+    $active ? theme.background : "transparent"};
   font-family: var(--font-outfit);
   font-size: 1.1rem;
   font-weight: 800;
@@ -101,15 +103,10 @@ export const TabButton = styled.button<{ $active?: boolean }>`
   white-space: nowrap;
   min-width: 5rem;
   text-align: center;
+  box-shadow: ${({ $active, theme }) =>
+    $active ? theme.boxShadowOuterStrong : undefined};
 
   &:hover {
-    color: var(--color-highlight);
+    color: ${({ theme }) => theme.highlight};
   }
-
-  ${({ $active }) =>
-    $active &&
-    `
-    background: #dfdede;
-    box-shadow: 18px 18px 22px #989797, -10px -10px 22px #eeeded;
-  `}
 `;
