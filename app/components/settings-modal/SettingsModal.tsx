@@ -16,6 +16,7 @@ import {
   SettingsTabs,
   TabButton,
 } from "./Settings.styled";
+import { AppearanceTab } from "./appearance-tab/AppearanceTab";
 
 const SettingsModal = () => {
   const dispatch = useDispatch();
@@ -79,6 +80,7 @@ const SettingsModal = () => {
             </TabButton>
           </SettingsTabs>
           {settingsTab === "timer" && <TimerTab />}
+          {settingsTab === "appearance" && <AppearanceTab />}
         </ModalBody>
       </Modal>
     </Overlay>

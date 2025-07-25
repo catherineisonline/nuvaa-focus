@@ -1,21 +1,26 @@
 "use client";
 import { ThemeProvider } from "styled-components";
 import { themes } from "../styles/themes";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentTheme } from "../redux/slices/appearanceSlice";
+import { RootState } from "../redux/store";
 
 export default function ThemeWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [currentTheme, setCurrentTheme] = useState("primary");
-
+  const dispatch = useDispatch();
+  const currentTheme = useSelector(
+    (state: RootState) => state.appearance.currentTheme
+  );
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     if (stored && themes[stored]) {
-      setCurrentTheme(stored);
+      dispatch(setCurrentTheme(stored));
     }
-  }, []);
+  }, [dispatch]);
 
   return <ThemeProvider theme={themes[currentTheme]}>{children}</ThemeProvider>;
 }
