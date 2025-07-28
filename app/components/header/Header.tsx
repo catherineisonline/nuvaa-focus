@@ -3,6 +3,7 @@ import { Flame } from "lucide-react";
 import { Controls } from "./Controls";
 import { Streak } from "./Streak";
 import { HeaderMain, Nav, PomodoroCounter, Title } from "./Header.styled";
+import { HamburgerButton } from "./Hamburger";
 
 const Header = () => {
   return (
@@ -19,6 +20,7 @@ const Header = () => {
           <Streak />
         </PomodoroCounter>
         <Controls />
+        <HamburgerButton />
       </Nav>
     </HeaderMain>
   );

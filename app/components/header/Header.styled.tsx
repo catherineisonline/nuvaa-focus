@@ -1,8 +1,10 @@
 "use client";
 import styled from "styled-components";
+import { media } from "../../styles/breakpoints";
 
 export const HeaderMain = styled.header`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
@@ -34,14 +36,28 @@ export const Nav = styled.nav`
   align-items: center;
   gap: 1rem;
 `;
-
+export const StreakSpan = styled.span`
+  @media ${media.md} {
+    padding-right: 5rem;
+  }
+`;
 export const HeaderControls = styled.ul`
   display: flex;
   align-items: center;
   list-style: none;
   gap: 1rem;
+
+  @media ${media.md} {
+    display: none;
+  }
 `;
 
+export const HeaderControlsMobile = styled.ul`
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 1rem;
+`;
 export const PomodoroCounter = styled.p`
   display: flex;
   align-items: center;
@@ -73,5 +89,15 @@ export const IconButton = styled.button`
   &:focus {
     background-color: ${({ theme }) => theme.buttonBackgroundActive};
     box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
+  }
+`;
+export const HamburgerIcon = styled(IconButton)`
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  @media ${media.md} {
+    display: block;
   }
 `;

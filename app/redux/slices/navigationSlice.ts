@@ -7,8 +7,13 @@ const navigationSlice = createSlice({
     isSettingsActive: false,
     isTasksActive: false,
     isMusicActive: false,
+    isHamburgerActive: false,
   },
   reducers: {
+    toggleHamburger(state) {
+      const current = state.isHamburgerActive;
+      state.isHamburgerActive = !current;
+    },
     toggleModal(state, action) {
       const modal = action.payload.target;
       const isActive = state[modal];
@@ -20,6 +25,7 @@ const navigationSlice = createSlice({
         }
       }
       state[modal] = !isActive;
+      state.isHamburgerActive = false;
     },
     closeModal(state, action) {
       const modal = action.payload.target;
@@ -30,4 +36,5 @@ const navigationSlice = createSlice({
 });
 
 export default navigationSlice.reducer;
-export const { toggleModal, closeModal } = navigationSlice.actions;
+export const { toggleModal, closeModal, toggleHamburger } =
+  navigationSlice.actions;
