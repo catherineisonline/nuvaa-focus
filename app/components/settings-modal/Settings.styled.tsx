@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { media } from "../../styles/breakpoints";
 export const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -24,6 +24,9 @@ export const Modal = styled.div`
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
   box-shadow: ${({ theme }) => theme.boxShadowOuter};
+  @media ${media.md} {
+    max-width: 40rem;
+  }
 `;
 export const ModalHeader = styled.div`
   display: flex;
@@ -66,16 +69,20 @@ export const CloseButton = styled.button`
 
 export const ModalBody = styled.div`
   display: flex;
-  // height: calc(60vh - 80px);
   min-height: 60vh;
   flex-direction: row;
   height: auto;
   max-height: 80vh;
   padding-bottom: 10rem;
   gap: 2rem;
+
+  @media ${media.md} {
+    flex-direction: column;
+  }
 `;
 
 export const SettingsTabs = styled.section`
+  position: relative;
   display: flex;
   border-right: 1px solid var(--shadow-medium);
   padding: 10px;
@@ -86,6 +93,17 @@ export const SettingsTabs = styled.section`
   border-radius: var(--border-radius);
   background-color: ${({ theme }) => theme.backgroundSecondary};
   box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
+  @media ${media.md} {
+    flex-direction: row;
+    gap: 0.6rem;
+    margin-bottom: auto;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;
 
 export const TabButton = styled.button<{ $active?: boolean }>`
@@ -108,5 +126,11 @@ export const TabButton = styled.button<{ $active?: boolean }>`
 
   &:hover {
     color: ${({ theme }) => theme.highlight};
+  }
+  @media ${media.md} {
+    font-size: 1rem;
+    min-width: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 `;
