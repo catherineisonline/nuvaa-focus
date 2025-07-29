@@ -11,14 +11,14 @@ const appearanceSlice = createSlice({
     customBackgrounds: [],
   },
   reducers: {
+    initilizecustomBackgrounds(state, action) {
+      state.customBackgrounds = [...action.payload.data];
+    },
     setCurrentTheme(state, action) {
       state.currentTheme = action.payload.name;
     },
     setCurrentBackground(state, action) {
       const img = action.payload.image;
-      if (!state.backgrounds.includes(img)) {
-        state.backgrounds.push(img);
-      }
       state.currentBackground = img;
     },
     setCurrentCustomBackground(state, action) {
@@ -49,4 +49,5 @@ export const {
   removeBackground,
   setCurrentCustomBackground,
   removeCustomBackground,
+  initilizecustomBackgrounds,
 } = appearanceSlice.actions;
