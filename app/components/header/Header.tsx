@@ -1,14 +1,27 @@
+"use client";
 import "./Header.styled.tsx";
 import { Flame } from "lucide-react";
 import { Controls } from "./Controls";
-import { Streak } from "./Streak";
-import { HeaderMain, Nav, PomodoroCounter, Title } from "./Header.styled";
+
+import {
+  HeaderMain,
+  Nav,
+  PomodoroCounter,
+  StreakSpan,
+  Title,
+} from "./Header.styled";
 import { HamburgerButton } from "./Hamburger";
+import { RootState } from "../../redux/store.js";
+import { useSelector } from "react-redux";
+import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
 const Header = () => {
+  const isBackgroundActive = useBackgroundStatus();
+  const streak = useSelector((state: RootState) => state.app.streak);
+
   return (
     <HeaderMain>
-      <Title translate="no">
+      <Title $bgImage={isBackgroundActive} translate="no">
         Nuvaa
         <span>
           Foc<span>us</span>
@@ -17,7 +30,7 @@ const Header = () => {
       <Nav>
         <PomodoroCounter>
           <Flame />
-          <Streak />
+          <StreakSpan $bgImage={isBackgroundActive}>{streak}</StreakSpan>
         </PomodoroCounter>
         <Controls />
         <HamburgerButton />

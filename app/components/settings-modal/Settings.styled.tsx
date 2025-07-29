@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { media } from "../../styles/breakpoints";
+
 export const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -13,17 +14,18 @@ export const Overlay = styled.div`
   z-index: 1000;
   backdrop-filter: blur(5px);
 `;
-export const Modal = styled.div`
+export const Modal = styled.div<{ $bgImage?: boolean }>`
   width: 90%;
-  max-width: 35rem;
-  max-height: 65vh;
-  min-height: 60vh;
+  max-width: 45rem;
+  max-height: 75vh;
+  min-height: 70vh;
   border-radius: 30px;
   border-radius: 1rem;
   padding: 1rem;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
-  box-shadow: ${({ theme }) => theme.boxShadowOuter};
+  box-shadow: ${({ $bgImage, theme }) =>
+    $bgImage ? undefined : theme.boxShadowOuter};
   @media ${media.md} {
     max-width: 40rem;
   }

@@ -1,9 +1,10 @@
 "use client";
 import { createGlobalStyle } from "styled-components";
 
-export const GlobalStyles = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle<{ $bgImage?: string }>`
 :root {
   --color-glass: #ffffff33;
+  --background-glass: #ffffff0a;
   --shadow-light: 0 4px 12px #0000001a;
   --shadow-medium: 0 8px 24px #00000026;
   --border-radius: 12px;
@@ -78,8 +79,29 @@ body {
   min-height: 100vh;
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
+   background-image: ${({ $bgImage }) =>
+     $bgImage ? `url(${$bgImage})` : "none"};
+   background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   position: relative;
   transition: var(--transition);
+ ${({ $bgImage }) =>
+   $bgImage &&
+   `
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(1px);
+      background-color: var(--background-glass);
+      z-index: -1;
+      pointer-events: none;
+    }
+  `}
 }
 
 h2,

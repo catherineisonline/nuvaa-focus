@@ -59,9 +59,11 @@ import {
   TasksSection,
   TaskText,
 } from "./Tasks.styled";
+import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
+  const isBackgroundActive = useBackgroundStatus();
   const { editingId, newTaskText, tasks, activeDrag } =
     useSelector(tasksSelectors);
   const currentTask = useSelector((state: RootState) =>
@@ -143,9 +145,13 @@ const TaskModal = () => {
     const input = e.target.value;
     dispatch(updateTaskfield({ text: input }));
   };
+
   return (
     <Overlay onClick={handleOutsideClick}>
-      <Modal role="dialog" aria-labelledby="tasks-title">
+      <Modal
+        $bgImage={isBackgroundActive}
+        role="dialog"
+        aria-labelledby="tasks-title">
         <ModalHeader>
           <h2 id="tasks-title">Tasks</h2>
           <CloseBtn aria-label="Close" onClick={handleModalClose}>

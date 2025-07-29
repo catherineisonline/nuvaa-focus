@@ -6,13 +6,16 @@ import { RootState } from "../../redux/store";
 import {
   ModeLabel,
   TimerContainer,
-  TimerContent,
+  TimerContentCircle,
   TimerDisplay,
 } from "./Page.styled";
+import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
 const Clock = () => {
   const dispatch = useDispatch();
   const dateTime = useSelector((state: RootState) => state.clock.dateTime);
+
+  const isBackgroundActive = useBackgroundStatus();
   const { is24Hour } = useSelector(settingsSelectors);
   useEffect(() => {
     const formatTime = () => {
@@ -31,12 +34,13 @@ const Clock = () => {
     return () => clearInterval(interval);
   }, [dispatch, is24Hour]);
   if (!dateTime) return null;
+
   return (
     <TimerContainer>
-      <TimerContent>
-        <ModeLabel>Current Time</ModeLabel>
-        <TimerDisplay>{dateTime}</TimerDisplay>
-      </TimerContent>
+      <TimerContentCircle>
+        <ModeLabel $bgImage={isBackgroundActive}>Current Time</ModeLabel>
+        <TimerDisplay $bgImage={isBackgroundActive}>{dateTime}</TimerDisplay>
+      </TimerContentCircle>
     </TimerContainer>
   );
 };

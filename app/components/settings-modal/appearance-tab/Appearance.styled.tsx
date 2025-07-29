@@ -1,8 +1,17 @@
 import styled from "styled-components";
+import { media } from "../../../styles/breakpoints";
 
 export const SettingsContent = styled.form`
   flex: 1;
-  overflow-y: auto;
+  max-height: calc(60vh - 100px);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: scroll;
+  padding-bottom: 2rem;
+  @media ${media.md} {
+    max-height: calc(50vh - 100px);
+  }
 `;
 
 export const SettingGroup = styled.fieldset`
@@ -51,4 +60,133 @@ export const ThemeLabel = styled.span`
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--color-text);
+`;
+
+export const BackgroundGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.25rem, 7.5rem));
+  gap: 1rem;
+`;
+
+export const BackgroundOption = styled.button<{ $isActive: boolean }>`
+  background: none;
+  border-width: 2px;
+  border-style: solid;
+  border-color: ${({ $isActive }) =>
+    $isActive ? "var(--color-button-bg)" : "transparent"};
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 4px;
+
+  &:hover {
+    border-color: var(--color-accent);
+  }
+  img {
+    max-width: 100%;
+    width: 100%;
+    height: 5rem;
+    object-fit: cover;
+    border-radius: 4px;
+    position: relative;
+  }
+`;
+
+export const SingleBackground = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
+export const RemoveBackgroundButton = styled.button`
+  position: absolute;
+  z-index: 9999;
+  top: -8px;
+  right: -8px;
+  background-color: ${({ theme }) => theme.boxShadowTimer};
+  border-radius: 50%;
+  border-size: 1px;
+  border-style: solid;
+  border-color: ${({ theme }) => theme.text};
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+
+  svg {
+    border-color: ${({ theme }) => theme.text};
+  }
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+
+export const RemoveCurrentBackground = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  background-color: ${({ theme }) => theme.highlight};
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 1rem;
+  font-family: var(--font-outfit);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+
+export const FileUploadSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 18.5rem;
+  height: 11rem;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: ${({ theme }) => theme.buttonText};
+  color: ${({ theme }) => theme.text};
+  text-align: center;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 8px;
+  position: relative;
+
+  label {
+    font-size: 1rem;
+    font-family: var(--font-outfit);
+
+    span {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+    small {
+      color: ${({ theme }) => theme.buttonText};
+      font-weight: 400;
+      font-size: 1rem;
+    }
+  }
+`;
+
+export const FileUploadInput = styled.input`
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
 `;

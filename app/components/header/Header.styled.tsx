@@ -1,4 +1,5 @@
 "use client";
+
 import styled from "styled-components";
 import { media } from "../../styles/breakpoints";
 
@@ -12,14 +13,14 @@ export const HeaderMain = styled.header`
   z-index: 100;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1<{ $bgImage?: boolean }>`
   display: flex;
   flex-direction: column;
   line-height: 1.7rem;
   font-size: 2rem;
   font-family: var(--font-lexend);
   font-weight: 800;
-  color: ${({ theme }) => theme.text};
+  color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
 
   span {
     font-size: 2.3rem;
@@ -36,7 +37,8 @@ export const Nav = styled.nav`
   align-items: center;
   gap: 1rem;
 `;
-export const StreakSpan = styled.span`
+export const StreakSpan = styled.span<{ $bgImage?: boolean }>`
+  color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
   @media ${media.md} {
     padding-right: 5rem;
   }
@@ -72,7 +74,7 @@ export const PomodoroCounter = styled.p`
   }
 `;
 
-export const IconButton = styled.button`
+export const IconButton = styled.button<{ $bgImage?: boolean }>`
   border: none;
   padding: 1rem;
   border-radius: var(--border-radius);
@@ -80,7 +82,8 @@ export const IconButton = styled.button`
   backdrop-filter: blur(10px);
   color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.background};
-  box-shadow: ${({ theme }) => theme.boxShadowOuter};
+  box-shadow: ${({ $bgImage, theme }) =>
+    $bgImage ? undefined : theme.boxShadowOuter};
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-medium);
@@ -91,7 +94,7 @@ export const IconButton = styled.button`
     box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   }
 `;
-export const HamburgerIcon = styled(IconButton)`
+export const HamburgerIcon = styled(IconButton)<{ $bgImage?: boolean }>`
   display: none;
   position: fixed;
   top: 1rem;

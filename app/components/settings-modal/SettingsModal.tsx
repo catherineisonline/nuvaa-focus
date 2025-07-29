@@ -17,9 +17,11 @@ import {
   TabButton,
 } from "./Settings.styled";
 import { AppearanceTab } from "./appearance-tab/AppearanceTab";
+import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
 const SettingsModal = () => {
   const dispatch = useDispatch();
+  const isBackgroundActive = useBackgroundStatus();
   const settingsTab = useSelector(
     (state: RootState) => state.settings.settingsTab
   );
@@ -42,7 +44,11 @@ const SettingsModal = () => {
 
   return (
     <Overlay onClick={handleOutsideClick}>
-      <Modal role="dialog" aria-labelledby="settings-title" aria-modal="true">
+      <Modal
+        $bgImage={isBackgroundActive}
+        role="dialog"
+        aria-labelledby="settings-title"
+        aria-modal="true">
         <ModalHeader>
           <ModalTitle id="settings-title">
             Settings{changesSavedMsg && <span> {changesSavedMsg}</span>}

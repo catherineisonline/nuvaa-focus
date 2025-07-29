@@ -5,22 +5,14 @@ export const selectPomodoroCount = (state: RootState) =>
   state.pomodoro.pomodoroCount;
 export const selectTimeLeft = (state: RootState) => state.pomodoro.timeLeft;
 export const selectIsRunning = (state: RootState) => state.pomodoro.isRunning;
-export const selectProgress = (state: RootState) => state.pomodoro.progress;
 export const selectCurrentMode = (state: RootState) =>
   state.pomodoro.currentMode;
 export const pomodoroSelectors = createSelector(
-  [
-    selectPomodoroCount,
-    selectTimeLeft,
-    selectIsRunning,
-    selectProgress,
-    selectCurrentMode,
-  ],
-  (pomodoroCount, timeLeft, isRunning, progress, currentMode) => ({
+  [selectPomodoroCount, selectTimeLeft, selectIsRunning, selectCurrentMode],
+  (pomodoroCount, timeLeft, isRunning, currentMode) => ({
     pomodoroCount,
     timeLeft,
     isRunning,
-    progress,
     currentMode,
   })
 );

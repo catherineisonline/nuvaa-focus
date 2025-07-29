@@ -17,8 +17,10 @@ import {
   TimerControls,
   TimerDisplay,
 } from "./Page.styled";
+import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 const StopWatch = ({ formatTime }) => {
   const dispatch = useDispatch();
+  const isBackgroundActive = useBackgroundStatus();
   const timeLeftStopwatch = useSelector(
     (state: RootState) => state.stopwatch.timeLeftStopwatch
   );
@@ -48,16 +50,20 @@ const StopWatch = ({ formatTime }) => {
   const handleStopwatch = () => {
     dispatch(toggleStopwatch());
   };
+
   return (
     <TimerContainer>
       <StopwatchContent>
-        <ModeLabel>Stopwatch</ModeLabel>
-        <TimerDisplay>{formatTime(timeLeftStopwatch)}</TimerDisplay>
+        <ModeLabel $bgImage={isBackgroundActive}>Stopwatch</ModeLabel>
+        <TimerDisplay $bgImage={isBackgroundActive}>
+          {formatTime(timeLeftStopwatch)}
+        </TimerDisplay>
       </StopwatchContent>
 
       <TimerControls>
         <ControlButton
           $active={stopwatchIsRunning}
+          $bgImage={isBackgroundActive}
           onClick={handleStopwatch}
           aria-label={stopwatchIsRunning ? "Pause" : "Start"}>
           {stopwatchIsRunning ? (
@@ -68,6 +74,7 @@ const StopWatch = ({ formatTime }) => {
         </ControlButton>
         <ControlButtonSecondary
           $active={false}
+          $bgImage={isBackgroundActive}
           onClick={resetStopwatch}
           aria-label="Reset">
           <RefreshCcw strokeWidth={2.8} />

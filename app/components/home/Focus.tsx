@@ -8,7 +8,6 @@ import {
   togglePomodoro,
   updateCount,
   updateMode,
-  updateProgress,
   updateTimeLeft,
 } from "../../redux/slices/pomodoroSlice";
 import { Pause, Play, SkipForward, RefreshCcw } from "lucide-react";
@@ -17,19 +16,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
   ControlButton,
-  GradientStop,
   ModeLabel,
   ModeLabelTask,
-  ProgressRing,
-  ProgressRingBackground,
-  ProgressRingProgress,
-  TimerCircle,
   TimerContainer,
-  TimerContent,
   TimerContentCircle,
   TimerControls,
   TimerDisplay,
 } from "./Page.styled";
+import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
 const Focus = ({ formatTime }) => {
   const dispatch = useDispatch();
@@ -37,7 +31,7 @@ const Focus = ({ formatTime }) => {
   const intervalRef = useRef(null);
   const { getMode, getModeTime } = usePomodoroMode();
 
-  const { progress, currentMode } = useSelector(pomodoroSelectors);
+  const { currentMode } = useSelector(pomodoroSelectors);
   const { autoStartNext, focusTime, shortBreakTime, longBreakTime } =
     useSelector(settingsSelectors);
   const currentTask = useSelector((state: RootState) =>
@@ -46,8 +40,8 @@ const Focus = ({ formatTime }) => {
 
   const isRunning = useSelector((state: RootState) => state.pomodoro.isRunning);
   const timeLeft = useSelector((state: RootState) => state.pomodoro.timeLeft);
-  const circumference = 2 * Math.PI * 190;
-  const strokeDashoffset = circumference * (1 - progress / 100);
+
+  const isBackgroundActive = useBackgroundStatus();
 
   const totalTime = useMemo(() => {
     return {
@@ -147,74 +141,43 @@ const Focus = ({ formatTime }) => {
     prevTimesRef.current = times;
   }, [dispatch, times, currentMode, timeLeft]);
 
-  useEffect(() => {
-    if (!totalTime) return;
-    const progressT = ((totalTime - timeLeft) / totalTime) * 100;
-
-    dispatch(updateProgress({ time: progressT }));
-  }, [dispatch, totalTime, timeLeft]);
-
   return (
     <TimerContainer>
-      <TimerCircle>
-        <ProgressRing width="400" height="400">
-          <ProgressRingBackground
-            strokeWidth="20"
-            fill="transparent"
-            r="190"
-            cx="200"
-            cy="200"
-          />
-          <defs>
-            <linearGradient
-              id="progressGradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="0%">
-              <GradientStop offset="0%" />
-              <GradientStop offset="100%" />
-            </linearGradient>
-          </defs>
-          <ProgressRingProgress
-            stroke="url(#progressGradient)"
-            strokeWidth="20"
-            fill="transparent"
-            r="190"
-            cx="200"
-            cy="200"
-            style={{
-              strokeDasharray: circumference,
-              strokeDashoffset: strokeDashoffset,
-            }}
-          />
-        </ProgressRing>
-
-        <TimerContentCircle>
-          <ModeLabel>
-            {currentMode === "shortBreakTime"
-              ? "Short Break"
-              : currentMode === "longBreakTime"
-              ? "Long Break"
-              : "Focus"}
-          </ModeLabel>
-          <TimerDisplay>{formatTime(timeLeft)}</TimerDisplay>
-        </TimerContentCircle>
-      </TimerCircle>
+      <TimerContentCircle>
+        <ModeLabel $bgImage={isBackgroundActive}>
+          {currentMode === "shortBreakTime"
+            ? "Short Break"
+            : currentMode === "longBreakTime"
+            ? "Long Break"
+            : "Focus"}
+        </ModeLabel>
+        <TimerDisplay $bgImage={isBackgroundActive}>
+          {formatTime(timeLeft)}
+        </TimerDisplay>
+      </TimerContentCircle>
       {currentTask && (
-        <ModeLabelTask>Working on: {currentTask.text}</ModeLabelTask>
+        <ModeLabelTask $bgImage={isBackgroundActive}>
+          I am working on: {currentTask.text}
+        </ModeLabelTask>
       )}
       <TimerControls>
         <ControlButton
           $active={isRunning}
+          $bgImage={isBackgroundActive}
           onClick={runPomodoro}
           aria-label={isRunning ? "Pause" : "Start"}>
           {isRunning ? <Pause strokeWidth={2.8} /> : <Play strokeWidth={2.8} />}
         </ControlButton>
-        <ControlButton onClick={skipPomodoro} aria-label="Skip">
+        <ControlButton
+          $bgImage={isBackgroundActive}
+          onClick={skipPomodoro}
+          aria-label="Skip">
           <SkipForward strokeWidth={2.8} />
         </ControlButton>
-        <ControlButton onClick={resetPomodoro} aria-label="Reset">
+        <ControlButton
+          $bgImage={isBackgroundActive}
+          onClick={resetPomodoro}
+          aria-label="Reset">
           <RefreshCcw strokeWidth={2.8} />
         </ControlButton>
       </TimerControls>
