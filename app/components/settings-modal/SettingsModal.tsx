@@ -53,7 +53,7 @@ const SettingsModal = () => {
           <ModalTitle id="settings-title">
             Settings{changesSavedMsg && <span> {changesSavedMsg}</span>}
           </ModalTitle>
-          <CloseButton aria-label="Close" onClick={handleModalClose} w>
+          <CloseButton aria-label="Close" onClick={handleModalClose}>
             <X size={32} />
           </CloseButton>
         </ModalHeader>
