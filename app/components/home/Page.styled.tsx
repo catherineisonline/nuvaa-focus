@@ -1,5 +1,6 @@
 "use client";
 import styled from "styled-components";
+import { media } from "../../styles/breakpoints";
 
 export const TimerContainer = styled.div`
   display: grid;
@@ -9,15 +10,18 @@ export const TimerContainer = styled.div`
   align-items: center;
 `;
 
-export const ModeTabs = styled.div`
+export const ModeTabs = styled.div<{ $bgActive?: boolean }>`
   display: flex;
   border-radius: var(--border-radius);
   padding: 10px;
   background-color: ${({ theme }) => theme.background};
-  box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
+  box-shadow: ${({ $bgActive, theme }) =>
+    $bgActive ? undefined : theme.boxShadowInsetSoft};
 `;
 
-export const ModeTabButton = styled.button<{ $active?: boolean }>`
+export const ModeTabButton = styled.button<{
+  $active?: boolean;
+}>`
   border: none;
   padding: 20px;
   cursor: pointer;
@@ -45,64 +49,39 @@ export const TimerCircle = styled.div`
   width: 400px;
   height: 400px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.background};
-  box-shadow: ${({ theme }) => theme.boxShadowTimer};
 `;
 
-export const ProgressRing = styled.svg`
-  transform: rotate(-90deg);
-  position: relative;
-  z-index: 2;
-`;
-
-export const ProgressRingBackground = styled.circle`
-  stroke-linecap: round;
-`;
-export const GradientStop = styled.stop`
-  stop-color: ${({ theme }) => theme.highlight};
-`;
-export const ProgressRingProgress = styled.circle`
-  stroke-linecap: round;
-  transition: all 1.5s ease-in-out;
-  z-index: 999;
-`;
-
-export const TimerContent = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-`;
-export const TimerContentCircle = styled(TimerContent)`
-  border-radius: 50%;
+export const TimerContentCircle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 362px;
-  width: 362px;
-  background: ${({ theme }) => theme.backgroundGradientTimer};
-  box-shadow: ${({ theme }) => theme.boxShadowTimerStrong};
 `;
-export const ModeLabel = styled.p`
+export const ModeLabel = styled.p<{ $bgImage?: boolean }>`
   font-size: 1.5rem;
-  color: ${({ theme }) => theme.text};
+  color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
   font-weight: 800;
   text-transform: uppercase;
 `;
 
-export const ModeLabelTask = styled.p`
-  font-weight: 400;
+export const ModeLabelTask = styled.p<{ $bgImage?: boolean }>`
+  font-weight: 500;
   margin: 0;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-family: var(--font-outfit);
+  color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
 `;
 
-export const TimerDisplay = styled.time`
-  font-size: 5rem;
+export const TimerDisplay = styled.time<{ $bgImage?: boolean }>`
+  font-size: 10rem;
   font-weight: 600;
-  color: ${({ theme }) => theme.text};
+  line-height: 7.5rem;
+  color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
+
+  @media ${media.md} {
+    font-size: 8rem;
+  }
 `;
 
 export const TimerControls = styled.div`
@@ -112,7 +91,10 @@ export const TimerControls = styled.div`
   justify-content: center;
 `;
 
-export const ControlButton = styled.button<{ $active?: boolean }>`
+export const ControlButton = styled.button<{
+  $active?: boolean;
+  $bgImage?: boolean;
+}>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -127,14 +109,19 @@ export const ControlButton = styled.button<{ $active?: boolean }>`
   border-radius: var(--border-radius);
   background-color: ${({ $active, theme }) =>
     $active ? theme.buttonBackgroundActive : theme.background};
-  box-shadow: ${({ $active, theme }) =>
-    $active ? theme.boxShadowInsetSoft : theme.boxShadowOuter};
+  box-shadow: ${({ $active, $bgImage, theme }) =>
+    $bgImage
+      ? undefined
+      : $active
+      ? theme.boxShadowInsetSoft
+      : theme.boxShadowOuter};
   &:hover {
     transform: translateY(-2px);
   }
   &:active {
     background-color: ${({ theme }) => theme.buttonBackgroundActive};
-    box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
+    box-shadow: ${({ $bgImage, theme }) =>
+      $bgImage ? undefined : theme.boxShadowInsetSoft};
   }
 `;
 export const ControlButtonSecondary = styled(ControlButton)`

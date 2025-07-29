@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTheme } from "../redux/slices/appearanceSlice";
 import { RootState } from "../redux/store";
+import { GlobalStyles } from "../styles/GlobalStyles";
 
 export default function ThemeWrapper({
   children,
@@ -15,6 +16,10 @@ export default function ThemeWrapper({
   const currentTheme = useSelector(
     (state: RootState) => state.appearance.currentTheme
   );
+  const currentBackground = useSelector(
+    (state: RootState) => state.appearance.currentBackground
+  );
+
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     if (stored && themes[stored]) {
@@ -22,5 +27,9 @@ export default function ThemeWrapper({
     }
   }, [dispatch]);
 
-  return <ThemeProvider theme={themes[currentTheme]}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={themes[currentTheme]}>
+      <GlobalStyles $bgImage={currentBackground} /> {children}
+    </ThemeProvider>
+  );
 }

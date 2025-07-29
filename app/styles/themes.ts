@@ -14,7 +14,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #c8c6c6, inset -6px -6px 13px #faf8f8",
     boxShadowOuter: "10px 10px 20px #989797, -10px -10px 22px #eeeded",
-    boxShadowOuterStrong: "18px 18px 22px #989797, -10px -10px 22px #eeeded",
+    boxShadowOuterStrong: "6px 6px 22px #989797, -6px -6px 22px #eeeded",
     boxShadowTimer: "inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff",
     boxShadowTimerStrong: "15px 15px 30px #b6b6b6, -5px -5px 30px #e4e4e4",
     boxShadowInputDisabled:
@@ -36,7 +36,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #c2cfe0, inset -6px -6px 13px #e8f1faff",
     boxShadowOuter: "10px 10px 20px #a2b1c3, -10px -10px 22px #e8f1faff",
-    boxShadowOuterStrong: "18px 18px 22px #a2b1c3, -10px -10px 10px #d5dfeaff",
+    boxShadowOuterStrong: "6px 6px 22px #a2b1c3, -6px -6px 10px #d5dfeaff",
     boxShadowTimer:
       "inset 5px 5px 10px #c9d7e8, inset -5px -5px 10px #e8f1faff",
     boxShadowTimerStrong: "15px 15px 30px #b0c2d8, -5px -5px 30px #e3edf5",
@@ -59,7 +59,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #e5d6d0, inset -6px -6px 13px #fff9f6",
     boxShadowOuter: "10px 10px 20px #d4c2bb, -10px -10px 22px #fff6f2",
-    boxShadowOuterStrong: "18px 18px 22px #d4c2bb, -10px -10px 22px #fff6f2",
+    boxShadowOuterStrong: "6px 6px 22px #d4c2bb, -6px -6px 22px #fff6f2",
     boxShadowTimer: "inset 5px 5px 10px #decac3, inset -5px -5px 10px #f2e4df",
     boxShadowTimerStrong: "15px 15px 30px #cbaea7, -5px -5px 30px #f2e4df",
     boxShadowInputDisabled:
@@ -81,7 +81,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #d8c9e4, inset -6px -6px 13px #e1d5ebff",
     boxShadowOuter: "10px 10px 20px #c4b3d1, -10px -10px 22px #f5ecf9",
-    boxShadowOuterStrong: "18px 18px 22px #c4b3d1, -10px -10px 22px #f5ecf9",
+    boxShadowOuterStrong: "6px 6px 22px #c4b3d1, -6px -6px 22px #f5ecf9",
     boxShadowTimer:
       "inset 5px 5px 10px #d4c1e0, inset -5px -5px 10px #e1d5ebff",
     boxShadowTimerStrong: "15px 15px 30px #baa4c9, -5px -5px 30px #f5ecf9",
@@ -104,7 +104,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #e0cbb8, inset -6px -6px 13px #d6d6d6ff",
     boxShadowOuter: "10px 10px 20px #d4c3b2, -10px -10px 22px #fffaf4",
-    boxShadowOuterStrong: "18px 18px 22px #d4c3b2, -10px -10px 22px #fffaf4",
+    boxShadowOuterStrong: "6px 6px 22px #d4c3b2, -6px -6px 22px #fffaf4",
     boxShadowTimer:
       "inset 5px 5px 10px #e2cfbc, inset -5px -5px 10px #d6d6d6ff",
     boxShadowTimerStrong: "15px 15px 30px #c9b29a, -5px -5px 30px #fef0e3",
@@ -127,7 +127,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #cdd8bc, inset -6px -6px 13px #eef5e1ff",
     boxShadowOuter: "10px 10px 20px #b5c3a1, -10px -10px 22px #f2fbe4",
-    boxShadowOuterStrong: "18px 18px 22px #a9b68f, -10px -10px 22px #e8f9d6",
+    boxShadowOuterStrong: "6px 6px 22px #a9b68f, -6px -6px 22px #e8f9d6",
     boxShadowTimer: "inset 5px 5px 10px #c1d3a9, inset -5px -5px 10px #fafff1",
     boxShadowTimerStrong: "15px 15px 30px #b3cba2, -5px -5px 30px #e1f5c4",
     boxShadowInputDisabled:
@@ -149,7 +149,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #bfe4d8, inset -6px -6px 13px #d2ede4ff",
     boxShadowOuter: "10px 10px 20px #b2d8cf, -10px -10px 22px #d2ede4ff",
-    boxShadowOuterStrong: "18px 18px 22px #b2d8cf, -10px -10px 22px #d2ede4ff",
+    boxShadowOuterStrong: "6px 6px 22px #b2d8cf, -6px -6px 22px #d2ede4ff",
     boxShadowTimer:
       "inset 5px 5px 10px #c2e7dc, inset -5px -5px 10px #d2ede4ff",
     boxShadowTimerStrong: "15px 15px 30px #a3ccc0, -5px -5px 30px #eafff8",
@@ -172,7 +172,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #bcd3d9, inset -6px -6px 13px #e7f5f7ff",
     boxShadowOuter: "10px 10px 20px #a1b5bb, -10px -10px 22px #f0fdff",
-    boxShadowOuterStrong: "18px 18px 22px #99b1b7, -10px -10px 22px #e1f7fc",
+    boxShadowOuterStrong: "6px 6px 22px #99b1b7, -6px -6px 22px #e1f7fc",
     boxShadowTimer:
       "inset 5px 5px 10px #b0cfd6, inset -5px -5px 10px #e7f5f7ff",
     boxShadowTimerStrong: "15px 15px 30px #a2c2c9, -5px -5px 30px #d5f5fb",
@@ -197,7 +197,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #d6c8c1, inset -6px -6px 13px #fff9f4",
     boxShadowOuter: "10px 10px 20px #b9aca6, -10px -10px 22px #fff6f1",
-    boxShadowOuterStrong: "18px 18px 22px #b09f97, -10px -10px 22px #f8eee9",
+    boxShadowOuterStrong: "6px 6px 22px #b09f97, -6px -6px 22px #f8eee9",
     boxShadowTimer: "inset 5px 5px 10px #cab8b0, inset -5px -5px 10px #fffaf6",
     boxShadowTimerStrong: "15px 15px 30px #c0aca5, -5px -5px 30px #f2e4dc",
     boxShadowInputDisabled:
@@ -219,7 +219,7 @@ export const themes = {
     boxShadowInsetSoft:
       "inset 6px 6px 13px #cdd0c9, inset -6px -6px 13px #eef3e2ff",
     boxShadowOuter: "10px 10px 20px #b5b8b1, -10px -10px 22px #eef1e6ff",
-    boxShadowOuterStrong: "18px 18px 22px #a6aaa3, -10px -10px 22px #eceeea",
+    boxShadowOuterStrong: "6px 6px 22px #a6aaa3, -6px -6px 22px #eceeea",
     boxShadowTimer:
       "inset 5px 5px 10px #c1c5be, inset -5px -5px 10px #eef3e2ff",
     boxShadowTimerStrong: "15px 15px 30px #b4b7b1, -5px -5px 30px #ebeee8",

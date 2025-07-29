@@ -5,6 +5,7 @@ import { HamburgerIcon } from "./Header.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleHamburger } from "../../redux/slices/navigationSlice";
 import { RootState } from "../../redux/store";
+import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
 export const HamburgerButton = () => {
   const dispatch = useDispatch();
@@ -15,8 +16,9 @@ export const HamburgerButton = () => {
   const isActive = useSelector(
     (state: RootState) => state.navigation.isHamburgerActive
   );
+  const isBackgroundActive = useBackgroundStatus();
   return (
-    <HamburgerIcon onClick={handleHamburger}>
+    <HamburgerIcon $bgImage={isBackgroundActive} onClick={handleHamburger}>
       {isActive ? <X /> : <Menu />}
     </HamburgerIcon>
   );

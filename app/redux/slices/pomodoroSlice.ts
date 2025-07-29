@@ -7,7 +7,6 @@ const pomodoroSlice = createSlice({
     pomodoroCount: 0,
     timeLeft: 1500,
     isRunning: false,
-    progress: 0,
     currentMode: "focusTime",
   },
   reducers: {
@@ -25,10 +24,6 @@ const pomodoroSlice = createSlice({
     updateCount(state) {
       const currentCount = state.pomodoroCount;
       state.pomodoroCount = currentCount + 1;
-    },
-    updateProgress(state, action) {
-      const time = action.payload.time;
-      state.progress = time;
     },
     updateMode(state, action) {
       const mode = action.payload.mode;
@@ -48,7 +43,6 @@ export const {
   updateTimeLeft,
   updateCount,
   timeTick,
-  updateProgress,
   stopPomodoro,
   updateMode,
 } = pomodoroSlice.actions;
