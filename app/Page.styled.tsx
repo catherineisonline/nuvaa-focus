@@ -1,5 +1,6 @@
 "use client";
 import styled from "styled-components";
+import { media } from "./styles/breakpoints";
 
 export const Overlay = styled.div`
   position: fixed;
@@ -18,4 +19,8 @@ export const MainWrapper = styled.main`
   align-items: center;
   padding: 1rem;
   gap: 3rem;
+
+  @media ${media.md} {
+    gap: 1rem;
+  }
 `;

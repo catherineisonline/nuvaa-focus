@@ -8,6 +8,9 @@ export const TimerContainer = styled.div`
   gap: 10px;
   max-width: 1440px;
   align-items: center;
+  @media ${media.md} {
+    grid-template-rows: 16rem 5rem;
+  }
 `;
 
 export const ModeTabs = styled.div<{ $bgActive?: boolean }>`

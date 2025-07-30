@@ -47,6 +47,7 @@ export const ThemeOption = styled.button<{
   text-align: center;
   font-family: var(--font-lexend);
   border: 1px solid transparent;
+  color: ${({ theme }) => theme.text};
   background: ${({ $colorBackground }) => $colorBackground};
   border-color: ${({ $active, $colorBorder, $colorBackground }) =>
     $active ? $colorBorder : $colorBackground};

@@ -243,7 +243,7 @@ export const CurrentIndicator = styled.span`
 
 export const TaskEdit = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2rem 2rem;
+  grid-template-columns: 1fr 4.5rem;
   gap: 10px;
 `;
 
@@ -270,6 +270,7 @@ export const TaskEditInput = styled.input`
 export const SaveEditBtn = styled.button`
   background-color: transparent;
   border: none;
+  padding: 6px;
   border-radius: 4px;
   cursor: pointer;
   transition: var(--transition);
@@ -293,6 +294,12 @@ export const TaskActions = styled.div`
 
   @media (hover: hover) and (pointer: fine) {
     ${TaskItem}:hover & {
+      opacity: 1;
+    }
+  }
+
+  @media ${media.md} {
+    ${TaskItem} & {
       opacity: 1;
     }
   }
