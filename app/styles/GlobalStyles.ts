@@ -1,7 +1,11 @@
 "use client";
 import { createGlobalStyle } from "styled-components";
 
-export const GlobalStyles = createGlobalStyle<{ $bgImage?: string }>`
+export const GlobalStyles = createGlobalStyle<{
+  $bgImage?: string;
+  $backgroundDim: number;
+  $backgroundBlur: number;
+}>`
 :root {
   --color-glass: #ffffff33;
   --background-glass: #ffffff0a;
@@ -86,18 +90,17 @@ body {
     background-repeat: no-repeat;
   position: relative;
   transition: var(--transition);
- ${({ $bgImage }) =>
+ ${({ $bgImage, $backgroundBlur, $backgroundDim }) =>
    $bgImage &&
-   `
-    &::before {
+   `&::before {
       content: "";
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      backdrop-filter: blur(1px);
-      background-color: var(--background-glass);
+      backdrop-filter: blur(${$backgroundBlur}px);
+      background-color: rgba(255, 255, 255, ${$backgroundDim});
       z-index: -1;
       pointer-events: none;
     }

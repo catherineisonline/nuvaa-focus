@@ -4,6 +4,8 @@ import { themes } from "../../../styles/themes";
 import {
   removeBackground,
   removeCustomBackground,
+  setBackgroundBlur,
+  setBackgroundDim,
   setCurrentBackground,
   setCurrentCustomBackground,
   setCurrentTheme,
@@ -20,6 +22,10 @@ import {
   SettingGroup,
   SettingsContent,
   SingleBackground,
+  Slider,
+  SliderContainer,
+  SliderDim,
+  SliderValue,
   ThemeGrid,
   ThemeLabel,
   ThemeOption,
@@ -42,6 +48,12 @@ export const AppearanceTab = () => {
   const customBackgrounds = useSelector(
     (state: RootState) => state.appearance.customBackgrounds
   );
+  const backgroundBlur = useSelector(
+    (state: RootState) => state.appearance.backgroundBlur
+  );
+  const backgroundDim = useSelector(
+    (state: RootState) => state.appearance.backgroundDim
+  );
   const handleThemeChange = (name: string) => {
     dispatch(setCurrentTheme({ name: name }));
   };
@@ -61,7 +73,12 @@ export const AppearanceTab = () => {
   const handleCustomBackground = (src: string) => {
     dispatch(removeCustomBackground({ src: src }));
   };
-
+  const handleBackgroundBlur = (value: number) => {
+    dispatch(setBackgroundBlur({ value: value }));
+  };
+  const handleBackgroundDim = (value: number) => {
+    dispatch(setBackgroundDim({ value: value }));
+  };
   const handleBackgroundUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
     if (file.size > MAX_FILE_SIZE_BYTES) {
@@ -177,6 +194,36 @@ export const AppearanceTab = () => {
             id="background-upload"
           />
         </FileUploadSection>
+      </SettingGroup>
+      <SettingGroup>
+        <SectionHeading>Background Blur</SectionHeading>
+        <SliderContainer>
+          <Slider
+            $value={backgroundBlur}
+            type="range"
+            min="0"
+            max="10"
+            value={backgroundBlur}
+            onChange={(e) => handleBackgroundBlur(parseInt(e.target.value))}
+          />
+          <SliderValue>{backgroundBlur}px</SliderValue>
+        </SliderContainer>
+      </SettingGroup>
+
+      <SettingGroup>
+        <SectionHeading>Background Dim</SectionHeading>
+        <SliderContainer>
+          <SliderDim
+            $dim={backgroundDim}
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={backgroundDim}
+            onChange={(e) => handleBackgroundDim(parseFloat(e.target.value))}
+          />
+          <SliderValue>{backgroundDim}%</SliderValue>
+        </SliderContainer>
       </SettingGroup>
     </SettingsContent>
   );
