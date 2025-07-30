@@ -9,8 +9,16 @@ const appearanceSlice = createSlice({
     currentBackground: null,
     backgrounds: [...PREDEFINED_BACKGROUNDS],
     customBackgrounds: [],
+    backgroundBlur: 0,
+    backgroundDim: 0,
   },
   reducers: {
+    setBackgroundBlur(state, action) {
+      state.backgroundBlur = action.payload.value;
+    },
+    setBackgroundDim(state, action) {
+      state.backgroundDim = action.payload.value;
+    },
     initilizecustomBackgrounds(state, action) {
       state.customBackgrounds = [...action.payload.data];
     },
@@ -50,4 +58,6 @@ export const {
   setCurrentCustomBackground,
   removeCustomBackground,
   initilizecustomBackgrounds,
+  setBackgroundBlur,
+  setBackgroundDim,
 } = appearanceSlice.actions;

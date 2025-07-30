@@ -19,6 +19,12 @@ export default function ThemeWrapper({
   const currentBackground = useSelector(
     (state: RootState) => state.appearance.currentBackground
   );
+  const backgroundBlur = useSelector(
+    (state: RootState) => state.appearance.backgroundBlur
+  );
+  const backgroundDim = useSelector(
+    (state: RootState) => state.appearance.backgroundDim
+  );
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -29,7 +35,12 @@ export default function ThemeWrapper({
 
   return (
     <ThemeProvider theme={themes[currentTheme]}>
-      <GlobalStyles $bgImage={currentBackground} /> {children}
+      <GlobalStyles
+        $bgImage={currentBackground}
+        $backgroundDim={backgroundDim}
+        $backgroundBlur={backgroundBlur}
+      />
+      {children}
     </ThemeProvider>
   );
 }

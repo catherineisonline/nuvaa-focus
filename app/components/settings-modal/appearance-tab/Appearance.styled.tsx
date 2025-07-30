@@ -130,17 +130,19 @@ export const RemoveCurrentBackground = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   background-color: ${({ theme }) => theme.highlight};
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 8px;
   border-radius: 8px;
   cursor: pointer;
   transition: var(--transition);
   font-size: 1rem;
   font-family: var(--font-outfit);
-
+  max-width: 18rem;
+  width: 100%;
   &:hover {
     transform: translateY(-2px);
   }
@@ -151,7 +153,8 @@ export const FileUploadSection = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 18.5rem;
+  max-width: 18rem;
+  width: 100%;
   height: 11rem;
   border-width: 2px;
   border-style: dashed;
@@ -189,4 +192,76 @@ export const FileUploadInput = styled.input`
   width: 100%;
   height: 100%;
   background-color: transparent;
+`;
+
+export const SliderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+`;
+
+export const Slider = styled.input<{ $value?: number }>`
+  width: 100%;
+  -webkit-appearance: none;
+  max-width: 18rem;
+  width: 100%;
+  height: 10px;
+  border-radius: 4px;
+  background: ${({ theme, $value }) => `
+    linear-gradient(
+      to right,
+      ${theme.highlight} 0%,
+      ${theme.highlight} ${($value / 10) * 100}%,
+      ${theme.background} ${($value / 10) * 100}%,
+      ${theme.background} 100%
+    )
+  `};
+  outline: none;
+  transition: var(--transition);
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.highlight};
+    cursor: pointer;
+    border: none;
+  }
+
+  &::-moz-range-thumb {
+    height: 1.2rem
+    width: 1.2rem
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.highlight};
+    cursor: pointer;
+    border: none;
+  }
+
+  &::-ms-thumb {
+    height: 1.2rem
+    width: 1.2rem
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.highlight};
+    cursor: pointer;
+    border: none;
+  }
+`;
+export const SliderDim = styled(Slider)<{ $dim?: number }>`
+  background: ${({ theme, $dim }) => `
+    linear-gradient(
+      to right,
+      ${theme.highlight} 0%,
+      ${theme.highlight} ${$dim * 100}%,
+      ${theme.background} ${$dim * 100}%,
+      ${theme.background} 100%
+    )
+  `};
+`;
+export const SliderValue = styled.span`
+  font-family: var(--font-outfit);
+  text-align: right;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.text};
 `;
