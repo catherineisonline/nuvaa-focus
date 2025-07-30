@@ -107,12 +107,14 @@ const SortableTask = ({
               }
             }}
           />
-          <SaveEditBtn aria-label="Save" onClick={saveEdit}>
-            <Check size={20} />
-          </SaveEditBtn>
-          <CancelEditBtn aria-label="Cancel" onClick={cancelEdit}>
-            <Ban size={20} />
-          </CancelEditBtn>
+          <TaskActions>
+            <SaveEditBtn aria-label="Save" onClick={saveEdit}>
+              <Check size={20} />
+            </SaveEditBtn>
+            <CancelEditBtn aria-label="Cancel" onClick={cancelEdit}>
+              <Ban size={20} />
+            </CancelEditBtn>
+          </TaskActions>
         </TaskEdit>
       ) : (
         <TaskNonEdit>
