@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle<{
   --shadow-medium: 0 8px 24px #00000026;
   --border-radius: 12px;
   --transition: all 0.3s ease-in-out;
+  --hover-transform: translateY(-3px);
 }
 *,
 *::before,
@@ -33,8 +34,10 @@ body {
   scrollbar-width: none;
   overflow-y: scroll;
   line-height: 1.5;
+  min-height: 100dvh;
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
-  font-family: "Arial", sans-serif;
+  font-family: var(--font-lexend);
 }
 body::-webkit-scrollbar {
   display: none;

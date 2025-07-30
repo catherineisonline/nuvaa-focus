@@ -3,14 +3,14 @@ import { media } from "../../../styles/breakpoints";
 
 export const SettingsContent = styled.form`
   flex: 1;
-  max-height: calc(60vh - 100px);
+  max-height: 95vh;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   overflow-y: scroll;
   padding-bottom: 2rem;
   @media ${media.md} {
-    max-height: calc(50vh - 100px);
+    max-height: 95vh;
   }
 `;
 
@@ -51,9 +51,11 @@ export const ThemeOption = styled.button<{
   border-color: ${({ $active, $colorBorder, $colorBackground }) =>
     $active ? $colorBorder : $colorBackground};
 
-  &:hover {
-    opacity: 0.7;
-    transform: translateY(-4px);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      opacity: 0.7;
+      transform: var(--hover-transform);
+    }
   }
 `;
 export const ThemeLabel = styled.span`
@@ -80,8 +82,10 @@ export const BackgroundOption = styled.button<{ $isActive: boolean }>`
   transition: var(--transition);
   padding: 4px;
 
-  &:hover {
-    border-color: var(--color-accent);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border-color: var(--color-accent);
+    }
   }
   img {
     max-width: 100%;
@@ -121,8 +125,10 @@ export const RemoveBackgroundButton = styled.button`
   svg {
     border-color: ${({ theme }) => theme.text};
   }
-  &:hover {
-    transform: translateY(-2px);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+    }
   }
 `;
 
@@ -143,8 +149,11 @@ export const RemoveCurrentBackground = styled.button`
   font-family: var(--font-outfit);
   max-width: 18rem;
   width: 100%;
-  &:hover {
-    transform: translateY(-2px);
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+    }
   }
 `;
 

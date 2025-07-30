@@ -27,14 +27,17 @@ export const Modal = styled.div<{ $bgImage?: boolean }>`
   box-shadow: ${({ $bgImage, theme }) =>
     $bgImage ? undefined : theme.boxShadowOuter};
   @media ${media.md} {
-    max-width: 40rem;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 `;
 export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   border-bottom: 1px solid var(--shadow-light);
 `;
 
@@ -64,8 +67,10 @@ export const CloseButton = styled.button`
   transition: var(--transition);
   color: ${({ theme }) => theme.text};
 
-  &:hover {
-    background-color: var(--color-glass);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--color-glass);
+    }
   }
 `;
 
@@ -80,6 +85,8 @@ export const ModalBody = styled.div`
 
   @media ${media.md} {
     flex-direction: column;
+    max-height: 100%;
+    height: 100%;
   }
 `;
 
@@ -98,7 +105,7 @@ export const SettingsTabs = styled.section`
   @media ${media.md} {
     flex-direction: row;
     gap: 0.6rem;
-    margin-bottom: auto;
+    margin-bottom: 1.5rem;
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -126,8 +133,10 @@ export const TabButton = styled.button<{ $active?: boolean }>`
   box-shadow: ${({ $active, theme }) =>
     $active ? theme.boxShadowOuterStrong : undefined};
 
-  &:hover {
-    color: ${({ theme }) => theme.highlight};
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: ${({ theme }) => theme.highlight};
+    }
   }
   @media ${media.md} {
     font-size: 1rem;

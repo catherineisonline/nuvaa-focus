@@ -9,7 +9,7 @@ export const HamburgerModal = styled.div`
   background-color: ${({ theme }) => theme.background};
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 8rem;
   align-items: center;
   justify-content: center;
   z-index: 999;
@@ -19,7 +19,7 @@ export const HamburgerControls = styled.ul`
   display: flex;
   flex-direction: column;
   list-style: none;
-  gap: 2rem;
+  gap: 1rem;
 `;
 export const Title = styled.h2`
   display: flex;
@@ -46,7 +46,8 @@ export const IconButton = styled.button`
   align-items: center;
   border: none;
   padding: 1rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
+  font-weight: 500;
   font-family: var(--font-lexend);
   border-radius: var(--border-radius);
   cursor: pointer;
@@ -54,13 +55,15 @@ export const IconButton = styled.button`
   width: 100%;
   color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.background};
-  box-shadow: ${({ theme }) => theme.boxShadowOuter};
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
+  text-transform: uppercase;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+      box-shadow: var(--shadow-medium);
+    }
   }
 
-  &:focus {
+  &:active {
     background-color: ${({ theme }) => theme.buttonBackgroundActive};
     box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   }

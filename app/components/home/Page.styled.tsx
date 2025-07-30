@@ -36,8 +36,15 @@ export const ModeTabButton = styled.button<{
   border-radius: var(--border-radius);
   box-shadow: ${({ $active, theme }) =>
     $active ? theme.boxShadowOuterStrong : undefined};
-  &:hover {
-    color: ${({ $active }) => ($active ? undefined : "black")};
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: ${({ theme, $active }) => ($active ? undefined : theme.highlight)};
+    }
+  }
+  @media ${media.md} {
+    min-width: 5rem;
+    max-width: fit-content;
   }
 `;
 
@@ -61,6 +68,7 @@ export const ModeLabel = styled.p<{ $bgImage?: boolean }>`
   font-size: 1.5rem;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
   font-weight: 800;
+  line-height: 6rem;
   text-transform: uppercase;
 `;
 
@@ -74,21 +82,22 @@ export const ModeLabelTask = styled.p<{ $bgImage?: boolean }>`
 `;
 
 export const TimerDisplay = styled.time<{ $bgImage?: boolean }>`
-  font-size: 10rem;
+  font-size: clamp(6rem, 15vw, 14rem);
   font-weight: 600;
   line-height: 7.5rem;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
-
-  @media ${media.md} {
-    font-size: 8rem;
-  }
 `;
-
+export const TimeNow = styled(TimerDisplay)`
+  font-size: clamp(5rem, 15vw, 14rem);
+`;
 export const TimerControls = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
   justify-content: center;
+  @media ${media.md} {
+    gap: 0.8rem;
+  }
 `;
 
 export const ControlButton = styled.button<{
@@ -103,7 +112,8 @@ export const ControlButton = styled.button<{
   border: none;
   cursor: pointer;
   transition: var(--transition);
-  min-width: 7rem;
+  max-width: 7rem;
+  width: 100%;
   color: ${({ theme }) => theme.buttonText};
   justify-content: center;
   border-radius: var(--border-radius);
@@ -115,13 +125,19 @@ export const ControlButton = styled.button<{
       : $active
       ? theme.boxShadowInsetSoft
       : theme.boxShadowOuter};
-  &:hover {
-    transform: translateY(-2px);
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+    }
   }
   &:active {
     background-color: ${({ theme }) => theme.buttonBackgroundActive};
     box-shadow: ${({ $bgImage, theme }) =>
       $bgImage ? undefined : theme.boxShadowInsetSoft};
+  }
+  @media ${media.md} {
+    max-width: 5rem;
   }
 `;
 export const ControlButtonSecondary = styled(ControlButton)`

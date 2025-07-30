@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
   ModeLabel,
+  TimeNow,
   TimerContainer,
   TimerContentCircle,
   TimerDisplay,
@@ -39,7 +40,7 @@ const Clock = () => {
     <TimerContainer>
       <TimerContentCircle>
         <ModeLabel $bgImage={isBackgroundActive}>Current Time</ModeLabel>
-        <TimerDisplay $bgImage={isBackgroundActive}>{dateTime}</TimerDisplay>
+        <TimeNow $bgImage={isBackgroundActive}>{dateTime}</TimeNow>
       </TimerContentCircle>
     </TimerContainer>
   );
