@@ -11,10 +11,11 @@ export const Overlay = styled.div`
 `;
 
 export const MainWrapper = styled.main`
+  flex: 1;
+  overflow: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: calc(100vh - 200px);
   padding: 1rem;
   gap: 3rem;
 `;

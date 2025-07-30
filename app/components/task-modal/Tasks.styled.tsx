@@ -28,7 +28,11 @@ export const Modal = styled.div<{ $bgImage?: boolean }>`
   box-shadow: ${({ $bgImage, theme }) =>
     $bgImage ? undefined : theme.boxShadowOuter};
   @media ${media.md} {
-    max-width: 40rem;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 `;
 export const ModalHeader = styled.header`
@@ -92,16 +96,17 @@ export const AddTaskButton = styled.button`
   background-color: ${({ theme }) => theme.backgroundSecondary};
   box-shadow: ${({ theme }) => theme.boxShadowOuter};
 
-  &:hover:not(:disabled) {
-    transform: translateY(-1px);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not(:disabled) {
+      transform: var(--hover-transform);
+    }
   }
-
   &:disabled {
     color: ${({ theme }) => theme.buttonTextDisabled};
     cursor: not-allowed;
     opacity: 0.5;
   }
-  &:focus:not(:disabled) {
+  &:active:not(:disabled) {
     box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   }
 `;
@@ -114,6 +119,9 @@ export const TasksSection = styled.section`
   max-height: calc(50vh - 100px);
   overflow-y: scroll;
   padding-bottom: 2rem;
+  @media ${media.md} {
+    max-height: 95vh;
+  }
 `;
 
 export const CurrentTaskSection = styled.div`
@@ -148,13 +156,15 @@ export const RemoveCurrentBtn = styled.button`
   border-radius: 6px;
   cursor: pointer;
   transition: var(--transition);
-
-  &:hover {
-    transform: translateY(-2px);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+    }
   }
 `;
 
 export const TaskListSection = styled.section`
+  max-height: 95vh;
   h3 {
     margin: 0 0 12px 0;
     font-size: 1.2rem;
@@ -219,9 +229,10 @@ export const TaskText = styled.span<{
   text-decoration: ${({ $completed }) =>
     $completed ? "line-through" : "none"};
   opacity: ${({ $completed }) => ($completed ? 0.6 : 1)};
-
-  &:hover {
-    color: ${({ theme }) => theme.highlight};
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: ${({ theme }) => theme.highlight};
+    }
   }
 `;
 
@@ -263,9 +274,10 @@ export const SaveEditBtn = styled.button`
   cursor: pointer;
   transition: var(--transition);
   color: ${({ theme }) => theme.text};
-
-  &:hover {
-    transform: translateY(-1px);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+    }
   }
 `;
 
@@ -279,8 +291,10 @@ export const TaskActions = styled.div`
   opacity: 0;
   transition: var(--transition);
 
-  ${TaskItem}:hover & {
-    opacity: 1;
+  @media (hover: hover) and (pointer: fine) {
+    ${TaskItem}:hover & {
+      opacity: 1;
+    }
   }
 `;
 
@@ -326,7 +340,9 @@ export const CloseBtn = styled.button`
   transition: var(--transition);
   color: ${({ theme }) => theme.text};
 
-  &:hover {
-    background-color: var(--color-glass);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--color-glass);
+    }
   }
 `;

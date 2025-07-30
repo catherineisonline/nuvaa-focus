@@ -11,6 +11,8 @@ export const HeaderMain = styled.header`
   padding: 1rem;
   position: relative;
   z-index: 100;
+  max-width: 1440px;
+  margin: 0 auto;
 `;
 
 export const Title = styled.h1<{ $bgImage?: boolean }>`
@@ -84,12 +86,15 @@ export const IconButton = styled.button<{ $bgImage?: boolean }>`
   background-color: ${({ theme }) => theme.background};
   box-shadow: ${({ $bgImage, theme }) =>
     $bgImage ? undefined : theme.boxShadowOuter};
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
+  transition: var(--transition);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+      box-shadow: var(--shadow-medium);
+    }
   }
 
-  &:focus {
+  &:active {
     background-color: ${({ theme }) => theme.buttonBackgroundActive};
     box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   }
