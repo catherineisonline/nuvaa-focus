@@ -89,7 +89,7 @@ export const IconButton = styled.button<{ $bgImage?: boolean }>`
   transition: var(--transition);
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      transform: var(--hover-transform);
+      :var(--hover-) ;
       box-shadow: var(--shadow-medium);
     }
   }

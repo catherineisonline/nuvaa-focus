@@ -18,6 +18,7 @@ import {
 } from "./Settings.styled";
 import { AppearanceTab } from "./appearance-tab/AppearanceTab";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
+import { FeaturesTab } from "./features-tab/FeaturesTab";
 
 const SettingsModal = () => {
   const dispatch = useDispatch();
@@ -87,6 +88,7 @@ const SettingsModal = () => {
           </SettingsTabs>
           {settingsTab === "timer" && <TimerTab />}
           {settingsTab === "appearance" && <AppearanceTab />}
+          {settingsTab === "features" && <FeaturesTab />}
         </ModalBody>
       </Modal>
     </Overlay>

@@ -6,6 +6,7 @@ import StopWatch from "./Stopwatch";
 import React from "react";
 import Focus from "./Focus";
 import Clock from "./Clock";
+import { Quotes } from "./quote/Quote";
 
 export const ModeTime = () => {
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
@@ -19,6 +20,7 @@ export const ModeTime = () => {
   };
   return (
     <React.Fragment>
+      <Quotes />
       {currentTab === "focusTime" ? (
         <Focus formatTime={formatTime} />
       ) : currentTab === "stopwatch" ? (
