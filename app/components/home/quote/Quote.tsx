@@ -7,8 +7,13 @@ import {
   setTempCustomQuote,
 } from "../../../redux/slices/quotesSlice";
 
-import { QuoteDisplay, QuoteDisplayText, QuoteSection } from "./Quote.styled";
+import {
+  QuoteDisplayInput,
+  QuoteDisplayText,
+  QuoteSection,
+} from "./Quote.styled";
 import { useBackgroundStatus } from "../../../hooks/useBackgroundStatus";
+import React from "react";
 
 export const Quotes = () => {
   const dispatch = useDispatch();
@@ -16,9 +21,9 @@ export const Quotes = () => {
   const isQuotesShown = useSelector(
     (state: RootState) => state.quotes.isQuotesShown
   );
-  // const isEditingQuote = useSelector(
-  //   (state: RootState) => state.quotes.isEditingQuote
-  // );
+  const isEditingQuote = useSelector(
+    (state: RootState) => state.quotes.isEditingQuote
+  );
   const customQuote = useSelector(
     (state: RootState) => state.quotes.customQuote
   );
@@ -30,26 +35,37 @@ export const Quotes = () => {
   );
   const handleIsEditingQuote = () => {
     dispatch(setIsEditingQuote());
+    dispatch(setTempCustomQuote({ value: customQuote || currentQuote }));
   };
   const handleTempQuote = (val: string) => {
     dispatch(setTempCustomQuote({ value: val }));
   };
   const handleCustomQuote = () => {
+    dispatch(setIsEditingQuote());
     dispatch(setCustomQuote({ value: tempCustomQuote }));
   };
   return (
-    <QuoteSection>
+    <React.Fragment>
       {isQuotesShown && (
-        <QuoteDisplayText
-          $bgImage={isBackgroundActive}
-          contentEditable={true}
-          suppressContentEditableWarning={true}
-          onInput={(e) => handleTempQuote((e.target as HTMLElement).innerText)}
-          onBlur={handleCustomQuote}
-          aria-label="Edit quote">
-          {customQuote || currentQuote}
-        </QuoteDisplayText>
+        <QuoteSection>
+          {isEditingQuote ? (
+            <QuoteDisplayInput
+              as={"textarea"}
+              autoFocus
+              value={tempCustomQuote}
+              onChange={(e) => handleTempQuote(e.target.value)}
+              onBlur={handleCustomQuote}
+              rows={1}
+            />
+          ) : (
+            <QuoteDisplayText
+              $bgImage={isBackgroundActive}
+              onClick={handleIsEditingQuote}>
+              {customQuote || currentQuote}
+            </QuoteDisplayText>
+          )}
+        </QuoteSection>
       )}
-    </QuoteSection>
+    </React.Fragment>
   );
 };

@@ -31,6 +31,12 @@ export const QuoteDisplayText = styled.p<{ $bgImage?: boolean }>`
       transform: var(--hover-transform);
     }
   }
+`;
+export const QuoteDisplayInput = styled(QuoteDisplayText)`
+  border: none;
+  background-color: transparent;
+  width: 100%;
+
   &:focus,
   &:active {
     outline: none;

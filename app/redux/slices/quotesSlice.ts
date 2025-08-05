@@ -21,18 +21,18 @@ const quotesSlice = createSlice({
     setCustomQuote(state, action) {
       const val = action.payload.value;
       state.customQuote = val;
-      state.isEditingQuote = false;
     },
     setTempCustomQuote(state, action) {
       const val = action.payload.value;
       state.tempCustomQuote = val;
     },
-    setIsEditingQuote(state) {
-      state.isEditingQuote = !state.isEditingQuote;
-    },
+
     setCurrentQuote(state, action) {
       const index = action.payload.index;
       state.currentQuote = state.quotes[index];
+    },
+    setIsEditingQuote(state) {
+      state.isEditingQuote = !state.isEditingQuote;
     },
   },
 });
@@ -41,7 +41,7 @@ export default quotesSlice.reducer;
 export const {
   showQuotes,
   setCustomQuote,
-  setIsEditingQuote,
   setTempCustomQuote,
   setCurrentQuote,
+  setIsEditingQuote,
 } = quotesSlice.actions;
