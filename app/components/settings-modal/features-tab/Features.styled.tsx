@@ -28,16 +28,34 @@ export const SectionHeading = styled.legend`
 
 export const QuoteGroup = styled.div`
   display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-item: center;
+  flex-direction: column;
+  gap: 20px;
+`;
 
-  button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
+export const RandomQuoteButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background-color: ${({ theme }) => theme.highlight};
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 1rem;
+  font-family: var(--font-outfit);
+  width: max-content;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+    }
   }
 `;
+
 export const CurrentQuote = styled.i`
   font-weight: 400;
 `;
@@ -50,7 +68,7 @@ export const QuoteTextArea = styled.textarea`
   max-width: 18rem;
   max-height: 13rem;
   padding: 12px;
-  border: 1px solid ${({ theme }) => theme.text};
+  border: 2px solid ${({ theme }) => theme.text};
   border-radius: 8px;
   background-color: ${({ theme }) => theme.backgroundSecondary}
   font-size: 0.9rem;

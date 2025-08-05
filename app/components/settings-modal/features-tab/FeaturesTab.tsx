@@ -5,6 +5,7 @@ import {
   CurrentQuoteWarning,
   QuoteGroup,
   QuoteTextArea,
+  RandomQuoteButton,
   SectionHeading,
   SettingGroup,
   SettingsContent,
@@ -18,7 +19,7 @@ import {
 import { RootState } from "../../../redux/store";
 import { useCallback, useEffect } from "react";
 import { CheckboxLabel } from "../timer-tab/Timer.styled";
-import { RefreshCw, Trash } from "lucide-react";
+import { Shuffle } from "lucide-react";
 
 export const FeaturesTab = () => {
   const dispatch = useDispatch();
@@ -72,15 +73,17 @@ export const FeaturesTab = () => {
           <SectionHeading>Here is a random quote:</SectionHeading>
           <QuoteGroup>
             <CurrentQuote>&quot;{currentQuote}&quot;</CurrentQuote>
-            <button
+            <RandomQuoteButton
               onClick={pickRandomQuote}
               type="button"
               aria-label="Generate random quote">
-              <RefreshCw />
-            </button>
+              Show me another quote
+              <Shuffle />
+            </RandomQuoteButton>
           </QuoteGroup>
         </SettingGroup>
       )}
+
       {customQuote && (
         <CurrentQuoteWarning>
           To enable random quotes, remove your custom quote
@@ -100,12 +103,6 @@ export const FeaturesTab = () => {
               <SectionHeading>Here is your quote:</SectionHeading>
               <QuoteGroup>
                 <CurrentQuote>&quot;{customQuote}&quot;</CurrentQuote>
-                <button
-                  onClick={() => handleCustomQuote("")}
-                  type="button"
-                  aria-label="Generate random quote">
-                  <Trash />
-                </button>
               </QuoteGroup>
             </SettingGroup>
           )}
