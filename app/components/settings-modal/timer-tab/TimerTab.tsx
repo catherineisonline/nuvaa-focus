@@ -5,19 +5,36 @@ import { updateChangesSavedMsg } from "../../../redux/slices/appSlice";
 import { debounce } from "lodash";
 import { useEffect } from "react";
 import { RootState } from "../../../redux/store";
+import Select from "react-select";
 import {
   CheckboxLabel,
-  Input,
+  createCustomStyles,
   RadioGroup,
   RadioLabel,
   SettingGroup,
   SettingLabel,
   SettingsContent,
 } from "./Timer.styled";
+import { useTheme } from "styled-components";
+import { TIMER_OPTIONS } from "../../../lib/constants";
 
 const TimerTab = () => {
   const dispatch = useDispatch();
   const settings = useSelector((state: RootState) => state.settings);
+
+  const theme = useTheme();
+  const customStyles = createCustomStyles(theme);
+
+  const defaultLongBreak = TIMER_OPTIONS.find(
+    (opt) => opt.value === settings.longBreakTime
+  );
+  const defaultShortBreakTime = TIMER_OPTIONS.find(
+    (opt) => opt.value === settings.shortBreakTime
+  );
+  const defaultFocusTime = TIMER_OPTIONS.find(
+    (opt) => opt.value === settings.focusTime
+  );
+
   const changesSavedMsg = useSelector(
     (state: RootState) => state.app.changesSavedMsg
   );
@@ -41,53 +58,44 @@ const TimerTab = () => {
     <SettingsContent>
       <SettingGroup>
         <SettingLabel htmlFor="focusTime">Focus Time</SettingLabel>
-        <Input
-          id="focusTime"
-          name="focusTime"
-          value={settings.focusTime}
-          onChange={(e) =>
-            updateSetting("focusTime", parseInt(e.target.value))
-          }>
-          {Array.from({ length: 480 }, (_, i) => (
-            <option key={i + 1} value={(i + 1) * 60}>
-              {i + 1} {i === 0 ? "Minute" : "Minutes"}
-            </option>
-          ))}
-        </Input>
+        <Select
+          styles={customStyles}
+          options={TIMER_OPTIONS}
+          defaultValue={defaultFocusTime}
+          onChange={(e) => {
+            if (e) {
+              updateSetting("focusTime", e.value);
+            }
+          }}
+        />
       </SettingGroup>
 
       <SettingGroup>
         <SettingLabel htmlFor="shortBreakTime">Short Break</SettingLabel>
-        <Input
-          id="shortBreakTime"
-          name="shortBreakTime"
-          value={settings.shortBreakTime}
-          onChange={(e) =>
-            updateSetting("shortBreakTime", parseInt(e.target.value))
-          }>
-          {Array.from({ length: 480 }, (_, i) => (
-            <option key={i + 1} value={(i + 1) * 60}>
-              {i + 1} {i === 0 ? "Minute" : "Minutes"}
-            </option>
-          ))}
-        </Input>
+        <Select
+          styles={customStyles}
+          options={TIMER_OPTIONS}
+          defaultValue={defaultShortBreakTime}
+          onChange={(e) => {
+            if (e) {
+              updateSetting("shortBreakTime", e.value);
+            }
+          }}
+        />
       </SettingGroup>
 
       <SettingGroup>
         <SettingLabel htmlFor="longBreakTime">Long Break</SettingLabel>
-        <Input
-          id="longBreakTime"
-          name="longBreakTime"
-          value={settings.longBreakTime}
-          onChange={(e) =>
-            updateSetting("longBreakTime", parseInt(e.target.value))
-          }>
-          {Array.from({ length: 480 }, (_, i) => (
-            <option key={i + 1} value={(i + 1) * 60}>
-              {i + 1} {i === 0 ? "Minute" : "Minutes"}
-            </option>
-          ))}
-        </Input>
+        <Select
+          styles={customStyles}
+          options={TIMER_OPTIONS}
+          defaultValue={defaultLongBreak}
+          onChange={(e) => {
+            if (e) {
+              updateSetting("longBreakTime", e.value);
+            }
+          }}
+        />
       </SettingGroup>
 
       <SettingGroup>

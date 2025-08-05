@@ -12,3 +12,8 @@ export const MOTIVATIONAL_QUOTES = [
   "Clarity comes from focused attention",
   "The best time to focus is now",
 ];
+
+export const TIMER_OPTIONS = Array.from({ length: 480 }, (_, i) => ({
+  value: (i + 1) * 60,
+  label: i === 0 ? "1 Minute" : `${i + 1} Minutes`,
+}));
