@@ -8,6 +8,7 @@ import stopwatchSlice from "./slices/stopwatchSlice";
 import tasksSlice from "./slices/tasksSlice";
 import appSLice from "./slices/appSlice";
 import appearanceSlice from "./slices/appearanceSlice";
+import quotesSlice from "./slices/quotesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     tasks: tasksSlice,
     app: appSLice,
     appearance: appearanceSlice,
+    quotes: quotesSlice,
   },
 });
 
