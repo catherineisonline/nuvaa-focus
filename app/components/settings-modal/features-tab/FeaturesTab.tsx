@@ -18,7 +18,7 @@ import {
 import { RootState } from "../../../redux/store";
 import { useCallback, useEffect } from "react";
 import { CheckboxLabel } from "../timer-tab/Timer.styled";
-import { Dices, Trash } from "lucide-react";
+import { RefreshCw, Trash } from "lucide-react";
 
 export const FeaturesTab = () => {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ export const FeaturesTab = () => {
   const currentQuote = useSelector(
     (state: RootState) => state.quotes.currentQuote
   );
+
   const quotes = useSelector((state: RootState) => state.quotes.quotes);
 
   const handleShowQuotes = () => {
@@ -75,7 +76,7 @@ export const FeaturesTab = () => {
               onClick={pickRandomQuote}
               type="button"
               aria-label="Generate random quote">
-              <Dices />
+              <RefreshCw />
             </button>
           </QuoteGroup>
         </SettingGroup>
