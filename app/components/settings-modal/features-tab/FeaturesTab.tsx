@@ -44,6 +44,8 @@ export const FeaturesTab = () => {
 
   const pickRandomQuote = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
+    localStorage.setItem("quoteIndex", JSON.stringify(randomIndex));
+
     dispatch(setCurrentQuote({ index: randomIndex }));
   }, [quotes, dispatch]);
 

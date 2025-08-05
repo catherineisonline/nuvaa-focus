@@ -18,6 +18,10 @@ const quotesSlice = createSlice({
         state.customQuote = "";
       }
     },
+    initilizeIsQuotesShown(state, action) {
+      const isShown = action.payload.val;
+      state.isQuotesShown = isShown;
+    },
     setCustomQuote(state, action) {
       const val = action.payload.value;
       state.customQuote = val;
@@ -44,4 +48,5 @@ export const {
   setTempCustomQuote,
   setCurrentQuote,
   setIsEditingQuote,
+  initilizeIsQuotesShown,
 } = quotesSlice.actions;
