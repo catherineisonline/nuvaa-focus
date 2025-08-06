@@ -1,12 +1,12 @@
 # Nuvaa Focus [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)[![GitHub issues](https://img.shields.io/github/issues/catherineisonline/nuvaa-focus)](https://github.com/catherineisonline/nuvaa-focus/issues)[![GitHub stars](https://img.shields.io/github/stars/catherineisonline/nuvaa-focus)](https://github.com/catherineisonline/nuvaa-focus/stargazers)
 
-**Nuvaa Focus** is a Pomodoro timer app designed to help users stay focused and manage their time effectively. It offers a clean, distraction-free interface and a range of features to optimize productivity, including customizable timers, task management, and ADHD-friendly themes.
+**Nuvaa Focus** is a focus timer app designed to help users stay focused and manage their time effectively. It offers a clean, distraction-free interface and a range of features to optimize productivity, including customizable timers, task management, and ADHD-friendly themes.
 
 ## ✨ Features
 
-### Pomodoro Timer
+### Focus Timer
 
-- **Focus Time** - Track focused work sessions using the Pomodoro technique
+- **Focus Time** - Track focused work sessions
 - **Short Break** - Set a short break after each focus session
 - **Long Break** - Take a longer break after a set number of focus sessions
 - **Custom Time** - Customize focus and break durations to fit your preferences
@@ -22,7 +22,7 @@
 
 ### Stopwatch & Time Display
 
-- **Stopwatch Mode** - Track time outside of Pomodoro mode
+- **Stopwatch Mode** - Track time outside of focus mode
 - **Regular Clock** - Display current time in the interface
 
 ### Themes
@@ -36,11 +36,16 @@
 
 ## 🛠 Tech Stack
 
-- **Next.js 15.3+** - React framework with App Router (SSR/SSG support)
-- **Redux Toolkit** - Modern state management
-- **Styled Components** - CSS-in-JS for custom theming
-- **React Icons** - Icon library
-- **@dnd-kit/core + @dnd-kit/sortable** - Drag-and-drop support for task management
+- [Next.js 15.3+](https://nextjs.org/docs) - React framework with App Router (SSR/SSG support)
+- [Redux Toolkit](https://redux-toolkit.js.org/) - Modern state management
+- [Styled Components](https://styled-components.com/) - CSS-in-JS for custom theming
+- [Lucide](https://lucide.dev/) - Icon library
+- [@dnd-kit/core + @dnd-kit/sortable](https://dndkit.com/) - Drag-and-drop support for task management
+- [React Select](https://react-select.com/) - Select Input control for ReactJS
+
+### Additional resources
+
+- [Neumorphism](https://neumorphism.io/) - Generate neumorphic designs
 
 ## 🚀 Getting Started
 
@@ -53,7 +58,7 @@
 `git clone https://github.com/your-username/nuvaa-focus.git`
 `cd nuvaa-focus`
 
-# Install dependencies
+### Install dependencies
 
 `npm install` or `yarn install`
 
