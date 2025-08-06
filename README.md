@@ -36,11 +36,16 @@
 
 ## 🛠 Tech Stack
 
-- **Next.js 15.3+** - React framework with App Router (SSR/SSG support)
-- **Redux Toolkit** - Modern state management
-- **Styled Components** - CSS-in-JS for custom theming
-- **React Icons** - Icon library
-- **@dnd-kit/core + @dnd-kit/sortable** - Drag-and-drop support for task management
+- [Next.js 15.3+](https://nextjs.org/docs) - React framework with App Router (SSR/SSG support)
+- [Redux Toolkit](https://redux-toolkit.js.org/) - Modern state management
+- [Styled Components](https://styled-components.com/) - CSS-in-JS for custom theming
+- [Lucide](https://lucide.dev/) - Icon library
+- [@dnd-kit/core + @dnd-kit/sortable](https://dndkit.com/) - Drag-and-drop support for task management
+- [React Select](https://react-select.com/) - Select Input control for ReactJS
+
+### Additional resources
+
+- [Neumorphism](https://neumorphism.io/) - Generate neumorphic designs
 
 ## 🚀 Getting Started
 
