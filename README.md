@@ -1,12 +1,12 @@
 # Nuvaa Focus [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)[![GitHub issues](https://img.shields.io/github/issues/catherineisonline/nuvaa-focus)](https://github.com/catherineisonline/nuvaa-focus/issues)[![GitHub stars](https://img.shields.io/github/stars/catherineisonline/nuvaa-focus)](https://github.com/catherineisonline/nuvaa-focus/stargazers)
 
-**Nuvaa Focus** is a Pomodoro timer app designed to help users stay focused and manage their time effectively. It offers a clean, distraction-free interface and a range of features to optimize productivity, including customizable timers, task management, and ADHD-friendly themes.
+**Nuvaa Focus** is a focus timer app designed to help users stay focused and manage their time effectively. It offers a clean, distraction-free interface and a range of features to optimize productivity, including customizable timers, task management, and ADHD-friendly themes.
 
 ## ✨ Features
 
-### Pomodoro Timer
+### Focus Timer
 
-- **Focus Time** - Track focused work sessions using the Pomodoro technique
+- **Focus Time** - Track focused work sessions
 - **Short Break** - Set a short break after each focus session
 - **Long Break** - Take a longer break after a set number of focus sessions
 - **Custom Time** - Customize focus and break durations to fit your preferences
@@ -22,7 +22,7 @@
 
 ### Stopwatch & Time Display
 
-- **Stopwatch Mode** - Track time outside of Pomodoro mode
+- **Stopwatch Mode** - Track time outside of focus mode
 - **Regular Clock** - Display current time in the interface
 
 ### Themes
@@ -58,7 +58,7 @@
 `git clone https://github.com/your-username/nuvaa-focus.git`
 `cd nuvaa-focus`
 
-# Install dependencies
+### Install dependencies
 
 `npm install` or `yarn install`
 
