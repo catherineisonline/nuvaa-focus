@@ -70,6 +70,25 @@ Open `http://localhost:3000` to view it in your browser.
 - `npm run start` # Run the app in production mode
 - `npm run lint` # Run ESLint for code checking
 
+## 📝 Branch Naming Rules
+
+Please follow these naming conventions for branches:
+
+- `feature/<short-description>` - For new features  
+  _Example_: `feature/login-form`, `feature/add-theme-switcher`
+
+- `bugfix/<short-description>` - For fixing bugs  
+  _Example_: `bugfix/fix-login-crash`, `bugfix/missing-icon`
+
+- `hotfix/<short-description>` - For quick critical fixes  
+  _Example_: `hotfix/fix-deploy-error`
+
+- `refactor/<short-description>` - For improving code without changing behavior  
+  _Example_: `refactor/cleanup-utils`, `refactor/rewrite-auth`
+
+- `chore/<short-description>` - For non-feature tasks like updating dependencies  
+  _Example_: `chore/update-eslint`, `chore/rename-files`
+
 ## 🚫 License & Usage Notice
 
 This project is protected under the **CC BY-NC-ND 4.0 License**.
