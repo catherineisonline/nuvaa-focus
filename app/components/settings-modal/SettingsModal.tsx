@@ -19,6 +19,7 @@ import {
 import { AppearanceTab } from "./appearance-tab/AppearanceTab";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 import { FeaturesTab } from "./features-tab/FeaturesTab";
+import { AnalyticsTab } from "./analytics-tab/AnalyticsTab";
 
 const SettingsModal = () => {
   const dispatch = useDispatch();
@@ -89,6 +90,7 @@ const SettingsModal = () => {
           {settingsTab === "timer" && <TimerTab />}
           {settingsTab === "appearance" && <AppearanceTab />}
           {settingsTab === "features" && <FeaturesTab />}
+          {settingsTab === "analytics" && <AnalyticsTab />}
         </ModalBody>
       </Modal>
     </Overlay>

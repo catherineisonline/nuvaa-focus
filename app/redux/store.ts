@@ -9,6 +9,7 @@ import tasksSlice from "./slices/tasksSlice";
 import appSLice from "./slices/appSlice";
 import appearanceSlice from "./slices/appearanceSlice";
 import quotesSlice from "./slices/quotesSlice";
+import analyticsSlice from "./slices/analyticsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     app: appSLice,
     appearance: appearanceSlice,
     quotes: quotesSlice,
+    analytics: analyticsSlice,
   },
 });
 
