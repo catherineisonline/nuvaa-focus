@@ -92,3 +92,26 @@ export const FocusTime = styled.p`
   color: ${({ theme }) => theme.text};
   opacity: 0.7;
 `;
+
+export const TodaysChartWrapper = styled.div`
+  .recharts-x-axis text {
+    fill: ${({ theme }) => theme.text};
+  }
+
+  .recharts-y-axis text {
+    fill: ${({ theme }) => theme.text};
+  }
+
+  .recharts-scatter-symbol {
+    fill: ${({ theme }) => theme.highlight};
+  }
+`;
+
+export const WeeklyChartWrapper = styled(TodaysChartWrapper)`
+  .recharts-x-axis {
+    stroke: ${({ theme }) => theme.text};
+  }
+  .recharts-bar-rectangle {
+    fill: ${({ theme }) => theme.highlight};
+  }
+`;

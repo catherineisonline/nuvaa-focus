@@ -1,3 +1,4 @@
+"use client";
 import { useSelector } from "react-redux";
 import {
   AnalyticsCard,
@@ -13,6 +14,8 @@ import {
   WeeklyProgress,
 } from "./Analytics.styled";
 import { RootState } from "../../../redux/store";
+import { WeeklyChart } from "./WeeklyChart";
+import { TodaysChart } from "./TodaysChart";
 
 export const AnalyticsTab = () => {
   const todayPomodoros = useSelector(
@@ -40,6 +43,10 @@ export const AnalyticsTab = () => {
         </AnalyticsGrid>
       </AnalyticsGroup>
       <AnalyticsGroup>
+        <SectionHeading>Today&apos;s Progress</SectionHeading>
+        <TodaysChart />
+      </AnalyticsGroup>
+      <AnalyticsGroup>
         <SectionHeading>Weekly Progress</SectionHeading>
         <WeeklyProgress>
           {weeklyProgress.map((day, index) => (
@@ -52,6 +59,10 @@ export const AnalyticsTab = () => {
             </DayProgress>
           ))}
         </WeeklyProgress>
+      </AnalyticsGroup>
+      <AnalyticsGroup>
+        <SectionHeading>Weekly Progress Chart</SectionHeading>
+        <WeeklyChart />
       </AnalyticsGroup>
     </AnalyticsContent>
   );
