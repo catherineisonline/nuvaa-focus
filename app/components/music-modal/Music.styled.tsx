@@ -1,0 +1,225 @@
+import styled from "styled-components";
+import { media } from "../../styles/breakpoints";
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+`;
+
+export const Modal = styled.div<{ $bgImage?: boolean }>`
+  width: 90%;
+  max-width: 45rem;
+  max-height: 75vh;
+  min-height: 70vh;
+  border-radius: 30px;
+  border-radius: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+  background: ${({ theme }) => theme.backgroundGradient};
+  box-shadow: ${({ $bgImage, theme }) =>
+    $bgImage ? undefined : theme.boxShadowOuter};
+  @media ${media.md} {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+`;
+export const ModalHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--shadow-light);
+
+  h2 {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: ${({ theme }) => theme.text};
+    font-size: 2rem;
+    font-weight: 600;
+  }
+`;
+export const ModalBody = styled.div`
+  flex-direction: column;
+  overflow-y: scroll;
+  max-height: 80vh;
+  padding-bottom: 10rem;
+`;
+
+export const CloseBtn = styled.button`
+  background-color: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: var(--transition);
+  color: ${({ theme }) => theme.text};
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--color-glass);
+    }
+  }
+`;
+
+export const MusicOptions = styled.div`
+  margin-bottom: 2rem;
+  h3 {
+    margin: 0 0 20px 0;
+    color: ${({ theme }) => theme.text};
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+`;
+
+export const MusicOption = styled.div`
+  margin-bottom: 16px;
+`;
+
+export const RadioOption = styled.label`
+  display: block;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 16px;
+  transition: var(--transition);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: ${({ theme }) => theme.text};
+  }
+`;
+
+export const OptionContent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: var(--transition);
+`;
+
+export const OptionText = styled.div`
+  h4 {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+`;
+
+export const CustomUrlSection = styled.div`
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+`;
+
+export const UrlInput = styled.input`
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.text};
+  transition: var(--transition);
+  margin-bottom: 12px;
+
+  &:focus {
+    outline: none;
+    border-color: color: ${({ theme }) => theme.text};
+  }
+`;
+
+export const UrlHelp = styled.div`
+  background: rgba(255, 255, 255, 0.4);
+  padding: 0.9rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.text};
+
+  p {
+    margin: 0 0 8px 0;
+    font-weight: 600;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1rem;
+  }
+
+  li {
+    margin-bottom: 4px;
+    font-family: monospace;
+  }
+`;
+
+export const MusicControls = styled.div`
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 0.9rem;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+`;
+
+export const MusicPlayer = styled.div`
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 0.9rem;
+  padding: 20px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  h4 {
+    margin: 0 0 1rem 0;
+    color: ${({ theme }) => theme.text};
+    font-size: 1rem;
+    font-weight: 600;
+  }
+`;
+
+export const YoutubeEmbed = styled.div`
+  position: relative;
+  padding-bottom: 3rem;
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+`;
+
+export const MusicLink = styled.a`
+  display: inline-block;
+  background-color: ${({ theme }) => theme.buttonBackgroundActive};
+  color: ${({ theme }) => theme.buttonText};
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+  &:hover {
+    transform: translateY(-1px);
+  }
+`;
