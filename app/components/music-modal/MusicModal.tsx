@@ -23,12 +23,15 @@ import { AudioLines, Link, VolumeOff, X } from "lucide-react";
 import { RootState } from "../../redux/store";
 import {
   setCustomUrl,
+  setHideModal,
   setMusicEnabled,
+  setMusicModalOn,
   setMusicUrl,
   setSelectedOption,
 } from "../../redux/slices/musicSlice";
 import { YouTube } from "./Youtube";
-import { Spotify } from "./Spotify";
+import { useEffect } from "react";
+import { SpotifyPlayer } from "./SpotifyPlayer";
 
 const MusicModal = () => {
   const dispatch = useDispatch();
@@ -41,13 +44,30 @@ const MusicModal = () => {
   const musicEnabled = useSelector(
     (state: RootState) => state.music.musicEnabled
   );
+  const musicModalOn = useSelector(
+    (state: RootState) => state.music.musicModalOn
+  );
+  const hideModal = useSelector((state: RootState) => state.music.hideModal);
+
   const handleOutsideClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
+    if (e.target === e.currentTarget && !musicModalOn) {
       dispatch(toggleModal({ target: "isMusicActive" }));
+    } else if (e.target === e.currentTarget) {
+      dispatch(setHideModal({ value: true }));
     }
   };
+
+  useEffect(() => {
+    console.log(musicModalOn, hideModal);
+  }, [musicModalOn, hideModal]);
+  
   const handleModalClose = () => {
-    dispatch(closeModal({ target: "isMusicActive" }));
+    // e.stopPropagation();
+    if (!musicModalOn) {
+      dispatch(closeModal({ target: "isMusicActive" }));
+    } else {
+      dispatch(setHideModal({ value: true }));
+    }
   };
 
   const handleOptionChange = (option: string) => {
@@ -58,6 +78,7 @@ const MusicModal = () => {
       dispatch(setMusicUrl({ value: "" }));
     } else if (option === "lofi") {
       dispatch(setMusicEnabled({ value: true }));
+      dispatch(setMusicModalOn({ value: true }));
       dispatch(
         setMusicUrl({
           value:
@@ -81,21 +102,27 @@ const MusicModal = () => {
   const extractYouTubeId = (url: string) => {
     return url.split("v=")[1].substring(0, 11);
   };
+  // useEffect(() => {
+  //   if (selectedOption === "lofi") {
+  //     dispatch(setMusicModalOn({ value: true }));
+  //   }
+  // }, [selectedOption, dispatch]);
 
   const renderMusicPlayer = () => {
     if (!musicEnabled || !musicUrl) return null;
-    if (selectedOption === "lofi") {
-      return <Spotify />;
-    } else if (selectedOption === "custom") {
+    if (selectedOption === "custom") {
       const youtubeId = extractYouTubeId(musicUrl);
       if (youtubeId) {
         return <YouTube id={youtubeId} />;
       }
+    } else {
+      return <SpotifyPlayer />;
     }
   };
   return (
-    <Overlay onClick={handleOutsideClick}>
+    <Overlay onClick={handleOutsideClick} $hideModal={hideModal}>
       <Modal
+        $hideModal={hideModal}
         $bgImage={isBackgroundActive}
         role="dialog"
         aria-labelledby="music-title">

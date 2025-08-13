@@ -5,6 +5,7 @@ import { toggleModal } from "../../redux/slices/navigationSlice";
 import { RootState } from "../../redux/store";
 import { HeaderControls, IconButton } from "./Header.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
+import { setHideModal } from "../../redux/slices/musicSlice";
 export const Controls = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
@@ -12,6 +13,7 @@ export const Controls = () => {
   const isFullscreen = useSelector(
     (state: RootState) => state.navigation.isFullscreen
   );
+  const hideModal = useSelector((state: RootState) => state.music.hideModal);
   const handleFullscreen = () => {
     dispatch(toggleModal({ target: "isFullscreen" }));
   };
@@ -19,7 +21,12 @@ export const Controls = () => {
     dispatch(toggleModal({ target: "isTasksActive" }));
   };
   const handleMusic = () => {
-    dispatch(toggleModal({ target: "isMusicActive" }));
+    console.log("what", hideModal);
+    if (hideModal) {
+      dispatch(setHideModal({ value: false }));
+    } else {
+      dispatch(toggleModal({ target: "isMusicActive" }));
+    }
   };
   const handleSettings = () => {
     dispatch(toggleModal({ target: "isSettingsActive" }));

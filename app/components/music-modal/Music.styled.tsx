@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { media } from "../../styles/breakpoints";
 
-export const Overlay = styled.div`
+export const Overlay = styled.div<{ $hideModal: boolean }>`
   position: fixed;
+  visibility: ${({ $hideModal }) => ($hideModal ? "hidden" : "visible")};
   top: 0;
   left: 0;
   right: 0;
@@ -15,8 +16,9 @@ export const Overlay = styled.div`
   backdrop-filter: blur(5px);
 `;
 
-export const Modal = styled.div<{ $bgImage?: boolean }>`
+export const Modal = styled.div<{ $bgImage?: boolean; $hideModal: boolean }>`
   width: 90%;
+  visibility: ${({ $hideModal }) => ($hideModal ? "hidden" : "visible")};
   max-width: 45rem;
   max-height: 75vh;
   min-height: 70vh;
@@ -57,7 +59,7 @@ export const ModalBody = styled.div`
   flex-direction: column;
   overflow-y: scroll;
   max-height: 80vh;
-  padding-bottom: 10rem;
+  padding: 0 1rem 10rem 1rem;
 `;
 
 export const CloseBtn = styled.button`
@@ -193,7 +195,10 @@ export const MusicPlayer = styled.div`
     font-weight: 600;
   }
 `;
-
+export const SpotifyPlayer = styled(MusicPlayer)`
+  position: absolute;
+  z-index: 9999;
+`;
 export const YoutubeEmbed = styled.div`
   position: relative;
   padding-bottom: 3rem;
@@ -221,5 +226,21 @@ export const MusicLink = styled.a`
   transition: var(--transition);
   &:hover {
     transform: translateY(-1px);
+  }
+`;
+
+export const SpotifyEmbed = styled(YoutubeEmbed)`
+  position: relative;
+  padding-bottom: 3rem;
+  wdith: 100%;
+  height: 10rem;
+  overflow: hidden;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 `;
