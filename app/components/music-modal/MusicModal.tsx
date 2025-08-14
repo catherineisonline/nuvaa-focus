@@ -5,6 +5,7 @@ import { closeModal, toggleModal } from "../../redux/slices/navigationSlice";
 import {
   CloseBtn,
   CustomUrlSection,
+  HiddenRadio,
   Modal,
   ModalBody,
   ModalHeader,
@@ -29,9 +30,16 @@ import {
   setMusicUrl,
   setSelectedOption,
 } from "../../redux/slices/musicSlice";
-import { YouTube } from "./Youtube";
+import { CustomPlayer } from "./CustomPlayer";
 import { useEffect } from "react";
 import { SpotifyPlayer } from "./SpotifyPlayer";
+type LinkType =
+  | "youtube"
+  | "spotify"
+  | "soundcloud"
+  | "vimeo"
+  | "apple-music"
+  | "unknown";
 
 const MusicModal = () => {
   const dispatch = useDispatch();
@@ -57,9 +65,7 @@ const MusicModal = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(musicModalOn, hideModal);
-  }, [musicModalOn, hideModal]);
+  useEffect(() => {}, [musicModalOn, hideModal]);
 
   const handleModalClose = () => {
     if (!musicModalOn) {
@@ -76,18 +82,9 @@ const MusicModal = () => {
     if (option === "none") {
       dispatch(setMusicEnabled({ value: false }));
       dispatch(setMusicUrl({ value: "" }));
-    } else if (option === "lofi") {
+    } else {
       dispatch(setMusicEnabled({ value: true }));
       dispatch(setMusicModalOn({ value: true }));
-      dispatch(
-        setMusicUrl({
-          value:
-            "https://www.youtube.com/embed/sF80I-TQiW0?si=XA9_ukuvimAQtqE3",
-        })
-      );
-    } else if (option === "custom") {
-      dispatch(setMusicEnabled({ value: true }));
-      dispatch(setMusicUrl({ value: customUrl }));
     }
   };
   const handleCustomUrlChange = (e: React.ChangeEvent) => {
@@ -98,25 +95,57 @@ const MusicModal = () => {
       dispatch(setMusicUrl({ value: value }));
     }
   };
-
-  const extractYouTubeId = (url: string) => {
-    return url.split("v=")[1].substring(0, 11);
-  };
-  // useEffect(() => {
-  //   if (selectedOption === "lofi") {
-  //     dispatch(setMusicModalOn({ value: true }));
-  //   }
-  // }, [selectedOption, dispatch]);
-
-  const renderMusicPlayer = () => {
-    if (!musicEnabled || !musicUrl) return null;
-    if (selectedOption === "custom") {
-      const youtubeId = extractYouTubeId(musicUrl);
-      if (youtubeId) {
-        return <YouTube id={youtubeId} />;
+  const extractMediaId = (platform: string, url: string) => {
+    switch (platform) {
+      case "youtube": {
+        return url.split("v=")[1].substring(0, 11);
       }
-    } else {
+      case "spotify": {
+        const match = url.match(
+          /spotify\.com\/(?:track|playlist|album)\/([a-zA-Z0-9]+)(?:\?|$)/
+        );
+        return match[1];
+      }
+
+      case "vimeo": {
+        const match = url.match(/vimeo\.com\/(\d+)(?:\?|$)/);
+        return match[1];
+      }
+
+      case "apple-music": {
+        const match = url.match(
+          /music\.apple\.com\/[a-z]{2}\/playlist\/[^/]+\/(pl\.[\w]+)/
+        );
+
+        return match[1];
+      }
+
+      default:
+        return null;
+    }
+  };
+
+  const detectLinkType = (url: string): LinkType => {
+    if (/youtu\.be\/|youtube\.com\/watch\?v=/.test(url)) return "youtube";
+    if (/spotify\.com\/(track|playlist|album)\//.test(url)) return "spotify";
+    if (/vimeo\.com\//.test(url)) return "vimeo";
+    if (/music\.apple\.com\//.test(url)) return "apple-music";
+    return "unknown";
+  };
+  const renderMusicPlayer = () => {
+    if (selectedOption === "lofi") {
       return <SpotifyPlayer />;
+    }
+    if (!musicEnabled || !musicUrl) return null;
+
+    if (selectedOption === "custom") {
+      const linkType = detectLinkType(musicUrl);
+
+      const id = extractMediaId(linkType, musicUrl);
+
+      if (linkType) {
+        return <CustomPlayer id={id} linkType={linkType} />;
+      }
     }
   };
   return (
@@ -139,7 +168,7 @@ const MusicModal = () => {
 
             <MusicOption>
               <RadioOption>
-                <input
+                <HiddenRadio
                   type="radio"
                   name="musicOption"
                   checked={selectedOption === "none"}
@@ -157,7 +186,7 @@ const MusicModal = () => {
 
             <MusicOption>
               <RadioOption>
-                <input
+                <HiddenRadio
                   type="radio"
                   name="musicOption"
                   checked={selectedOption === "lofi"}
@@ -175,7 +204,7 @@ const MusicModal = () => {
 
             <MusicOption>
               <RadioOption>
-                <input
+                <HiddenRadio
                   type="radio"
                   name="musicOption"
                   checked={selectedOption === "custom"}
@@ -204,7 +233,8 @@ const MusicModal = () => {
                   <ul>
                     <li>YouTube (youtube.com/watch?v=...)</li>
                     <li>Spotify (open.spotify.com/...)</li>
-                    <li>Direct audio files (.mp3, .wav, etc.)</li>
+                    <li>Vimeo (vimeo.com/...)</li>
+                    <li>Apple Music (music.apple.com/...)</li>
                   </ul>
                 </UrlHelp>
               </CustomUrlSection>

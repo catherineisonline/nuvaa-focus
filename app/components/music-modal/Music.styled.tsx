@@ -103,8 +103,15 @@ export const RadioOption = styled.label`
     background-color: rgba(255, 255, 255, 0.8);
     border-color: ${({ theme }) => theme.text};
   }
+  &:has(input:checked) {
+    border-color: ${({ theme }) => theme.highlight};
+  }
 `;
-
+export const HiddenRadio = styled.input.attrs({ type: "radio" })`
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+`;
 export const OptionContent = styled.div`
   display: flex;
   align-items: center;
@@ -171,10 +178,16 @@ export const UrlHelp = styled.div`
 `;
 
 export const MusicControls = styled.div`
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 0.9rem;
   padding: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  p {
+    font-weight: 400;
+    font-size: 0.9rem;
+  }
+  p:last-child {
+    margin-bottom: 0;
+    opacity: 0.7;
+    font-style: italic;
+  }
 `;
 
 export const MusicPlayer = styled.div`
