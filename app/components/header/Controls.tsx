@@ -21,7 +21,6 @@ export const Controls = () => {
     dispatch(toggleModal({ target: "isTasksActive" }));
   };
   const handleMusic = () => {
-    console.log("what", hideModal);
     if (hideModal) {
       dispatch(setHideModal({ value: false }));
     } else {

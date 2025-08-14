@@ -10,12 +10,15 @@ import {
   HamburgerModal,
   Title,
 } from "./ControlsModal.style";
+import { setHideModal } from "../../redux/slices/musicSlice";
 
 export const ControlsModal = () => {
   const dispatch = useDispatch();
   const isFullscreen = useSelector(
     (state: RootState) => state.navigation.isFullscreen
   );
+  const hideModal = useSelector((state: RootState) => state.music.hideModal);
+
   const handleFullscreen = () => {
     dispatch(toggleModal({ target: "isFullscreen" }));
   };
@@ -23,8 +26,13 @@ export const ControlsModal = () => {
     dispatch(toggleModal({ target: "isTasksActive" }));
   };
   const handleMusic = () => {
-    dispatch(toggleModal({ target: "isMusicActive" }));
+    if (hideModal) {
+      dispatch(setHideModal({ value: false }));
+    } else {
+      dispatch(toggleModal({ target: "isMusicActive" }));
+    }
   };
+
   const handleSettings = () => {
     dispatch(toggleModal({ target: "isSettingsActive" }));
   };

@@ -60,13 +60,13 @@ const MusicModal = () => {
   useEffect(() => {
     console.log(musicModalOn, hideModal);
   }, [musicModalOn, hideModal]);
-  
+
   const handleModalClose = () => {
-    // e.stopPropagation();
     if (!musicModalOn) {
       dispatch(closeModal({ target: "isMusicActive" }));
     } else {
       dispatch(setHideModal({ value: true }));
+       dispatch(closeModal({ target: "closeMusicModal" }));
     }
   };
 
