@@ -60,6 +60,10 @@ export const ModalBody = styled.div`
   overflow-y: scroll;
   max-height: 80vh;
   padding: 0 1rem 10rem 1rem;
+  @media ${media.md} {
+    padding: 0 1rem 1rem 1rem;
+    max-height: 85vh;
+  }
 `;
 
 export const CloseBtn = styled.button`

@@ -86,7 +86,8 @@ export const ModalBody = styled.div`
   @media ${media.md} {
     flex-direction: column;
     max-height: 100%;
-    height: 100%;
+    padding: 0 1rem 1rem 1rem;
+    height: 85vh;
   }
 `;
 

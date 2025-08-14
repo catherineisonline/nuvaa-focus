@@ -54,8 +54,15 @@ export const ModalHeader = styled.header`
   }
 `;
 export const ModalBody = styled.div`
+  display: flex;
   flex-direction: column;
   max-height: 80vh;
+  gap: 2rem;
+  @media ${media.md} {
+    max-height: 100%;
+    padding: 0 1rem 1rem 1rem;
+    height: 85vh;
+  }
 `;
 export const AddTaskSection = styled.section`
   padding: 20px 24px;
