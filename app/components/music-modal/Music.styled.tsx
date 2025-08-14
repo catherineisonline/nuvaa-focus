@@ -195,21 +195,6 @@ export const SpotifyPlayer = styled(MusicPlayer)`
   position: absolute;
   z-index: 9999;
 `;
-export const YoutubeEmbed = styled.div`
-  position: relative;
-  padding-bottom: 3rem;
-  height: 0;
-  overflow: hidden;
-  border-radius: 8px;
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-  }
-`;
 
 export const MusicLink = styled.a`
   display: inline-block;
@@ -223,8 +208,7 @@ export const MusicLink = styled.a`
     transform: translateY(-1px);
   }
 `;
-
-export const SpotifyEmbed = styled(YoutubeEmbed)`
+export const SpotifyEmbed = styled.div`
   position: relative;
   padding-bottom: 3rem;
   wdith: 100%;
@@ -238,4 +222,7 @@ export const SpotifyEmbed = styled(YoutubeEmbed)`
     height: 100%;
     border: none;
   }
+`;
+export const YoutubeEmbed = styled(SpotifyEmbed)`
+  height: 22rem;
 `;

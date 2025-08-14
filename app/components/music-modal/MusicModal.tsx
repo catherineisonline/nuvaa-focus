@@ -66,7 +66,7 @@ const MusicModal = () => {
       dispatch(closeModal({ target: "isMusicActive" }));
     } else {
       dispatch(setHideModal({ value: true }));
-       dispatch(closeModal({ target: "closeMusicModal" }));
+      dispatch(closeModal({ target: "closeMusicModal" }));
     }
   };
 
@@ -184,7 +184,7 @@ const MusicModal = () => {
                 <OptionContent>
                   <Link />
                   <OptionText>
-                    <h4>Custom Link</h4>
+                    <h4>Custom Music</h4>
                     <p>Your own music URL</p>
                   </OptionText>
                 </OptionContent>
