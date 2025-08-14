@@ -68,7 +68,6 @@ export const CloseBtn = styled.button`
   padding: 8px;
   cursor: pointer;
   border-radius: 8px;
-  transition: var(--transition);
   color: ${({ theme }) => theme.text};
 
   @media (hover: hover) and (pointer: fine) {
@@ -99,7 +98,6 @@ export const RadioOption = styled.label`
   border: 2px solid transparent;
   border-radius: 12px;
   padding: 16px;
-  transition: var(--transition);
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.8);
@@ -111,7 +109,6 @@ export const OptionContent = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  transition: var(--transition);
 `;
 
 export const OptionText = styled.div`
@@ -142,7 +139,6 @@ export const UrlInput = styled.input`
   background: rgba(255, 255, 255, 0.8);
   font-size: 0.9rem;
   color: ${({ theme }) => theme.text};
-  transition: var(--transition);
   margin-bottom: 12px;
 
   &:focus {
@@ -223,7 +219,6 @@ export const MusicLink = styled.a`
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  transition: var(--transition);
   &:hover {
     transform: translateY(-1px);
   }
