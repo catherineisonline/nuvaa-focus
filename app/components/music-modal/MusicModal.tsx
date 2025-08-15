@@ -157,10 +157,9 @@ const MusicModal = () => {
         </ModalHeader>
 
         <ModalBody>
-          <MusicOptions>
-            <h3>Choose Your Focus Music</h3>
-
-            <MusicOption>
+          <h3>Choose Your Focus Music</h3>
+          <MusicOptions $bgActive={isBackgroundActive}>
+            <MusicOption $active={selectedOption === "none"}>
               <RadioOption>
                 <HiddenRadio
                   type="radio"
@@ -178,7 +177,7 @@ const MusicModal = () => {
               </RadioOption>
             </MusicOption>
 
-            <MusicOption>
+            <MusicOption $active={selectedOption === "lofi"}>
               <RadioOption>
                 <HiddenRadio
                   type="radio"
@@ -196,7 +195,7 @@ const MusicModal = () => {
               </RadioOption>
             </MusicOption>
 
-            <MusicOption>
+            <MusicOption $active={selectedOption === "custom"}>
               <RadioOption>
                 <HiddenRadio
                   type="radio"
@@ -213,29 +212,28 @@ const MusicModal = () => {
                 </OptionContent>
               </RadioOption>
             </MusicOption>
-
-            {selectedOption === "custom" && (
-              <CustomUrlSection>
-                <UrlInput
-                  type="url"
-                  value={customUrl}
-                  onChange={handleCustomUrlChange}
-                  placeholder="Paste your music URL here..."
-                />
-                {musicUrl && <em>Your latest url: {musicUrl}</em>}
-                <UrlHelp>
-                  <p>Supported platforms:</p>
-                  <ul>
-                    <li>YouTube (youtube.com/watch?v=...)</li>
-                    <li>Spotify (open.spotify.com/...)</li>
-                    <li>Vimeo (vimeo.com/...)</li>
-                    <li>Apple Music (music.apple.com/...)</li>
-                  </ul>
-                </UrlHelp>
-              </CustomUrlSection>
-            )}
           </MusicOptions>
-
+          {selectedOption === "custom" && (
+            <CustomUrlSection>
+              <h3>Paste your music URL here</h3>
+              <UrlInput
+                type="url"
+                value={customUrl}
+                onChange={handleCustomUrlChange}
+                placeholder="youtube.com/watch?v=..."
+              />
+              {musicUrl && <em>Your latest url: {musicUrl}</em>}
+              <UrlHelp>
+                <p>Supported platforms:</p>
+                <ul>
+                  <li>YouTube (youtube.com/watch?v=...)</li>
+                  <li>Spotify (open.spotify.com/...)</li>
+                  <li>Vimeo (vimeo.com/...)</li>
+                  <li>Apple Music (music.apple.com/...)</li>
+                </ul>
+              </UrlHelp>
+            </CustomUrlSection>
+          )}
           {renderMusicPlayer()}
 
           <MusicControls>
