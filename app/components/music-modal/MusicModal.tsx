@@ -33,13 +33,7 @@ import {
 import { CustomPlayer } from "./CustomPlayer";
 import { useEffect } from "react";
 import { SpotifyPlayer } from "./SpotifyPlayer";
-type LinkType =
-  | "youtube"
-  | "spotify"
-  | "soundcloud"
-  | "vimeo"
-  | "apple-music"
-  | "unknown";
+type LinkType = "youtube" | "spotify" | "vimeo" | "apple-music" | "unknown";
 
 const MusicModal = () => {
   const dispatch = useDispatch();
@@ -64,8 +58,6 @@ const MusicModal = () => {
       dispatch(setHideModal({ value: true }));
     }
   };
-
-  useEffect(() => {}, [musicModalOn, hideModal]);
 
   const handleModalClose = () => {
     if (!musicModalOn) {
@@ -94,7 +86,9 @@ const MusicModal = () => {
     if (selectedOption === "custom") {
       dispatch(setMusicUrl({ value: value }));
     }
+    dispatch(setCustomUrl({ value: "" }));
   };
+
   const extractMediaId = (platform: string, url: string) => {
     switch (platform) {
       case "youtube": {
@@ -228,6 +222,7 @@ const MusicModal = () => {
                   onChange={handleCustomUrlChange}
                   placeholder="Paste your music URL here..."
                 />
+                {musicUrl && <em>Your latest url: {musicUrl}</em>}
                 <UrlHelp>
                   <p>Supported platforms:</p>
                   <ul>

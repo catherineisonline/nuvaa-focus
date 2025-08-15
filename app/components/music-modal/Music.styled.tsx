@@ -85,7 +85,9 @@ export const CloseBtn = styled.button`
 `;
 
 export const MusicOptions = styled.div`
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   h3 {
     margin: 0 0 20px 0;
     color: ${({ theme }) => theme.text};
@@ -140,8 +142,9 @@ export const OptionText = styled.div`
 `;
 
 export const CustomUrlSection = styled.div`
-  margin-top: 1rem;
-  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
