@@ -6,10 +6,12 @@ import { ThemeType } from "../../../styles/themes";
 import { OptionType } from "../../../types/react-select";
 
 export const SettingsContent = styled.form`
-  overflow-y: auto;
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 10rem;
   @media ${media.md} {
-    width: 90%;
+    padding-bottom: 2rem;
   }
 `;
 

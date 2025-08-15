@@ -2,16 +2,14 @@ import styled from "styled-components";
 import { media } from "../../../styles/breakpoints";
 
 export const AnalyticsContent = styled.section`
-  flex: 1;
-  max-height: 95vh;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  overflow-y: scroll;
-  padding-bottom: 2rem;
-
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 10rem;
   @media ${media.md} {
-    max-height: 95vh;
+    padding-bottom: 2rem;
   }
 `;
 

@@ -16,6 +16,11 @@ import {
   setCurrentQuote,
   setCustomQuote,
 } from "../../redux/slices/quotesSlice";
+import {
+  setMusicEnabled,
+  setMusicUrl,
+  setSelectedOption,
+} from "../../redux/slices/musicSlice";
 
 export const Initilizer = () => {
   const dispatch = useDispatch();
@@ -36,6 +41,13 @@ export const Initilizer = () => {
   const customQuote = useSelector(
     (state: RootState) => state.quotes.customQuote
   );
+  const selectedOption = useSelector(
+    (state: RootState) => state.music.selectedOption
+  );
+  const musicEnabled = useSelector(
+    (state: RootState) => state.music.musicEnabled
+  );
+  const musicUrl = useSelector((state: RootState) => state.music.musicUrl);
   useEffect(() => {
     const streakStore = localStorage.getItem("streak");
     const settingsStore = localStorage.getItem("settings");
@@ -47,6 +59,9 @@ export const Initilizer = () => {
     const isQuotesShownStore = localStorage.getItem("isQuotesShown");
     const quoteIndexStore = localStorage.getItem("quoteIndex");
     const customQuoteStore = localStorage.getItem("customQuote");
+    const selectedOptionStore = localStorage.getItem("selectedOption");
+    const musicUrlStore = localStorage.getItem("musicUrl");
+    const musicEnabledStore = localStorage.getItem("musicEnabled");
     if (streakStore !== null) {
       dispatch(initStreak({ value: JSON.parse(streakStore) }));
     }
@@ -81,6 +96,15 @@ export const Initilizer = () => {
     if (customQuoteStore !== null) {
       dispatch(setCustomQuote({ value: JSON.parse(customQuoteStore) }));
     }
+    if (selectedOptionStore !== null) {
+      dispatch(setSelectedOption({ value: JSON.parse(selectedOptionStore) }));
+    }
+    if (musicUrlStore !== null) {
+      dispatch(setMusicUrl({ value: JSON.parse(musicUrlStore) }));
+    }
+    if (musicEnabledStore !== null) {
+      dispatch(setMusicEnabled({ value: JSON.parse(musicEnabledStore) }));
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -98,6 +122,9 @@ export const Initilizer = () => {
     );
     localStorage.setItem("isQuotesShown", JSON.stringify(isQuotesShown));
     localStorage.setItem("customQuote", JSON.stringify(customQuote));
+    localStorage.setItem("selectedOption", JSON.stringify(selectedOption));
+    localStorage.setItem("musicUrl", JSON.stringify(musicUrl));
+    localStorage.setItem("musicEnabled", JSON.stringify(musicEnabled));
   }, [
     currentTab,
     streak,
@@ -107,6 +134,9 @@ export const Initilizer = () => {
     customBackgrounds,
     isQuotesShown,
     customQuote,
+    selectedOption,
+    musicUrl,
+    musicEnabled,
   ]);
 
   return null;

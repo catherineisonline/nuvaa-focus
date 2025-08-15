@@ -29,6 +29,9 @@ const navigationSlice = createSlice({
     },
     closeModal(state, action) {
       const modal = action.payload.target;
+      if (modal === "closeMusicModal") {
+        state.isHamburgerActive = false;
+      }
       const isActive = state[modal];
       state[modal] = !isActive;
     },

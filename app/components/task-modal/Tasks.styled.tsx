@@ -16,13 +16,16 @@ export const Overlay = styled.div`
 `;
 
 export const Modal = styled.div<{ $bgImage?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   width: 90%;
   max-width: 45rem;
-  max-height: 75vh;
+  max-height: 90vh;
   min-height: 70vh;
   border-radius: 30px;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1.5rem;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
   box-shadow: ${({ $bgImage, theme }) =>
@@ -39,7 +42,6 @@ export const ModalHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   border-bottom: 1px solid var(--shadow-light);
 
   h2 {
@@ -54,11 +56,17 @@ export const ModalHeader = styled.header`
   }
 `;
 export const ModalBody = styled.div`
+  display: flex;
   flex-direction: column;
+  height: 100%;
+  min-height: 60vh;
   max-height: 80vh;
+  gap: 2rem;
+  @media ${media.md} {
+    max-height: 85vh;
+  }
 `;
 export const AddTaskSection = styled.section`
-  padding: 20px 24px;
   border-bottom: 1px solid var(--shadow-light);
   display: grid;
   grid-template-columns: 1fr 3rem;
@@ -115,12 +123,10 @@ export const TasksSection = styled.section`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 10px 24px;
-  max-height: calc(50vh - 100px);
-  overflow-y: scroll;
-  padding-bottom: 2rem;
+  overflow-y: auto;
+  padding-bottom: 10rem;
   @media ${media.md} {
-    max-height: 95vh;
+    padding-bottom: 2rem;
   }
 `;
 
