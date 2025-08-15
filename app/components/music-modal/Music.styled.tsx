@@ -17,14 +17,17 @@ export const Overlay = styled.div<{ $hideModal: boolean }>`
 `;
 
 export const Modal = styled.div<{ $bgImage?: boolean; $hideModal: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   width: 90%;
   visibility: ${({ $hideModal }) => ($hideModal ? "hidden" : "visible")};
   max-width: 45rem;
-  max-height: 75vh;
+  max-height: 90vh;
   min-height: 70vh;
   border-radius: 30px;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1.5rem;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
   box-shadow: ${({ $bgImage, theme }) =>
@@ -41,7 +44,6 @@ export const ModalHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   border-bottom: 1px solid var(--shadow-light);
 
   h2 {
@@ -56,13 +58,14 @@ export const ModalHeader = styled.header`
   }
 `;
 export const ModalBody = styled.div`
+  display: flex;
   flex-direction: column;
-  overflow-y: scroll;
-  max-height: 80vh;
-  padding: 0 1rem 10rem 1rem;
+  gap: 2rem;
+  height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 20rem;
   @media ${media.md} {
-    padding: 0 1rem 1rem 1rem;
-    max-height: 85vh;
+    padding-bottom: 2rem;
   }
 `;
 

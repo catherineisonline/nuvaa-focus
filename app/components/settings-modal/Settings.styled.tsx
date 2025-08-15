@@ -15,13 +15,16 @@ export const Overlay = styled.div`
   backdrop-filter: blur(5px);
 `;
 export const Modal = styled.div<{ $bgImage?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   width: 90%;
   max-width: 45rem;
-  max-height: 75vh;
+  max-height: 90vh;
   min-height: 70vh;
   border-radius: 30px;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1.5rem;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
   box-shadow: ${({ $bgImage, theme }) =>
@@ -76,18 +79,14 @@ export const CloseButton = styled.button`
 
 export const ModalBody = styled.div`
   display: flex;
-  min-height: 60vh;
   flex-direction: row;
-  height: auto;
+  height: 100%;
+  min-height: 60vh;
   max-height: 80vh;
-  padding-bottom: 10rem;
   gap: 2rem;
-
   @media ${media.md} {
     flex-direction: column;
-    max-height: 100%;
-    padding: 0 1rem 1rem 1rem;
-    height: 85vh;
+    max-height: 85vh;
   }
 `;
 
