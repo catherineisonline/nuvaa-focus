@@ -56,7 +56,7 @@ export const WeeklyChart = () => {
       <ResponsiveContainer width="100%" height="100%" minHeight={350}>
         <BarChart width={100} height={200} data={data}>
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis orientation="right" />
           <Tooltip />
           <Bar dataKey="streak" />
         </BarChart>
