@@ -56,6 +56,7 @@ export const Quotes = () => {
               onChange={(e) => handleTempQuote(e.target.value)}
               onBlur={handleCustomQuote}
               rows={1}
+              maxLength={65}
             />
           ) : (
             <QuoteDisplayText

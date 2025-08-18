@@ -20,11 +20,17 @@ export const ModeTabs = styled.div<{ $bgActive?: boolean }>`
   background-color: ${({ theme }) => theme.background};
   box-shadow: ${({ $bgActive, theme }) =>
     $bgActive ? undefined : theme.boxShadowInsetSoft};
+  @media ${media.md} {
+    height: 4rem;
+  }
 `;
 
 export const ModeTabButton = styled.button<{
   $active?: boolean;
 }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: none;
   padding: 20px;
   cursor: pointer;
@@ -141,6 +147,7 @@ export const ControlButton = styled.button<{
   }
   @media ${media.md} {
     max-width: 5rem;
+    padding: 10px 20px;
   }
 `;
 export const ControlButtonSecondary = styled(ControlButton)`
