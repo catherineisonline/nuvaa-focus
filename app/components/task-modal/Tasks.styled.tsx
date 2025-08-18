@@ -232,6 +232,7 @@ export const TaskText = styled.span<{
   flex-direction: row;
   gap: 10px;
   font-weight: 400;
+
   text-decoration: ${({ $completed }) =>
     $completed ? "line-through" : "none"};
   opacity: ${({ $completed }) => ($completed ? 0.6 : 1)};

@@ -8,12 +8,11 @@ export const QuoteSection = styled.section`
   margin: 0 auto;
   display: flex;
   justify-content: center;
-
   div {
     position: relative;
   }
-  @media ${media.md} {
-    max-width: 95vw;
+  @media ${media.sm} {
+    display: none;
   }
 `;
 

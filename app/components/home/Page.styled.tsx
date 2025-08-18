@@ -84,10 +84,17 @@ export const ModeLabel = styled.p<{ $bgImage?: boolean }>`
 export const ModeLabelTask = styled.p<{ $bgImage?: boolean }>`
   font-weight: 500;
   margin: 0;
+  line-height: 1.3rem;
   text-align: center;
   font-size: 1.5rem;
   font-family: var(--font-outfit);
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
+  @media ${media.md} {
+    max-width: 95vw;
+  }
 `;
 
 export const TimerDisplay = styled.time<{ $bgImage?: boolean }>`
@@ -102,6 +109,7 @@ export const TimeNow = styled(TimerDisplay)`
 export const TimerControls = styled.div`
   display: flex;
   gap: 1rem;
+  padding-top: 1rem;
   align-items: center;
   justify-content: center;
   @media ${media.md} {
