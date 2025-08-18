@@ -13,7 +13,7 @@ export const QuoteSection = styled.section`
     position: relative;
   }
   @media ${media.md} {
-    width: 80%;
+    max-width: 95vw;
   }
 `;
 
@@ -25,6 +25,9 @@ export const QuoteDisplayText = styled.p<{ $bgImage?: boolean }>`
   line-height: 1.3;
   cursor: pointer;
   transition: var(--transition);
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       color: ${({ theme }) => theme.highlight};

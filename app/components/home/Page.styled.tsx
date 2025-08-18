@@ -4,12 +4,12 @@ import { media } from "../../styles/breakpoints";
 
 export const TimerContainer = styled.div`
   display: grid;
-  grid-template-rows: 25rem 5rem;
+  grid-template-rows: 15rem 5rem;
   gap: 10px;
   max-width: 1440px;
   align-items: center;
   @media ${media.md} {
-    grid-template-rows: 16rem 5rem;
+    grid-template-rows: 12rem 5rem;
   }
 `;
 
@@ -71,7 +71,7 @@ export const ModeLabel = styled.p<{ $bgImage?: boolean }>`
   font-size: 1.5rem;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
   font-weight: 800;
-  line-height: 6rem;
+  line-height: 5rem;
   text-transform: uppercase;
 `;
 
