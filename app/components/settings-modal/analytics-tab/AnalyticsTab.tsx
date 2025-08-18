@@ -33,11 +33,16 @@ export const AnalyticsTab = () => {
         <SectionHeading>Today&apos;s Progress</SectionHeading>
         <AnalyticsGrid>
           <AnalyticsCard>
-            <h4>Pomodoros Completed</h4>
-            <AnalyticsValue>{todayPomodoros}</AnalyticsValue>
+            <h4>
+              Pomodoros <br />
+              Completed
+            </h4>
+            <AnalyticsValue>{todayPomodoros} times</AnalyticsValue>
           </AnalyticsCard>
           <AnalyticsCard>
-            <h4>Focus Time</h4>
+            <h4>
+              Focus <br /> Time
+            </h4>
             <AnalyticsValue>{todayFocusTime} min</AnalyticsValue>
           </AnalyticsCard>
         </AnalyticsGrid>

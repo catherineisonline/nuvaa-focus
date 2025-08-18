@@ -55,7 +55,8 @@ export const ModalTitle = styled.h2`
   font-weight: 600;
 
   span {
-    font-size: 1.2rem;
+    font-size: 1rem;
+
     font-weight: 400;
     font-family: var(--font-outfit);
   }
@@ -103,6 +104,7 @@ export const SettingsTabs = styled.section`
   background-color: ${({ theme }) => theme.backgroundSecondary};
   box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   @media ${media.md} {
+    min-height: 5rem;
     flex-direction: row;
     gap: 0.6rem;
     margin-bottom: 1.5rem;

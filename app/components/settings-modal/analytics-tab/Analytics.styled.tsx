@@ -32,8 +32,10 @@ export const AnalyticsGrid = styled.section`
 `;
 
 export const AnalyticsCard = styled.article`
+  display: flex;
+  flex-direction: column;
   background-color: ${({ theme }) => theme.backgroundSecondary};
-  padding: 2rem;
+  padding: 1rem;
   border-radius: var(--border-radius);
   text-align: center;
   border: 1px solid rgba(0, 0, 0, 0.1);

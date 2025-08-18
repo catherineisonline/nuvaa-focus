@@ -4,12 +4,12 @@ import { media } from "../../styles/breakpoints";
 
 export const TimerContainer = styled.div`
   display: grid;
-  grid-template-rows: 25rem 5rem;
+  grid-template-rows: 15rem 5rem;
   gap: 10px;
   max-width: 1440px;
   align-items: center;
   @media ${media.md} {
-    grid-template-rows: 16rem 5rem;
+    grid-template-rows: 12rem 5rem;
   }
 `;
 
@@ -20,11 +20,17 @@ export const ModeTabs = styled.div<{ $bgActive?: boolean }>`
   background-color: ${({ theme }) => theme.background};
   box-shadow: ${({ $bgActive, theme }) =>
     $bgActive ? undefined : theme.boxShadowInsetSoft};
+  @media ${media.md} {
+    height: 4rem;
+  }
 `;
 
 export const ModeTabButton = styled.button<{
   $active?: boolean;
 }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: none;
   padding: 20px;
   cursor: pointer;
@@ -71,17 +77,24 @@ export const ModeLabel = styled.p<{ $bgImage?: boolean }>`
   font-size: 1.5rem;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
   font-weight: 800;
-  line-height: 6rem;
+  line-height: 5rem;
   text-transform: uppercase;
 `;
 
 export const ModeLabelTask = styled.p<{ $bgImage?: boolean }>`
   font-weight: 500;
   margin: 0;
+  line-height: 1.3rem;
   text-align: center;
   font-size: 1.5rem;
   font-family: var(--font-outfit);
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
+  @media ${media.md} {
+    max-width: 95vw;
+  }
 `;
 
 export const TimerDisplay = styled.time<{ $bgImage?: boolean }>`
@@ -96,6 +109,7 @@ export const TimeNow = styled(TimerDisplay)`
 export const TimerControls = styled.div`
   display: flex;
   gap: 1rem;
+  padding-top: 1rem;
   align-items: center;
   justify-content: center;
   @media ${media.md} {
@@ -141,6 +155,7 @@ export const ControlButton = styled.button<{
   }
   @media ${media.md} {
     max-width: 5rem;
+    padding: 10px 20px;
   }
 `;
 export const ControlButtonSecondary = styled(ControlButton)`

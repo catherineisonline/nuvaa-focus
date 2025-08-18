@@ -150,18 +150,34 @@ export const CurrentTaskItem = styled.div`
   font-family: var(--font-outfit);
   padding: 19px;
   border-radius: 8px;
-  height: 1rem;
   font-weight: 500;
+  min-height: 1rem;
+
+  span {
+    flex: 1;
+    overflow: hidden;
+    white-space: wrap;
+    word-break: break-word;
+  }
+
+  @media ${media.sm} {
+    align-items: flex-start;
+  }
 `;
 
 export const RemoveCurrentBtn = styled.button`
+  flex-shrink: 0;
   background-color: transparent;
   color: ${({ theme }) => theme.buttonText};
   border: none;
-  padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
   transition: var(--transition);
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       transform: var(--hover-transform);
@@ -230,8 +246,10 @@ export const TaskText = styled.span<{
   font-family: var(--font-outfit);
   display: flex;
   flex-direction: row;
-  gap: 10px;
   font-weight: 400;
+  overflow: hidden;
+  white-space: wrap;
+  word-break: break-word;
   text-decoration: ${({ $completed }) =>
     $completed ? "line-through" : "none"};
   opacity: ${({ $completed }) => ($completed ? 0.6 : 1)};
@@ -245,6 +263,8 @@ export const TaskText = styled.span<{
 export const CurrentIndicator = styled.span`
   opacity: 0.8;
   font-weight: 600;
+  flex-shrink: 0;
+  margin-left: 10px;
 `;
 
 export const TaskEdit = styled.div`

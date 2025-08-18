@@ -32,12 +32,12 @@ body {
 body {
   -ms-overflow-style: none;
   scrollbar-width: none;
-  overflow-y: scroll;
   line-height: 1.5;
-  min-height: 100dvh;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-lexend);
+  overflow: hidden;
+
 }
 body::-webkit-scrollbar {
   display: none;

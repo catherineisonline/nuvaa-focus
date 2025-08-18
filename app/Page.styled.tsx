@@ -13,7 +13,6 @@ export const Overlay = styled.div`
 
 export const MainWrapper = styled.main`
   flex: 1;
-  overflow: none;
   display: flex;
   flex-direction: column;
   align-items: center;

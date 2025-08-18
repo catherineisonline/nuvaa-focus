@@ -38,6 +38,7 @@ export const TodaysChart = () => {
             domain={[8, 18]}
             tickFormatter={(h) => `${h}:00`}
             name="Time"
+            orientation="right"
           />
           <Tooltip />
           <Scatter name="Streak" data={data} />
