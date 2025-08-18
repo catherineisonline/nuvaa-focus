@@ -166,7 +166,7 @@ const TaskModal = () => {
               value={newTaskText}
               onChange={(e) => handleTaskChange(e)}
               onFocus={cancelEdit}
-              maxLength={65}
+              maxLength={40}
               placeholder="Add a new task..."
               autoFocus={true}
               onKeyDown={(e) => {
