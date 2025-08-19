@@ -2,6 +2,10 @@ import StyledComponentsRegistry from "./lib/registry";
 import ReduxProvider from "./redux/ReduxProvider";
 import { Lexend, Outfit } from "next/font/google";
 import ThemeWrapper from "./components/ThemeWrapper";
+import { Initilizer } from "./components/home/Initilizer";
+import { Overlay } from "./Page.styled";
+import Header from "./components/header/Header";
+import { Modals } from "./components/home/Modals";
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -31,7 +35,13 @@ export default function RootLayout({ children }) {
       <body className="font-lexend">
         <ReduxProvider>
           <StyledComponentsRegistry>
-            <ThemeWrapper>{children}</ThemeWrapper>
+            <ThemeWrapper>
+              <Initilizer />
+              <Overlay />
+              <Header />
+              {children}
+              <Modals />
+            </ThemeWrapper>
           </StyledComponentsRegistry>
         </ReduxProvider>
       </body>

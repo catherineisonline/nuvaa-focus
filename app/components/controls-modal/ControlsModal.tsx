@@ -1,5 +1,12 @@
 "use client";
-import { ListTodo, Maximize, Minimize, Music, Settings } from "lucide-react";
+import {
+  CircleQuestionMark,
+  ListTodo,
+  Maximize,
+  Minimize,
+  Music,
+  Settings,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { toggleModal } from "../../redux/slices/navigationSlice";
@@ -11,6 +18,7 @@ import {
   Title,
 } from "./ControlsModal.style";
 import { setHideModal } from "../../redux/slices/musicSlice";
+import Link from "next/link";
 
 export const ControlsModal = () => {
   const dispatch = useDispatch();
@@ -35,6 +43,9 @@ export const ControlsModal = () => {
 
   const handleSettings = () => {
     dispatch(toggleModal({ target: "isSettingsActive" }));
+  };
+  const handleRedirection = () => {
+    dispatch(setHideModal({ value: false }));
   };
   return (
     <HamburgerModal>
@@ -66,6 +77,15 @@ export const ControlsModal = () => {
         <li>
           <IconButton onClick={handleSettings} aria-label="Settings">
             <Settings /> Settings
+          </IconButton>
+        </li>
+        <li>
+          <IconButton
+            as="a"
+            aria-label="How it works"
+            href="/about"
+            onClick={handleRedirection}>
+            <CircleQuestionMark /> How it works
           </IconButton>
         </li>
       </HamburgerControls>

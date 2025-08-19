@@ -76,7 +76,9 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
-
+a {
+text-decoration: none;
+}
 #root,
 #__next {
   isolation: isolate;
@@ -122,5 +124,13 @@ select {
 p {
   font-family: var(--font-lexend);
   font-weight: 800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 `;

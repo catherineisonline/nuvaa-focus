@@ -12,7 +12,7 @@ export const CustomPlayer = ({ id, linkType }) => {
             src={`https://www.youtube-nocookie.com/embed/${id}?rel=0`}
             title="YouTube video"
             loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media:robustness=SW_SECURE_CRYPTO; gyroscope; picture-in-picture; web-share"
+            allow="accelerometer; autoplay; clipboard-write;  gyroscope; picture-in-picture; web-share"
             sandbox="allow-scripts allow-same-origin allow-presentation"
             referrerPolicy="strict-origin-when-cross-origin"
           />

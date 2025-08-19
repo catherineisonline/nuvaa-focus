@@ -9,7 +9,7 @@ export const SpotifyPlayer = () => {
           src="https://open.spotify.com/embed/playlist/0vvXsWCC9xrXsKd4FyS8kM?utm_source=generator&theme=0"
           title="Spotify Playlist"
           loading="lazy"
-          allow="autoplay; clipboard-write; encrypted-media 'self' https://open.spotify.com; fullscreen; picture-in-picture; encrypted-media:robustness=SW_SECURE_CRYPTO"
+          allow="autoplay; clipboard-write; encrypted-media 'self' https://open.spotify.com; fullscreen; picture-in-picture; "
           sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
         />
       </SpotifyEmbed>
