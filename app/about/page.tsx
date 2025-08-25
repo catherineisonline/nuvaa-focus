@@ -12,16 +12,21 @@ import {
   AboutSteps,
   GoBackButton,
 } from "./Page.styled";
+import { useBackgroundStatus } from "../hooks/useBackgroundStatus";
 
 export default function Page() {
+  const isBackgroundActive = useBackgroundStatus();
+
   return (
     <About>
       <GoBackButton href="/" aria-label="Go back to main page">
         <SquareArrowLeft /> go back
       </GoBackButton>
       <AboutSection>
-        <AboutSectionHeading>How to use Nuvaa Focus?</AboutSectionHeading>
-        <AboutSectionParagraph>
+        <AboutSectionHeading $bgImage={isBackgroundActive}>
+          How to use Nuvaa Focus?
+        </AboutSectionHeading>
+        <AboutSectionParagraph $bgImage={isBackgroundActive}>
           Nuvaa Focus helps you manage your time and stay productive by breaking
           your work into manageable intervals, called focus sessions. Each
           session lasts around 25 minutes, separated by short breaks, helping

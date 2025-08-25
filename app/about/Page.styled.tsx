@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { media } from "../styles/breakpoints";
 
 export const About = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   width: 100%;
   max-width: 1440px;
   background-color: var(--shadow-light);
@@ -42,20 +45,20 @@ export const AboutSection = styled.section`
   max-width: 90vw;
   margin: 0 auto;
 `;
-export const AboutSectionHeading = styled.h2`
+export const AboutSectionHeading = styled.h2<{ $bgImage: boolean }>`
   font-size: 2rem;
   font-weight: 600;
   text-align: center;
-  color: ${({ theme }) => theme.background};
+  color: ${({ theme, $bgImage }) => ($bgImage ? theme.background : theme.text)};
   @media ${media.md} {
     font-size: 1.5rem;
   }
 `;
 
-export const AboutSectionParagraph = styled.p`
+export const AboutSectionParagraph = styled.p<{ $bgImage: boolean }>`
   font-size: 1.2rem;
   font-weight: 400;
-  color: ${({ theme }) => theme.background};
+  color: ${({ theme, $bgImage }) => ($bgImage ? theme.background : theme.text)};
   text-align: center;
   max-width: 70vw;
   margin: 0 auto;
