@@ -1,11 +1,19 @@
 "use client";
-import { Settings, Minimize, Music, Maximize, ListTodo } from "lucide-react";
+import {
+  Settings,
+  Minimize,
+  Music,
+  Maximize,
+  ListTodo,
+  CircleQuestionMark,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../redux/slices/navigationSlice";
 import { RootState } from "../../redux/store";
 import { HeaderControls, IconButton } from "./Header.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 import { setHideModal } from "../../redux/slices/musicSlice";
+import Link from "next/link";
 export const Controls = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
@@ -64,6 +72,13 @@ export const Controls = () => {
           aria-label="Settings">
           <Settings />
         </IconButton>
+      </li>
+      <li>
+        <Link href="/about">
+          <IconButton $bgImage={isBackgroundActive} aria-label="How it works">
+            <CircleQuestionMark />
+          </IconButton>
+        </Link>
       </li>
     </HeaderControls>
   );

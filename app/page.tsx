@@ -9,14 +9,11 @@ import { MainWrapper, Overlay } from ".//Page.styled";
 export default function Page() {
   return (
     <div>
-      <Initilizer />
-      <Overlay />
-      <Header />
       <MainWrapper>
         <ModeTab />
         <ModeTime />
       </MainWrapper>
-      <Modals />
+    
     </div>
   );
 }

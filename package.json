@@ -2,6 +2,13 @@
   "name": "nuvaa-focus",
   "version": "0.1.0",
   "private": true,
+  "description": "Nuvaa Focus is a focus timer app designed to help users stay focused and manage their time effectively.",
+  "author": "Ekaterine Mitagvaria",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/catherineisonline/nuvaa-focus"
+  },
+  "license": "CC BY-NC-ND 4.0 License",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
