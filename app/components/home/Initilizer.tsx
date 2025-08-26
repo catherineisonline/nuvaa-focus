@@ -21,6 +21,7 @@ import {
   setMusicUrl,
   setSelectedOption,
 } from "../../redux/slices/musicSlice";
+import { setOnboarding } from "../../redux/slices/onboardingSlice";
 
 export const Initilizer = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,15 @@ export const Initilizer = () => {
     (state: RootState) => state.music.musicEnabled
   );
   const musicUrl = useSelector((state: RootState) => state.music.musicUrl);
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem("hasVisited");
+    if (!hasVisited) {
+      dispatch(setOnboarding({ value: true }));
+      localStorage.setItem("hasVisited", "true");
+    }
+  }, [dispatch]);
+
   useEffect(() => {
     const streakStore = localStorage.getItem("streak");
     const settingsStore = localStorage.getItem("settings");

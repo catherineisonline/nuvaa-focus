@@ -11,6 +11,7 @@ import appearanceSlice from "./slices/appearanceSlice";
 import quotesSlice from "./slices/quotesSlice";
 import analyticsSlice from "./slices/analyticsSlice";
 import musicSlice from "./slices/musicSlice";
+import onboardingSlice from "./slices/onboardingSlice";
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     quotes: quotesSlice,
     analytics: analyticsSlice,
     music: musicSlice,
+    onboarding: onboardingSlice,
   },
 });
 
