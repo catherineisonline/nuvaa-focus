@@ -23,3 +23,45 @@ export const MainWrapper = styled.main`
     gap: 1rem;
   }
 `;
+
+export const ErrorContent = styled.section<{ $bgImage: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  transform: translateY(50%);
+  width: 100%;
+  max-width: 65vw;
+  color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
+  background: ${({ $bgImage }) => ($bgImage ? "var(--shadow-light)" : "transparent")};
+  backdrop-filter: ${({ $bgImage }) => ($bgImage ? "blur(5px)" : undefined)};
+  text-align: center;
+  h2 {
+    font-size: 3rem;
+  }
+  @media ${media.md} {
+    max-width: 90vw;
+  }
+`;
+export const ErrorContentList = styled.ul`
+  list-style: none;
+  text-align: center;
+`;
+
+export const GoBack = styled.a`
+  display: flex;
+  flex-direction: row;
+  text-decoration: underline;
+  font-weight: 400;
+  border-radius: var(--border-radius);
+  color: ${({ theme }) => theme.background};
+  background-color: ${({ theme }) => theme.highlight};
+  padding: 12px 20px;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: var(--hover-transform);
+    }
+  }
+`;
