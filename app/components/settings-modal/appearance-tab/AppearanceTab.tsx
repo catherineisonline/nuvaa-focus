@@ -1,6 +1,6 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import { themes } from "../../../styles/themes";
+import { themeMeta } from "../../../styles/themes";
 import {
   removeBackground,
   removeCustomBackground,
@@ -91,7 +91,7 @@ export const AppearanceTab = () => {
       <SettingGroup>
         <SectionHeading>Color Themes</SectionHeading>
         <ThemeGrid>
-          {Object.values(themes).map((theme) => (
+          {themeMeta.map((theme) => (
             <ThemeOption
               type="button"
               key={theme.name}
