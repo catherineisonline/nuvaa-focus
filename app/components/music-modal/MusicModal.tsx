@@ -20,7 +20,11 @@ import {
   UrlInput,
 } from "./Music.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
-import { AudioLines, Link, VolumeOff, X } from "lucide-react";
+
+import AudioLines from "lucide-react/dist/esm/icons/audio-lines";
+import Link from "lucide-react/dist/esm/icons/link";
+import VolumeOff from "lucide-react/dist/esm/icons/volume-off";
+import X from "lucide-react/dist/esm/icons/x";
 import { RootState } from "../../redux/store";
 import {
   setCustomUrl,
@@ -38,17 +42,11 @@ type LinkType = "youtube" | "spotify" | "vimeo" | "apple-music" | "unknown";
 const MusicModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
-  const selectedOption = useSelector(
-    (state: RootState) => state.music.selectedOption
-  );
+  const selectedOption = useSelector((state: RootState) => state.music.selectedOption);
   const customUrl = useSelector((state: RootState) => state.music.customUrl);
   const musicUrl = useSelector((state: RootState) => state.music.musicUrl);
-  const musicEnabled = useSelector(
-    (state: RootState) => state.music.musicEnabled
-  );
-  const musicModalOn = useSelector(
-    (state: RootState) => state.music.musicModalOn
-  );
+  const musicEnabled = useSelector((state: RootState) => state.music.musicEnabled);
+  const musicModalOn = useSelector((state: RootState) => state.music.musicModalOn);
   const hideModal = useSelector((state: RootState) => state.music.hideModal);
 
   const handleOutsideClick = (e: React.MouseEvent) => {
@@ -95,9 +93,7 @@ const MusicModal = () => {
         return url.split("v=")[1].substring(0, 11);
       }
       case "spotify": {
-        const match = url.match(
-          /spotify\.com\/(?:track|playlist|album)\/([a-zA-Z0-9]+)(?:\?|$)/
-        );
+        const match = url.match(/spotify\.com\/(?:track|playlist|album)\/([a-zA-Z0-9]+)(?:\?|$)/);
         return match[1];
       }
 
@@ -107,9 +103,7 @@ const MusicModal = () => {
       }
 
       case "apple-music": {
-        const match = url.match(
-          /music\.apple\.com\/[a-z]{2}\/playlist\/[^/]+\/(pl\.[\w]+)/
-        );
+        const match = url.match(/music\.apple\.com\/[a-z]{2}\/playlist\/[^/]+\/(pl\.[\w]+)/);
 
         return match[1];
       }
@@ -144,11 +138,7 @@ const MusicModal = () => {
   };
   return (
     <Overlay onClick={handleOutsideClick} $hideModal={hideModal}>
-      <Modal
-        $hideModal={hideModal}
-        $bgImage={isBackgroundActive}
-        role="dialog"
-        aria-labelledby="music-title">
+      <Modal $hideModal={hideModal} $bgImage={isBackgroundActive} role="dialog" aria-labelledby="music-title">
         <ModalHeader>
           <h2 id="music-title">Music Settings</h2>
           <CloseBtn aria-label="Close" onClick={handleModalClose}>
@@ -237,13 +227,8 @@ const MusicModal = () => {
           {renderMusicPlayer()}
 
           <MusicControls>
-            <p>
-              Music volume can be controlled using your browser or system
-              controls.
-            </p>
-            <p>
-              For best focus, keep the volume at a comfortable background level.
-            </p>
+            <p>Music volume can be controlled using your browser or system controls.</p>
+            <p>For best focus, keep the volume at a comfortable background level.</p>
           </MusicControls>
         </ModalBody>
       </Modal>

@@ -1,12 +1,12 @@
 "use client";
-import {
-  Settings,
-  Minimize,
-  Music,
-  Maximize,
-  ListTodo,
-  CircleQuestionMark,
-} from "lucide-react";
+
+import CircleQuestionMark from "lucide-react/dist/esm/icons/circle-question-mark";
+import ListTodo from "lucide-react/dist/esm/icons/list-todo";
+import Maximize from "lucide-react/dist/esm/icons/maximize";
+import Minimize from "lucide-react/dist/esm/icons/minimize";
+import Music from "lucide-react/dist/esm/icons/music";
+import Settings from "lucide-react/dist/esm/icons/settings";
+
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../redux/slices/navigationSlice";
 import { RootState } from "../../redux/store";
@@ -18,9 +18,7 @@ export const Controls = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
 
-  const isFullscreen = useSelector(
-    (state: RootState) => state.navigation.isFullscreen
-  );
+  const isFullscreen = useSelector((state: RootState) => state.navigation.isFullscreen);
   const hideModal = useSelector((state: RootState) => state.music.hideModal);
   const handleFullscreen = () => {
     dispatch(toggleModal({ target: "isFullscreen" }));
@@ -42,18 +40,12 @@ export const Controls = () => {
   return (
     <HeaderControls>
       <li>
-        <IconButton
-          $bgImage={isBackgroundActive}
-          onClick={handleTasks}
-          aria-label="Todo list">
+        <IconButton $bgImage={isBackgroundActive} onClick={handleTasks} aria-label="Todo list">
           <ListTodo />
         </IconButton>
       </li>
       <li>
-        <IconButton
-          $bgImage={isBackgroundActive}
-          onClick={handleMusic}
-          aria-label="Music">
+        <IconButton $bgImage={isBackgroundActive} onClick={handleMusic} aria-label="Music">
           <Music />
         </IconButton>
       </li>
@@ -66,10 +58,7 @@ export const Controls = () => {
         </IconButton>
       </li>
       <li>
-        <IconButton
-          $bgImage={isBackgroundActive}
-          onClick={handleSettings}
-          aria-label="Settings">
+        <IconButton $bgImage={isBackgroundActive} onClick={handleSettings} aria-label="Settings">
           <Settings />
         </IconButton>
       </li>

@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ONBOARDING_STEPS } from "../../lib/constants";
 import { setNextStep, toggleModal } from "../../redux/slices/onboardingSlice";
 import { RootState } from "../../redux/store";
-import { X } from "lucide-react";
+
+import X from "lucide-react/dist/esm/icons/x";
 import {
   CloseButton,
   Modal,

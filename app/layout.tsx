@@ -5,8 +5,10 @@ import ThemeWrapper from "./components/ThemeWrapper";
 import { Initilizer } from "./components/home/Initilizer";
 import { Overlay } from "./Page.styled";
 import Header from "./components/header/Header";
-import { Modals } from "./components/home/Modals";
 
+import dynamic from "next/dynamic";
+
+const Modals = dynamic<{}>(() => import("./components/home/Modals").then((mod) => mod.Modals));
 const lexend = Lexend({
   subsets: ["latin"],
   weight: ["400", "500", "800"],

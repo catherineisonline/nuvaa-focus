@@ -1,15 +1,10 @@
 "use client";
 import "./Header.styled.tsx";
-import { Flame } from "lucide-react";
+
+import Flame from "lucide-react/dist/esm/icons/flame";
 import { Controls } from "./Controls";
 
-import {
-  HeaderMain,
-  Nav,
-  PomodoroCounter,
-  StreakSpan,
-  Title,
-} from "./Header.styled";
+import { HeaderMain, Nav, PomodoroCounter, StreakSpan, Title } from "./Header.styled";
 import { HamburgerButton } from "./Hamburger";
 import { RootState } from "../../redux/store.js";
 import { useSelector } from "react-redux";

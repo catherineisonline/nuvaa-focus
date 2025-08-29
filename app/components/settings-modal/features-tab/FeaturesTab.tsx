@@ -11,27 +11,18 @@ import {
   SettingsContent,
 } from "./Features.styled";
 
-import {
-  setCurrentQuote,
-  setCustomQuote,
-  showQuotes,
-} from "../../../redux/slices/quotesSlice";
+import { setCurrentQuote, setCustomQuote, showQuotes } from "../../../redux/slices/quotesSlice";
 import { RootState } from "../../../redux/store";
 import { useCallback, useEffect } from "react";
 import { CheckboxLabel } from "../timer-tab/Timer.styled";
-import { Shuffle } from "lucide-react";
+
+import Shuffle from "lucide-react/dist/esm/icons/shuffle";
 
 export const FeaturesTab = () => {
   const dispatch = useDispatch();
-  const isQuotesShown = useSelector(
-    (state: RootState) => state.quotes.isQuotesShown
-  );
-  const customQuote = useSelector(
-    (state: RootState) => state.quotes.customQuote
-  );
-  const currentQuote = useSelector(
-    (state: RootState) => state.quotes.currentQuote
-  );
+  const isQuotesShown = useSelector((state: RootState) => state.quotes.isQuotesShown);
+  const customQuote = useSelector((state: RootState) => state.quotes.customQuote);
+  const currentQuote = useSelector((state: RootState) => state.quotes.currentQuote);
 
   const quotes = useSelector((state: RootState) => state.quotes.quotes);
 
@@ -61,12 +52,7 @@ export const FeaturesTab = () => {
       <SettingGroup>
         <SectionHeading>Motivational Quotes</SectionHeading>
         <CheckboxLabel htmlFor="showQuote">
-          <input
-            id="showQuote"
-            type="checkbox"
-            checked={isQuotesShown}
-            onChange={handleShowQuotes}
-          />
+          <input id="showQuote" type="checkbox" checked={isQuotesShown} onChange={handleShowQuotes} />
           Show motivational quotes
         </CheckboxLabel>
       </SettingGroup>
@@ -75,10 +61,7 @@ export const FeaturesTab = () => {
           <SectionHeading>Here is a random quote:</SectionHeading>
           <QuoteGroup>
             <CurrentQuote>&quot;{currentQuote}&quot;</CurrentQuote>
-            <RandomQuoteButton
-              onClick={pickRandomQuote}
-              type="button"
-              aria-label="Generate random quote">
+            <RandomQuoteButton onClick={pickRandomQuote} type="button" aria-label="Generate random quote">
               Show me another quote
               <Shuffle />
             </RandomQuoteButton>
@@ -86,11 +69,7 @@ export const FeaturesTab = () => {
         </SettingGroup>
       )}
 
-      {customQuote && (
-        <CurrentQuoteWarning>
-          To enable random quotes, remove your custom quote
-        </CurrentQuoteWarning>
-      )}
+      {customQuote && <CurrentQuoteWarning>To enable random quotes, remove your custom quote</CurrentQuoteWarning>}
       {isQuotesShown && (
         <SettingGroup>
           <SectionHeading>Custom Quote (optional)</SectionHeading>

@@ -13,7 +13,6 @@ export default function Page() {
         <ModeTab />
         <ModeTime />
       </MainWrapper>
-    
     </div>
   );
 }
