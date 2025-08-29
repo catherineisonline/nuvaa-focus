@@ -39,7 +39,7 @@ import { useEffect } from "react";
 import { SpotifyPlayer } from "./SpotifyPlayer";
 type LinkType = "youtube" | "spotify" | "vimeo" | "apple-music" | "unknown";
 
-const MusicModal = () => {
+export const MusicModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
   const selectedOption = useSelector((state: RootState) => state.music.selectedOption);
@@ -235,5 +235,3 @@ const MusicModal = () => {
     </Overlay>
   );
 };
-
-export default MusicModal;

@@ -22,7 +22,7 @@ import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 import { FeaturesTab } from "./features-tab/FeaturesTab";
 import { AnalyticsTab } from "./analytics-tab/AnalyticsTab";
 
-const SettingsModal = () => {
+export const SettingsModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
   const settingsTab = useSelector((state: RootState) => state.settings.settingsTab);
@@ -77,5 +77,3 @@ const SettingsModal = () => {
     </Overlay>
   );
 };
-
-export default SettingsModal;

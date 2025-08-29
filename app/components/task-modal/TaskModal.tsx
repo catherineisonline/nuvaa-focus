@@ -1,5 +1,4 @@
 "use client";
-
 import Plus from "lucide-react/dist/esm/icons/plus";
 import Trash2 from "lucide-react/dist/esm/icons/trash-2";
 import CircleMinus from "lucide-react/dist/esm/icons/circle-minus";
@@ -62,7 +61,7 @@ import {
 } from "./Tasks.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
-const TaskModal = () => {
+export const TaskModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
   const { editingId, newTaskText, tasks, activeDrag } = useSelector(tasksSelectors);
@@ -248,5 +247,3 @@ const TaskModal = () => {
     </Overlay>
   );
 };
-
-export default TaskModal;

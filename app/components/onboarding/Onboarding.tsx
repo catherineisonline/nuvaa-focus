@@ -22,6 +22,7 @@ import {
   SecondaryNavigationBtn,
 } from "./Onboarding.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
+import { useMemo } from "react";
 
 export const Onboarding = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,10 @@ export const Onboarding = () => {
   };
 
   const currentStepData = ONBOARDING_STEPS[currentStep];
-  const Icon = currentStepData.icon;
+  // const Icon = currentStepData.icon;
+
+  const Icon = useMemo(() => currentStepData.icon, [currentStepData]);
+
   return (
     <Overlay onClick={handleOutsideClick}>
       <Modal $bgImage={isBackgroundActive}>
