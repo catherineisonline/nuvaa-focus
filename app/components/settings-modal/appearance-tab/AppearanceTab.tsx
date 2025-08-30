@@ -10,7 +10,6 @@ import {
   setCurrentCustomBackground,
   setCurrentTheme,
 } from "../../../redux/slices/appearanceSlice";
-import { RootState } from "../../../redux/store";
 import {
   BackgroundGrid,
   BackgroundOption,
@@ -36,15 +35,15 @@ import X from "lucide-react/dist/esm/icons/x";
 import Upload from "lucide-react/dist/esm/icons/upload";
 
 import { MAX_FILE_SIZE_BYTES, MAX_FILE_SIZE_MB } from "../../../lib/constants";
+import { appearanceSelectors } from "../../../redux/selectors/appearanceSelectors";
 export const AppearanceTab = () => {
   const dispatch = useDispatch();
-  const currentTheme = useSelector((state: RootState) => state.appearance.currentTheme);
-  const currentBackground = useSelector((state: RootState) => state.appearance.currentBackground);
-  const backgrounds = useSelector((state: RootState) => state.appearance.backgrounds);
-  const customBackgrounds = useSelector((state: RootState) => state.appearance.customBackgrounds);
-  const backgroundBlur = useSelector((state: RootState) => state.appearance.backgroundBlur);
-  const backgroundDim = useSelector((state: RootState) => state.appearance.backgroundDim);
+
+  const { currentTheme, currentBackground, backgroundBlur, backgroundDim, customBackgrounds, backgrounds } =
+    useSelector(appearanceSelectors);
+
   const handleThemeChange = (name: string) => {
+    localStorage.setItem("theme", name);
     dispatch(setCurrentTheme({ name: name }));
   };
   const handleImageChange = (image: string | StaticImageData, action: string) => {
@@ -57,7 +56,7 @@ export const AppearanceTab = () => {
   const handleBackgroundRemoval = () => {
     dispatch(removeBackground());
   };
-  const handleCustomBackground = (src: string) => {
+  const handleCustomBackground = (src: string | StaticImageData) => {
     dispatch(removeCustomBackground({ src: src }));
   };
   const handleBackgroundBlur = (value: number) => {
@@ -73,6 +72,7 @@ export const AppearanceTab = () => {
       alert(`File too large. Max allowed size is ${MAX_FILE_SIZE_MB} MB.`);
       return;
     }
+
     if (customBackgrounds.length === 6) {
       alert(`Too many uploads. Max allowed is 6 custom images.`);
       return;
@@ -80,8 +80,13 @@ export const AppearanceTab = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent<FileReader>) => {
-        const fileReader = event.target.result;
-        dispatch(setCurrentCustomBackground({ image: fileReader }));
+        // const fileReader = event.target.result;
+        const result = event.target?.result;
+        // dispatch(setCurrentCustomBackground({ image: fileReader }));
+        if (typeof result === "string") {
+          // ✅ Safe: result is now a Base64 string (Data URL)
+          dispatch(setCurrentCustomBackground({ image: result }));
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -113,7 +118,7 @@ export const AppearanceTab = () => {
               $isActive={currentBackground === bg}
               type="button"
               aria-label="Select background"
-              key={bg}
+              key={`${bg}-${index}`}
               onClick={() => handleImageChange(bg, "predefined")}>
               <Image src={bg} alt={`Background ${index + 1}`} width={300} height={300} />
             </BackgroundOption>
@@ -125,7 +130,7 @@ export const AppearanceTab = () => {
           <SectionHeading>Custom Backgrounds</SectionHeading>
           <BackgroundGrid>
             {customBackgrounds.map((bg, index) => (
-              <SingleBackground key={bg}>
+              <SingleBackground key={`${bg}-${index}`}>
                 <BackgroundOption
                   $isActive={currentBackground === bg}
                   type="button"

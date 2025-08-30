@@ -4,16 +4,12 @@ import { ThemeType } from "../styles/themes";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTheme } from "../redux/slices/appearanceSlice";
-import { RootState } from "../redux/store";
 import { GlobalStyles } from "../styles/GlobalStyles";
+import { appearanceSelectors } from "../redux/selectors/appearanceSelectors";
 
 export default function ThemeWrapper({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const currentTheme = useSelector((state: RootState) => state.appearance.currentTheme);
-  const currentBackground = useSelector((state: RootState) => state.appearance.currentBackground);
-  const backgroundBlur = useSelector((state: RootState) => state.appearance.backgroundBlur);
-  const backgroundDim = useSelector((state: RootState) => state.appearance.backgroundDim);
-
+  const { currentTheme, currentBackground, backgroundBlur, backgroundDim } = useSelector(appearanceSelectors);
   const [themeObject, setThemeObject] = useState<ThemeType>(null);
 
   useEffect(() => {
@@ -23,7 +19,7 @@ export default function ThemeWrapper({ children }: { children: React.ReactNode }
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     if (stored) {
-      dispatch(setCurrentTheme(stored));
+      dispatch(setCurrentTheme({ name: stored }));
     }
   }, [dispatch]);
 

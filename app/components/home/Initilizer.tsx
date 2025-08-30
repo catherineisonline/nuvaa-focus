@@ -7,21 +7,11 @@ import { useEffect } from "react";
 import { setupSettings } from "../../redux/slices/settingsSlice";
 import { initStreak, setCurrentTab } from "../../redux/slices/appSlice";
 import { initTasks, setCurrentTaskId } from "../../redux/slices/tasksSlice";
-import {
-  initilizecustomBackgrounds,
-  setCurrentBackground,
-} from "../../redux/slices/appearanceSlice";
-import {
-  initilizeIsQuotesShown,
-  setCurrentQuote,
-  setCustomQuote,
-} from "../../redux/slices/quotesSlice";
-import {
-  setMusicEnabled,
-  setMusicUrl,
-  setSelectedOption,
-} from "../../redux/slices/musicSlice";
+import { initilizecustomBackgrounds, setCurrentBackground } from "../../redux/slices/appearanceSlice";
+import { initilizeIsQuotesShown, setCurrentQuote, setCustomQuote } from "../../redux/slices/quotesSlice";
+import { setMusicEnabled, setMusicUrl, setSelectedOption } from "../../redux/slices/musicSlice";
 import { setOnboarding } from "../../redux/slices/onboardingSlice";
+import { appearanceSelectors } from "../../redux/selectors/appearanceSelectors";
 
 export const Initilizer = () => {
   const dispatch = useDispatch();
@@ -30,24 +20,12 @@ export const Initilizer = () => {
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
 
   const { tasks, currentTaskId } = useSelector(tasksSelectors);
-  const currentBackground = useSelector(
-    (state: RootState) => state.appearance.currentBackground
-  );
-  const customBackgrounds = useSelector(
-    (state: RootState) => state.appearance.customBackgrounds
-  );
-  const isQuotesShown = useSelector(
-    (state: RootState) => state.quotes.isQuotesShown
-  );
-  const customQuote = useSelector(
-    (state: RootState) => state.quotes.customQuote
-  );
-  const selectedOption = useSelector(
-    (state: RootState) => state.music.selectedOption
-  );
-  const musicEnabled = useSelector(
-    (state: RootState) => state.music.musicEnabled
-  );
+  const { currentBackground, customBackgrounds } = useSelector(appearanceSelectors);
+
+  const isQuotesShown = useSelector((state: RootState) => state.quotes.isQuotesShown);
+  const customQuote = useSelector((state: RootState) => state.quotes.customQuote);
+  const selectedOption = useSelector((state: RootState) => state.music.selectedOption);
+  const musicEnabled = useSelector((state: RootState) => state.music.musicEnabled);
   const musicUrl = useSelector((state: RootState) => state.music.musicUrl);
 
   useEffect(() => {
@@ -88,14 +66,10 @@ export const Initilizer = () => {
       dispatch(setCurrentTaskId({ id: JSON.parse(currentTaskStore) }));
     }
     if (currentBackgroundStore !== null) {
-      dispatch(
-        setCurrentBackground({ image: JSON.parse(currentBackgroundStore) })
-      );
+      dispatch(setCurrentBackground({ image: JSON.parse(currentBackgroundStore) }));
     }
     if (customBackgroundsStore !== null) {
-      dispatch(
-        initilizecustomBackgrounds({ data: JSON.parse(customBackgroundsStore) })
-      );
+      dispatch(initilizecustomBackgrounds({ data: JSON.parse(customBackgroundsStore) }));
     }
     if (isQuotesShownStore !== null) {
       dispatch(initilizeIsQuotesShown({ val: JSON.parse(isQuotesShownStore) }));
@@ -122,14 +96,8 @@ export const Initilizer = () => {
     localStorage.setItem("streak", JSON.stringify(streak));
     localStorage.setItem("tasks", JSON.stringify(tasks));
     localStorage.setItem("currentTaskId", JSON.stringify(currentTaskId));
-    localStorage.setItem(
-      "currentBackground",
-      JSON.stringify(currentBackground)
-    );
-    localStorage.setItem(
-      "customBackgrounds",
-      JSON.stringify(customBackgrounds)
-    );
+    localStorage.setItem("currentBackground", JSON.stringify(currentBackground));
+    localStorage.setItem("customBackgrounds", JSON.stringify(customBackgrounds));
     localStorage.setItem("isQuotesShown", JSON.stringify(isQuotesShown));
     localStorage.setItem("customQuote", JSON.stringify(customQuote));
     localStorage.setItem("selectedOption", JSON.stringify(selectedOption));
