@@ -7,6 +7,7 @@ export const TimerContainer = styled.div`
   grid-template-rows: 15rem 5rem;
   gap: 10px;
   max-width: 1440px;
+  min-width: 30rem;
   align-items: center;
   @media ${media.md} {
     grid-template-rows: 12rem 5rem;
@@ -18,8 +19,7 @@ export const ModeTabs = styled.div<{ $bgActive?: boolean }>`
   border-radius: var(--border-radius);
   padding: 10px;
   background-color: ${({ theme }) => theme.background};
-  box-shadow: ${({ $bgActive, theme }) =>
-    $bgActive ? undefined : theme.boxShadowInsetSoft};
+  box-shadow: ${({ $bgActive, theme }) => ($bgActive ? undefined : theme.boxShadowInsetSoft)};
   @media ${media.md} {
     height: 4rem;
   }
@@ -40,11 +40,9 @@ export const ModeTabButton = styled.button<{
   font-size: 1.1rem;
   font-weight: 800;
   font-family: var(--font-outfit);
-  background-color: ${({ $active, theme }) =>
-    $active ? theme.buttonBackgroundActive : "transparent"};
+  background-color: ${({ $active, theme }) => ($active ? theme.buttonBackgroundActive : "transparent")};
   border-radius: var(--border-radius);
-  box-shadow: ${({ $active, theme }) =>
-    $active ? theme.boxShadowOuterStrong : undefined};
+  box-shadow: ${({ $active, theme }) => ($active ? theme.boxShadowOuterStrong : undefined)};
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -98,10 +96,14 @@ export const ModeLabelTask = styled.p<{ $bgImage?: boolean }>`
 `;
 
 export const TimerDisplay = styled.time<{ $bgImage?: boolean }>`
-  font-size: clamp(6rem, 15vw, 14rem);
+  font-size: clamp(6rem, 13vw, 13rem);
   font-weight: 600;
   line-height: 7.5rem;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
+  @media ${media.md} {
+    font-size: clamp(6rem, 10vw, 10rem);
+    line-height: 2.5rem;
+  }
 `;
 export const TimeNow = styled(TimerDisplay)`
   font-size: clamp(5rem, 15vw, 14rem);
@@ -134,14 +136,9 @@ export const ControlButton = styled.button<{
   color: ${({ theme }) => theme.buttonText};
   justify-content: center;
   border-radius: var(--border-radius);
-  background-color: ${({ $active, theme }) =>
-    $active ? theme.buttonBackgroundActive : theme.background};
+  background-color: ${({ $active, theme }) => ($active ? theme.buttonBackgroundActive : theme.background)};
   box-shadow: ${({ $active, $bgImage, theme }) =>
-    $bgImage
-      ? undefined
-      : $active
-      ? theme.boxShadowInsetSoft
-      : theme.boxShadowOuter};
+    $bgImage ? undefined : $active ? theme.boxShadowInsetSoft : theme.boxShadowOuter};
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -150,8 +147,7 @@ export const ControlButton = styled.button<{
   }
   &:active {
     background-color: ${({ theme }) => theme.buttonBackgroundActive};
-    box-shadow: ${({ $bgImage, theme }) =>
-      $bgImage ? undefined : theme.boxShadowInsetSoft};
+    box-shadow: ${({ $bgImage, theme }) => ($bgImage ? undefined : theme.boxShadowInsetSoft)};
   }
   @media ${media.md} {
     max-width: 5rem;

@@ -1,6 +1,6 @@
 "use client";
-import { SquareArrowLeft } from "lucide-react";
-import "./Page.styled.tsx";
+
+import SquareArrowLeft from "lucide-react/dist/esm/icons/square-arrow-left";
 import {
   About,
   AboutSection,

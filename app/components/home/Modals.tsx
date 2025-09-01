@@ -1,12 +1,18 @@
 "use client";
 import React from "react";
-import MusicModal from "../music-modal/MusicModal";
-import SettingsModal from "../settings-modal/SettingsModal";
-import TaskModal from "../task-modal/TaskModal";
+import dynamic from "next/dynamic";
+
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
-import { ControlsModal } from "../controls-modal/ControlsModal";
-import { Onboarding } from "../onboarding/Onboarding";
+const ControlsModal = dynamic(() => import("../controls-modal/ControlsModal").then((mod) => mod.ControlsModal), {
+  ssr: false,
+});
+const TaskModal = dynamic(() => import("../task-modal/TaskModal").then((mod) => mod.TaskModal), { ssr: false });
+const MusicModal = dynamic(() => import("../music-modal/MusicModal").then((mod) => mod.MusicModal), { ssr: false });
+const SettingsModal = dynamic(() => import("../settings-modal/SettingsModal").then((mod) => mod.SettingsModal), {
+  ssr: false,
+});
+const Onboarding = dynamic(() => import("../onboarding/Onboarding").then((mod) => mod.Onboarding), { ssr: false });
 
 export const Modals = () => {
   const isTasksActive = useSelector((state: RootState) => state.navigation.isTasksActive);

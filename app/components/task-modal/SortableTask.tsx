@@ -1,15 +1,14 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Ban, Check, GripVertical, Pencil, Trash2 } from "lucide-react";
+
+import GripVertical from "lucide-react/dist/esm/icons/grip-vertical";
+import Check from "lucide-react/dist/esm/icons/check";
+import Ban from "lucide-react/dist/esm/icons/ban";
+import Pencil from "lucide-react/dist/esm/icons/pencil";
+import Trash2 from "lucide-react/dist/esm/icons/trash-2";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCurrentTaskId,
-  setEditingId,
-  setEditText,
-  toggleEdit,
-  updatedEdit,
-} from "../../redux/slices/tasksSlice";
+import { setCurrentTaskId, setEditingId, setEditText, toggleEdit, updatedEdit } from "../../redux/slices/tasksSlice";
 import { tasksSelectors } from "../../redux/selectors/tasksSelectors";
 import {
   CancelEditBtn,
@@ -31,22 +30,14 @@ type Task = {
   id: string;
   completed: boolean;
 };
-const SortableTask = ({
-  editingId,
-  task,
-  toggleTask,
-  currentTask,
-  deleteTask,
-  cancelEdit,
-}) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({
-      id: task,
-      transition: {
-        duration: 500,
-        easing: "cubic-bezier(0.25, 1, 0.5, 1)",
-      },
-    });
+const SortableTask = ({ editingId, task, toggleTask, currentTask, deleteTask, cancelEdit }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: task,
+    transition: {
+      duration: 500,
+      easing: "cubic-bezier(0.25, 1, 0.5, 1)",
+    },
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -75,23 +66,12 @@ const SortableTask = ({
     dispatch(toggleEdit({ id: task.id, text: task.text }));
   };
   return (
-    <TaskItem
-      as="div"
-      $edit={editingId}
-      ref={setNodeRef}
-      style={style}
-      {...attributes}>
+    <TaskItem as="div" $edit={editingId} ref={setNodeRef} style={style} {...attributes}>
       <TaskDragHandle {...listeners}>
         <GripVertical size={24} />
       </TaskDragHandle>
 
-      {!editingId && (
-        <TaskCheckbox
-          type="checkbox"
-          checked={task.completed}
-          onChange={() => toggleTask(task.id)}
-        />
-      )}
+      {!editingId && <TaskCheckbox type="checkbox" checked={task.completed} onChange={() => toggleTask(task.id)} />}
 
       {editingId === task.id ? (
         <TaskEdit>
@@ -123,22 +103,14 @@ const SortableTask = ({
             $current={currentTask && currentTask.id === task.id}
             onClick={() => setAsCurrentTask(task)}>
             {task.text}
-            {currentTask && currentTask.id === task.id && (
-              <CurrentIndicator>&#40;Current&#41;</CurrentIndicator>
-            )}
+            {currentTask && currentTask.id === task.id && <CurrentIndicator>&#40;Current&#41;</CurrentIndicator>}
           </TaskText>
 
           <TaskActions>
-            <TaskActionBtn
-              $type="edit"
-              onClick={() => startEditing(task)}
-              aria-label="Edit task">
+            <TaskActionBtn $type="edit" onClick={() => startEditing(task)} aria-label="Edit task">
               <Pencil size={20} />
             </TaskActionBtn>
-            <TaskActionBtn
-              $type="delete"
-              onClick={() => deleteTask(task.id)}
-              aria-label="Delete task">
+            <TaskActionBtn $type="delete" onClick={() => deleteTask(task.id)} aria-label="Delete task">
               <Trash2 size={20} />
             </TaskActionBtn>
           </TaskActions>

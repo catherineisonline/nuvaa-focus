@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ONBOARDING_STEPS } from "../../lib/constants";
 import { setNextStep, toggleModal } from "../../redux/slices/onboardingSlice";
 import { RootState } from "../../redux/store";
-import { X } from "lucide-react";
+
+import X from "lucide-react/dist/esm/icons/x";
 import {
   CloseButton,
   Modal,
@@ -21,6 +22,7 @@ import {
   SecondaryNavigationBtn,
 } from "./Onboarding.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
+import { useMemo } from "react";
 
 export const Onboarding = () => {
   const dispatch = useDispatch();
@@ -49,7 +51,10 @@ export const Onboarding = () => {
   };
 
   const currentStepData = ONBOARDING_STEPS[currentStep];
-  const Icon = currentStepData.icon;
+  // const Icon = currentStepData.icon;
+
+  const Icon = useMemo(() => currentStepData.icon, [currentStepData]);
+
   return (
     <Overlay onClick={handleOutsideClick}>
       <Modal $bgImage={isBackgroundActive}>

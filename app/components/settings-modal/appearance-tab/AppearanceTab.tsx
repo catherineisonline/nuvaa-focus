@@ -1,6 +1,6 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import { themes } from "../../../styles/themes";
+import { themeMeta } from "../../../styles/themes/themesMeta";
 import {
   removeBackground,
   removeCustomBackground,
@@ -10,7 +10,6 @@ import {
   setCurrentCustomBackground,
   setCurrentTheme,
 } from "../../../redux/slices/appearanceSlice";
-import { RootState } from "../../../redux/store";
 import {
   BackgroundGrid,
   BackgroundOption,
@@ -31,36 +30,23 @@ import {
   ThemeOption,
 } from "./Appearance.styled";
 import Image, { StaticImageData } from "next/image";
-import { Upload, X } from "lucide-react";
+
+import X from "lucide-react/dist/esm/icons/x";
+import Upload from "lucide-react/dist/esm/icons/upload";
 
 import { MAX_FILE_SIZE_BYTES, MAX_FILE_SIZE_MB } from "../../../lib/constants";
+import { appearanceSelectors } from "../../../redux/selectors/appearanceSelectors";
 export const AppearanceTab = () => {
   const dispatch = useDispatch();
-  const currentTheme = useSelector(
-    (state: RootState) => state.appearance.currentTheme
-  );
-  const currentBackground = useSelector(
-    (state: RootState) => state.appearance.currentBackground
-  );
-  const backgrounds = useSelector(
-    (state: RootState) => state.appearance.backgrounds
-  );
-  const customBackgrounds = useSelector(
-    (state: RootState) => state.appearance.customBackgrounds
-  );
-  const backgroundBlur = useSelector(
-    (state: RootState) => state.appearance.backgroundBlur
-  );
-  const backgroundDim = useSelector(
-    (state: RootState) => state.appearance.backgroundDim
-  );
+
+  const { currentTheme, currentBackground, backgroundBlur, backgroundDim, customBackgrounds, backgrounds } =
+    useSelector(appearanceSelectors);
+
   const handleThemeChange = (name: string) => {
+    localStorage.setItem("theme", name);
     dispatch(setCurrentTheme({ name: name }));
   };
-  const handleImageChange = (
-    image: string | StaticImageData,
-    action: string
-  ) => {
+  const handleImageChange = (image: string | StaticImageData, action: string) => {
     if (action === "predefined") {
       dispatch(setCurrentBackground({ image: image }));
     } else if (action === "custom") {
@@ -70,7 +56,7 @@ export const AppearanceTab = () => {
   const handleBackgroundRemoval = () => {
     dispatch(removeBackground());
   };
-  const handleCustomBackground = (src: string) => {
+  const handleCustomBackground = (src: string | StaticImageData) => {
     dispatch(removeCustomBackground({ src: src }));
   };
   const handleBackgroundBlur = (value: number) => {
@@ -86,6 +72,7 @@ export const AppearanceTab = () => {
       alert(`File too large. Max allowed size is ${MAX_FILE_SIZE_MB} MB.`);
       return;
     }
+
     if (customBackgrounds.length === 6) {
       alert(`Too many uploads. Max allowed is 6 custom images.`);
       return;
@@ -93,8 +80,10 @@ export const AppearanceTab = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent<FileReader>) => {
-        const fileReader = event.target.result;
-        dispatch(setCurrentCustomBackground({ image: fileReader }));
+        const result = event.target?.result;
+        if (typeof result === "string") {
+          dispatch(setCurrentCustomBackground({ image: result }));
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -104,7 +93,7 @@ export const AppearanceTab = () => {
       <SettingGroup>
         <SectionHeading>Color Themes</SectionHeading>
         <ThemeGrid>
-          {Object.values(themes).map((theme) => (
+          {themeMeta.map((theme) => (
             <ThemeOption
               type="button"
               key={theme.name}
@@ -126,14 +115,9 @@ export const AppearanceTab = () => {
               $isActive={currentBackground === bg}
               type="button"
               aria-label="Select background"
-              key={bg}
+              key={`${bg}-${index}`}
               onClick={() => handleImageChange(bg, "predefined")}>
-              <Image
-                src={bg}
-                alt={`Background ${index + 1}`}
-                width={300}
-                height={300}
-              />
+              <Image src={bg} alt={`Background ${index + 1}`} width={300} height={300} />
             </BackgroundOption>
           ))}
         </BackgroundGrid>
@@ -143,18 +127,13 @@ export const AppearanceTab = () => {
           <SectionHeading>Custom Backgrounds</SectionHeading>
           <BackgroundGrid>
             {customBackgrounds.map((bg, index) => (
-              <SingleBackground key={bg}>
+              <SingleBackground key={`${bg}-${index}`}>
                 <BackgroundOption
                   $isActive={currentBackground === bg}
                   type="button"
                   aria-label="Select background"
                   onClick={() => handleImageChange(bg, "custom")}>
-                  <Image
-                    src={bg}
-                    alt={`Background ${index + 1}`}
-                    width={300}
-                    height={300}
-                  />
+                  <Image src={bg} alt={`Background ${index + 1}`} width={300} height={300} />
                 </BackgroundOption>
                 <RemoveBackgroundButton aria-label="Remove this background">
                   <X onClick={() => handleCustomBackground(bg)} />
@@ -166,9 +145,7 @@ export const AppearanceTab = () => {
       )}
       <SettingGroup>
         {currentBackground && (
-          <RemoveCurrentBackground
-            onClick={handleBackgroundRemoval}
-            aria-label="Remove current background">
+          <RemoveCurrentBackground onClick={handleBackgroundRemoval} aria-label="Remove current background">
             Remove current background <X />
           </RemoveCurrentBackground>
         )}
@@ -187,12 +164,7 @@ export const AppearanceTab = () => {
               (max 2MB, max 1024px)
             </small>
           </label>
-          <FileUploadInput
-            type="file"
-            accept="image/*"
-            onChange={handleBackgroundUpload}
-            id="background-upload"
-          />
+          <FileUploadInput type="file" accept="image/*" onChange={handleBackgroundUpload} id="background-upload" />
         </FileUploadSection>
       </SettingGroup>
       <SettingGroup>

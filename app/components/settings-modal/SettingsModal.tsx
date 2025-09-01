@@ -1,6 +1,7 @@
 "use client";
 import "./Settings.styled.tsx";
-import { X } from "lucide-react";
+
+import X from "lucide-react/dist/esm/icons/x";
 import TimerTab from "./timer-tab/TimerTab";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, toggleModal } from "../../redux/slices/navigationSlice";
@@ -21,15 +22,11 @@ import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 import { FeaturesTab } from "./features-tab/FeaturesTab";
 import { AnalyticsTab } from "./analytics-tab/AnalyticsTab";
 
-const SettingsModal = () => {
+export const SettingsModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
-  const settingsTab = useSelector(
-    (state: RootState) => state.settings.settingsTab
-  );
-  const changesSavedMsg = useSelector(
-    (state: RootState) => state.app.changesSavedMsg
-  );
+  const settingsTab = useSelector((state: RootState) => state.settings.settingsTab);
+  const changesSavedMsg = useSelector((state: RootState) => state.app.changesSavedMsg);
 
   const handleSettingsTab = (tab: string) => {
     dispatch(updateSettingsTab({ tab: tab }));
@@ -46,44 +43,28 @@ const SettingsModal = () => {
 
   return (
     <Overlay onClick={handleOutsideClick}>
-      <Modal
-        $bgImage={isBackgroundActive}
-        role="dialog"
-        aria-labelledby="settings-title"
-        aria-modal="true">
+      <Modal $bgImage={isBackgroundActive} role="dialog" aria-labelledby="settings-title" aria-modal="true">
         <ModalHeader>
-          <ModalTitle id="settings-title">
-            Settings{changesSavedMsg && <span> {changesSavedMsg}</span>}
-          </ModalTitle>
+          <ModalTitle id="settings-title">Settings{changesSavedMsg && <span> {changesSavedMsg}</span>}</ModalTitle>
           <CloseButton aria-label="Close" onClick={handleModalClose}>
             <X size={32} />
           </CloseButton>
         </ModalHeader>
         <ModalBody>
           <SettingsTabs>
-            <TabButton
-              $active={settingsTab === "timer"}
-              onClick={() => handleSettingsTab("timer")}>
+            <TabButton $active={settingsTab === "timer"} onClick={() => handleSettingsTab("timer")}>
               Timer
             </TabButton>
-            <TabButton
-              $active={settingsTab === "appearance"}
-              onClick={() => handleSettingsTab("appearance")}>
+            <TabButton $active={settingsTab === "appearance"} onClick={() => handleSettingsTab("appearance")}>
               Appearance
             </TabButton>
-            <TabButton
-              $active={settingsTab === "features"}
-              onClick={() => handleSettingsTab("features")}>
+            <TabButton $active={settingsTab === "features"} onClick={() => handleSettingsTab("features")}>
               Features
             </TabButton>
-            <TabButton
-              $active={settingsTab === "analytics"}
-              onClick={() => handleSettingsTab("analytics")}>
+            <TabButton $active={settingsTab === "analytics"} onClick={() => handleSettingsTab("analytics")}>
               Analytics
             </TabButton>
-            <TabButton
-              $active={settingsTab === "account"}
-              onClick={() => handleSettingsTab("account")}>
+            <TabButton $active={settingsTab === "account"} onClick={() => handleSettingsTab("account")}>
               Account
             </TabButton>
           </SettingsTabs>
@@ -96,5 +77,3 @@ const SettingsModal = () => {
     </Overlay>
   );
 };
-
-export default SettingsModal;

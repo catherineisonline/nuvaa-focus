@@ -12,9 +12,7 @@ export const ModeTab = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
   const isRunning = useSelector((state: RootState) => state.pomodoro.isRunning);
-  const isRunningStopwatch = useSelector(
-    (state: RootState) => state.stopwatch.stopwatchIsRunning
-  );
+  const isRunningStopwatch = useSelector((state: RootState) => state.stopwatch.stopwatchIsRunning);
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
 
   const updateTab = (tab: string) => {
@@ -27,19 +25,13 @@ export const ModeTab = () => {
   };
   return (
     <ModeTabs $bgActive={isBackgroundActive}>
-      <ModeTabButton
-        $active={currentTab === "focusTime"}
-        onClick={() => updateTab("focusTime")}>
+      <ModeTabButton $active={currentTab === "focusTime"} onClick={() => updateTab("focusTime")}>
         Focus
       </ModeTabButton>
-      <ModeTabButton
-        $active={currentTab === "stopwatch"}
-        onClick={() => updateTab("stopwatch")}>
+      <ModeTabButton $active={currentTab === "stopwatch"} onClick={() => updateTab("stopwatch")}>
         Stopwatch
       </ModeTabButton>
-      <ModeTabButton
-        $active={currentTab === "clock"}
-        onClick={() => updateTab("clock")}>
+      <ModeTabButton $active={currentTab === "clock"} onClick={() => updateTab("clock")}>
         Clock
       </ModeTabButton>
     </ModeTabs>

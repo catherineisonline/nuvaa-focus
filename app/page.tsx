@@ -1,10 +1,8 @@
 import React from "react";
-import Header from "./components/header/Header";
 import { ModeTab } from "./components/home/ModeTab";
 import { ModeTime } from "./components/home/ModeTime";
-import { Initilizer } from "./components/home/Initilizer";
-import { Modals } from "./components/home/Modals";
-import { MainWrapper, Overlay } from ".//Page.styled";
+
+import { MainWrapper } from ".//Page.styled";
 
 export default function Page() {
   return (
@@ -13,7 +11,6 @@ export default function Page() {
         <ModeTab />
         <ModeTime />
       </MainWrapper>
-    
     </div>
   );
 }

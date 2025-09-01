@@ -1,5 +1,9 @@
 "use client";
-import { Plus, Trash2, CircleMinus, X } from "lucide-react";
+import Plus from "lucide-react/dist/esm/icons/plus";
+import Trash2 from "lucide-react/dist/esm/icons/trash-2";
+import CircleMinus from "lucide-react/dist/esm/icons/circle-minus";
+import X from "lucide-react/dist/esm/icons/x";
+
 import "./Tasks.styled.tsx";
 import {
   DndContext,
@@ -15,11 +19,7 @@ import {
   DragEndEvent,
 } from "@dnd-kit/core";
 
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-  sortableKeyboardCoordinates,
-} from "@dnd-kit/sortable";
+import { SortableContext, verticalListSortingStrategy, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import SortableTask from "./SortableTask";
 import SortableTaskDrag from "./SortableDrag";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,11 +61,10 @@ import {
 } from "./Tasks.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
-const TaskModal = () => {
+export const TaskModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
-  const { editingId, newTaskText, tasks, activeDrag } =
-    useSelector(tasksSelectors);
+  const { editingId, newTaskText, tasks, activeDrag } = useSelector(tasksSelectors);
   const currentTask = useSelector((state: RootState) =>
     state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId)
   );
@@ -148,10 +147,7 @@ const TaskModal = () => {
 
   return (
     <Overlay onClick={handleOutsideClick}>
-      <Modal
-        $bgImage={isBackgroundActive}
-        role="dialog"
-        aria-labelledby="tasks-title">
+      <Modal $bgImage={isBackgroundActive} role="dialog" aria-labelledby="tasks-title">
         <ModalHeader>
           <h2 id="tasks-title">Tasks</h2>
           <CloseBtn aria-label="Close" onClick={handleModalClose}>
@@ -188,9 +184,7 @@ const TaskModal = () => {
                 <CurrentTaskItem>
                   <span>{currentTask.text}</span>
                   {!editingId && (
-                    <RemoveCurrentBtn
-                      aria-label="Remove current task"
-                      onClick={removeCurrentTask}>
+                    <RemoveCurrentBtn aria-label="Remove current task" onClick={removeCurrentTask}>
                       <CircleMinus size={20} />
                     </RemoveCurrentBtn>
                   )}
@@ -211,11 +205,7 @@ const TaskModal = () => {
                     strategy={verticalListSortingStrategy}>
                     {activeDrag && (
                       <DragOverlay>
-                        <SortableTaskDrag
-                          key={activeDrag.id}
-                          task={activeDrag.id}
-                          currentTask={currentTask}
-                        />
+                        <SortableTaskDrag key={activeDrag.id} task={activeDrag.id} currentTask={currentTask} />
                       </DragOverlay>
                     )}
                     {activeTasks.map((task) => (
@@ -240,16 +230,9 @@ const TaskModal = () => {
                 <TaskList>
                   {completedTasks.map((task) => (
                     <TaskItem $completed={true} key={task.id}>
-                      <TaskCheckbox
-                        type="checkbox"
-                        checked={task.completed}
-                        onChange={() => toggleTask(task.id)}
-                      />
+                      <TaskCheckbox type="checkbox" checked={task.completed} onChange={() => toggleTask(task.id)} />
                       <TaskText $completed={true}>{task.text}</TaskText>
-                      <TaskActionBtn
-                        $type="delete"
-                        onClick={() => handleDelete(task.id)}
-                        aria-label="Delete task">
+                      <TaskActionBtn $type="delete" onClick={() => handleDelete(task.id)} aria-label="Delete task">
                         <Trash2 size={24} />
                       </TaskActionBtn>
                     </TaskItem>
@@ -264,5 +247,3 @@ const TaskModal = () => {
     </Overlay>
   );
 };
-
-export default TaskModal;

@@ -27,8 +27,7 @@ export const Modal = styled.div<{ $bgImage?: boolean }>`
   padding: 1.5rem;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
-  box-shadow: ${({ $bgImage, theme }) =>
-    $bgImage ? undefined : theme.boxShadowOuter};
+  box-shadow: ${({ $bgImage, theme }) => ($bgImage ? undefined : theme.boxShadowOuter)};
   @media ${media.md} {
     max-width: 100%;
     max-height: 100%;
@@ -123,8 +122,7 @@ export const TabButton = styled.button<{ $active?: boolean }>`
   transition: var(--transition);
   border-radius: var(--border-radius);
   color: ${({ $active, theme }) => ($active ? theme.highlight : theme.text)};
-  background-color: ${({ $active, theme }) =>
-    $active ? theme.background : "transparent"};
+  background-color: ${({ $active, theme }) => ($active ? theme.background : "transparent")};
   font-family: var(--font-outfit);
   font-size: 1.1rem;
   font-weight: 800;
@@ -132,8 +130,7 @@ export const TabButton = styled.button<{ $active?: boolean }>`
   white-space: nowrap;
   min-width: 5rem;
   text-align: center;
-  box-shadow: ${({ $active, theme }) =>
-    $active ? theme.boxShadowOuterStrong : undefined};
+  box-shadow: ${({ $active, theme }) => ($active ? theme.boxShadowOuterStrong : undefined)};
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {

@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import { media } from "../../../styles/breakpoints";
 import { GroupBase, StylesConfig } from "react-select";
-import { ThemeType } from "../../../styles/themes";
+import { ThemeType } from "../../../types/themes";
 import { OptionType } from "../../../types/react-select";
 
 export const SettingsContent = styled.form`
@@ -52,9 +52,7 @@ export const CheckboxLabel = styled.label`
   font-size: 1rem;
 `;
 
-export const createCustomStyles = (
-  theme: ThemeType
-): StylesConfig<OptionType, false, GroupBase<OptionType>> => ({
+export const createCustomStyles = (theme: ThemeType): StylesConfig<OptionType, false, GroupBase<OptionType>> => ({
   control: (provided) => ({
     ...provided,
     backgroundColor: theme.inputInner,

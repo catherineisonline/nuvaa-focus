@@ -34,8 +34,8 @@ export const ErrorContent = styled.section<{ $bgImage: boolean }>`
   width: 100%;
   max-width: 65vw;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
-  background: ${({ $bgImage }) => ($bgImage ? "var(--shadow-light)" : "transparent")};
-  backdrop-filter: ${({ $bgImage }) => ($bgImage ? "blur(5px)" : undefined)};
+  background-color: ${({ $bgImage }) => ($bgImage ? "var(--background-glass)" : "transparent")};
+  backdrop-filter: ${({ $bgImage }) => ($bgImage ? "blur(2px)" : undefined)};
   text-align: center;
   h2 {
     font-size: 3rem;

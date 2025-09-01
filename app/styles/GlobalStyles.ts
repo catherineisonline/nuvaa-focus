@@ -1,8 +1,9 @@
 "use client";
+import { StaticImageData } from "next/dist/shared/lib/get-img-props";
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle<{
-  $bgImage?: string;
+  $bgImage?: string | StaticImageData;
   $backgroundDim: number;
   $backgroundBlur: number;
 }>`
@@ -88,8 +89,7 @@ body {
   min-height: 100vh;
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
-   background-image: ${({ $bgImage }) =>
-     $bgImage ? `url(${$bgImage})` : "none"};
+   background-image: ${({ $bgImage }) => ($bgImage ? `url(${$bgImage})` : "none")};
    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

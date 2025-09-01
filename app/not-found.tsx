@@ -1,6 +1,7 @@
 "use client";
 import { ErrorContent, ErrorContentList, GoBack, MainWrapper } from "./Page.styled";
-import { ArrowUpRight } from "lucide-react";
+
+import ArrowUpRight from "lucide-react/dist/esm/icons/arrow-up-right";
 import { useBackgroundStatus } from "./hooks/useBackgroundStatus";
 
 export default function NotFound() {
