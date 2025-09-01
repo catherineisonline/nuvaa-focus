@@ -28,8 +28,7 @@ export const Modal = styled.div<{ $bgImage?: boolean }>`
   padding: 1.5rem;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
-  box-shadow: ${({ $bgImage, theme }) =>
-    $bgImage ? undefined : theme.boxShadowOuter};
+  box-shadow: ${({ $bgImage, theme }) => ($bgImage ? undefined : theme.boxShadowOuter)};
   @media ${media.md} {
     max-width: 100%;
     max-height: 100%;
@@ -52,7 +51,7 @@ export const ModalHeader = styled.header`
     gap: 10px;
     color: ${({ theme }) => theme.text};
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 export const ModalBody = styled.div`
@@ -137,7 +136,7 @@ export const CurrentTaskSection = styled.div`
     margin: 0 0 12px 0;
     font-size: 1.2rem;
     color: ${({ theme }) => theme.text};
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 
@@ -191,7 +190,7 @@ export const TaskListSection = styled.section`
     margin: 0 0 12px 0;
     font-size: 1.2rem;
     color: ${({ theme }) => theme.text};
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 
@@ -250,8 +249,7 @@ export const TaskText = styled.span<{
   overflow: hidden;
   white-space: wrap;
   word-break: break-word;
-  text-decoration: ${({ $completed }) =>
-    $completed ? "line-through" : "none"};
+  text-decoration: ${({ $completed }) => ($completed ? "line-through" : "none")};
   opacity: ${({ $completed }) => ($completed ? 0.6 : 1)};
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -262,7 +260,7 @@ export const TaskText = styled.span<{
 
 export const CurrentIndicator = styled.span`
   opacity: 0.8;
-  font-weight: 600;
+  font-weight: 500;
   flex-shrink: 0;
   margin-left: 10px;
 `;
@@ -342,11 +340,7 @@ export const TaskActionBtn = styled.button<{ $type?: "edit" | "delete" }>`
   align-items: center;
   justify-content: center;
   color: ${({ $type, theme }) =>
-    $type === "edit"
-      ? theme.buttonText
-      : $type === "delete"
-      ? theme.highlight
-      : "inherit"};
+    $type === "edit" ? theme.buttonText : $type === "delete" ? theme.highlight : "inherit"};
 `;
 
 export const CompletedSection = styled.section`

@@ -49,7 +49,7 @@ export const AnalyticsCard = styled.article`
 
 export const AnalyticsValue = styled.p`
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 500;
   color: ${({ theme }) => theme.text};
 `;
 
@@ -70,7 +70,7 @@ export const DayProgress = styled.article`
 
   h4 {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     color: ${({ theme }) => theme.text};
   }
 `;
@@ -83,7 +83,7 @@ export const DayStats = styled.div`
 
 export const PomodoroCount = styled.p`
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: ${({ theme }) => theme.text};
 `;
 

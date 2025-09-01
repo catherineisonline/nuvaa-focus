@@ -66,7 +66,7 @@ export const PomodoroCounter = styled.p`
   display: flex;
   align-items: center;
   gap: 4px;
-  font-weight: 600;
+  font-weight: 500;
   color: ${({ theme }) => theme.text};
   font-size: 1.5rem;
 

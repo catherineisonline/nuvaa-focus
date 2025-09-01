@@ -51,7 +51,7 @@ export const ModalTitle = styled.h2`
   gap: 10px;
   color: ${({ theme }) => theme.text};
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 500;
 
   span {
     font-size: 1rem;

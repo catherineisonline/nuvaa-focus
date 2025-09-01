@@ -97,7 +97,7 @@ export const ModeLabelTask = styled.p<{ $bgImage?: boolean }>`
 
 export const TimerDisplay = styled.time<{ $bgImage?: boolean }>`
   font-size: clamp(6rem, 13vw, 13rem);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 7.5rem;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
   @media ${media.md} {

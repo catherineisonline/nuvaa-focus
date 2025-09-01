@@ -30,8 +30,7 @@ export const Modal = styled.div<{ $bgImage?: boolean; $hideModal: boolean }>`
   padding: 1.5rem;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
-  box-shadow: ${({ $bgImage, theme }) =>
-    $bgImage ? undefined : theme.boxShadowOuter};
+  box-shadow: ${({ $bgImage, theme }) => ($bgImage ? undefined : theme.boxShadowOuter)};
   @media ${media.md} {
     max-width: 100%;
     max-height: 100%;
@@ -53,7 +52,7 @@ export const ModalHeader = styled.header`
     gap: 10px;
     color: ${({ theme }) => theme.text};
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 export const ModalBody = styled.div`
@@ -95,7 +94,7 @@ export const MusicOptions = styled.div<{ $bgActive: boolean }>`
     margin: 0 0 20px 0;
     color: ${({ theme }) => theme.text};
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 
@@ -109,11 +108,9 @@ export const MusicOption = styled.div<{ $active: boolean }>`
   font-size: 1.1rem;
   font-weight: 800;
   font-family: var(--font-outfit);
-  background-color: ${({ $active, theme }) =>
-    $active ? theme.buttonBackgroundActive : "transparent"};
+  background-color: ${({ $active, theme }) => ($active ? theme.buttonBackgroundActive : "transparent")};
   border-radius: var(--border-radius);
-  box-shadow: ${({ $active, theme }) =>
-    $active ? theme.boxShadowOuterStrong : undefined};
+  box-shadow: ${({ $active, theme }) => ($active ? theme.boxShadowOuterStrong : undefined)};
 
   &:hover {
     color: ${({ theme }) => theme.highlight};
@@ -141,7 +138,7 @@ export const OptionText = styled.div`
   h4 {
     margin: 0 0 4px 0;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   p {
@@ -183,7 +180,7 @@ export const UrlHelp = styled.div`
 
   p {
     margin: 0 0 8px 0;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   ul {
@@ -221,7 +218,7 @@ export const MusicPlayer = styled.div`
     margin: 0 0 1rem 0;
     color: ${({ theme }) => theme.text};
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 export const SpotifyPlayer = styled(MusicPlayer)`
@@ -236,7 +233,7 @@ export const MusicLink = styled.a`
   padding: 12px 20px;
   border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   &:hover {
     transform: translateY(-1px);
   }

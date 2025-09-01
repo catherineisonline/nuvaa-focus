@@ -47,7 +47,7 @@ export const AboutSection = styled.section`
 `;
 export const AboutSectionHeading = styled.h2<{ $bgImage: boolean }>`
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   color: ${({ theme, $bgImage }) => ($bgImage ? theme.background : theme.text)};
   @media ${media.md} {
@@ -93,7 +93,7 @@ export const AboutStep = styled.li`
 
 export const AboutStepHeading = styled.h3`
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 500;
   color: ${({ theme }) => theme.background};
   margin-bottom: 16px;
 `;
