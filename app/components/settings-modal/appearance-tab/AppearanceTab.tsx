@@ -1,6 +1,6 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import { themeMeta } from "../../../styles/themes";
+import { themeMeta } from "../../../styles/themes/themesMeta";
 import {
   removeBackground,
   removeCustomBackground,
@@ -80,11 +80,8 @@ export const AppearanceTab = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event: ProgressEvent<FileReader>) => {
-        // const fileReader = event.target.result;
         const result = event.target?.result;
-        // dispatch(setCurrentCustomBackground({ image: fileReader }));
         if (typeof result === "string") {
-          // ✅ Safe: result is now a Base64 string (Data URL)
           dispatch(setCurrentCustomBackground({ image: result }));
         }
       };

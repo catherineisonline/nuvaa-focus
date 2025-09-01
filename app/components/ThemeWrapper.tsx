@@ -1,6 +1,6 @@
 "use client";
 import { ThemeProvider } from "styled-components";
-import { ThemeType } from "../styles/themes";
+import { ThemeType } from "../types/themes";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTheme } from "../redux/slices/appearanceSlice";
@@ -13,7 +13,7 @@ export default function ThemeWrapper({ children }: { children: React.ReactNode }
   const [themeObject, setThemeObject] = useState<ThemeType>(null);
 
   useEffect(() => {
-    import(`../styles/themes`).then((mod) => setThemeObject(mod[currentTheme]));
+    import(`../styles/themes/${currentTheme}`).then((mod) => setThemeObject(mod[currentTheme]));
   }, [currentTheme]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function ThemeWrapper({ children }: { children: React.ReactNode }
     if (stored) {
       dispatch(setCurrentTheme({ name: stored }));
     }
-  }, [dispatch]);
+  }, [dispatch, themeObject]);
 
   if (!currentTheme || !themeObject) return null;
 
