@@ -50,7 +50,7 @@ export const ModalTitle = styled.h2`
   gap: 10px;
   color: ${({ theme }) => theme.text};
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 500;
 
   span {
     font-size: 1rem;
@@ -103,7 +103,7 @@ export const ModalStepsContent = styled.div`
   h3 {
     font-size: 1.5rem;
     color: ${({ theme }) => theme.text};
-    font-weight: 600;
+    font-weight: 500;
   }
   p {
     color: ${({ theme }) => theme.text};

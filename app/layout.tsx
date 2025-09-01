@@ -26,6 +26,7 @@ export const metadata = {
   description: "Your productivity buddy",
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
   },
 };
 
