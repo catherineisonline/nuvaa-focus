@@ -21,14 +21,21 @@ import { AppearanceTab } from "./appearance-tab/AppearanceTab";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 import { FeaturesTab } from "./features-tab/FeaturesTab";
 import { AnalyticsTab } from "./analytics-tab/AnalyticsTab";
+import { useRef } from "react";
 
 export const SettingsModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
   const settingsTab = useSelector((state: RootState) => state.settings.settingsTab);
   const changesSavedMsg = useSelector((state: RootState) => state.app.changesSavedMsg);
+  const lastTabRef = useRef<HTMLElement>(null);
 
   const handleSettingsTab = (tab: string) => {
+    if (tab === "account") {
+      if (lastTabRef.current) {
+        lastTabRef.current.scrollLeft = lastTabRef.current.scrollWidth;
+      }
+    }
     dispatch(updateSettingsTab({ tab: tab }));
   };
 
@@ -51,7 +58,7 @@ export const SettingsModal = () => {
           </CloseButton>
         </ModalHeader>
         <ModalBody>
-          <SettingsTabs>
+          <SettingsTabs ref={lastTabRef}>
             <TabButton $active={settingsTab === "timer"} onClick={() => handleSettingsTab("timer")}>
               Timer
             </TabButton>

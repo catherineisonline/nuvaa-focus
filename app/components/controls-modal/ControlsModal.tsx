@@ -2,8 +2,7 @@
 
 import CircleQuestionMark from "lucide-react/dist/esm/icons/circle-question-mark";
 import ListTodo from "lucide-react/dist/esm/icons/list-todo";
-import Maximize from "lucide-react/dist/esm/icons/maximize";
-import Minimize from "lucide-react/dist/esm/icons/minimize";
+
 import Music from "lucide-react/dist/esm/icons/music";
 import Settings from "lucide-react/dist/esm/icons/settings";
 
@@ -13,16 +12,11 @@ import { toggleModal } from "../../redux/slices/navigationSlice";
 import { HamburgerButton } from "../header/Hamburger";
 import { HamburgerControls, IconButton, HamburgerModal, Title } from "./ControlsModal.style";
 import { setHideModal } from "../../redux/slices/musicSlice";
-import Link from "next/link";
 
 export const ControlsModal = () => {
   const dispatch = useDispatch();
-  const isFullscreen = useSelector((state: RootState) => state.navigation.isFullscreen);
   const hideModal = useSelector((state: RootState) => state.music.hideModal);
 
-  const handleFullscreen = () => {
-    dispatch(toggleModal({ target: "isFullscreen" }));
-  };
   const handleTasks = () => {
     dispatch(toggleModal({ target: "isTasksActive" }));
   };
@@ -58,11 +52,6 @@ export const ControlsModal = () => {
         <li>
           <IconButton onClick={handleMusic} aria-label="Music">
             <Music /> Music
-          </IconButton>
-        </li>
-        <li>
-          <IconButton onClick={handleFullscreen} aria-label={isFullscreen ? "Maximize screen" : "Minimize screen"}>
-            {isFullscreen ? <Maximize /> : <Minimize />} Toggle Fullscreen
           </IconButton>
         </li>
         <li>

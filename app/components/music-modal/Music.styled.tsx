@@ -64,6 +64,7 @@ export const ModalBody = styled.div`
   padding-bottom: 20rem;
   @media ${media.md} {
     padding-bottom: 2rem;
+    gap: 1rem;
   }
 `;
 
@@ -79,6 +80,9 @@ export const CloseBtn = styled.button`
     &:hover {
       background-color: var(--color-glass);
     }
+  }
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.highlight};
   }
 `;
 
@@ -99,6 +103,7 @@ export const MusicOptions = styled.div<{ $bgActive: boolean }>`
 `;
 
 export const MusicOption = styled.div<{ $active: boolean }>`
+  position: relative;
   border: none;
   padding: 20px;
   cursor: pointer;
@@ -115,6 +120,10 @@ export const MusicOption = styled.div<{ $active: boolean }>`
   &:hover {
     color: ${({ theme }) => theme.highlight};
   }
+
+  &:has(input[type="radio"]:focus-visible) {
+    outline: 3px solid ${({ theme }) => theme.highlight};
+  }
 `;
 
 export const RadioOption = styled.label`
@@ -125,8 +134,12 @@ export const RadioOption = styled.label`
 `;
 export const HiddenRadio = styled.input.attrs({ type: "radio" })`
   position: absolute;
+  top: 0;
+  left: 0;
   opacity: 0;
   pointer-events: none;
+  width: 100%;
+  height: 100%;
 `;
 export const OptionContent = styled.div`
   display: flex;

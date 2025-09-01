@@ -37,7 +37,7 @@ body {
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-lexend);
-  overflow: hidden;
+  overflowX: hidden;
 
 }
 body::-webkit-scrollbar {
