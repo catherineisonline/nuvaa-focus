@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { media } from "../../styles/breakpoints";
 
 export const HamburgerModal = styled.div`
   position: fixed;

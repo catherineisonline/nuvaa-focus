@@ -37,6 +37,7 @@ import {
 import { CustomPlayer } from "./CustomPlayer";
 import { useEffect } from "react";
 import { SpotifyPlayer } from "./SpotifyPlayer";
+import { FocusTrap } from "focus-trap-react";
 type LinkType = "youtube" | "spotify" | "vimeo" | "apple-music" | "unknown";
 
 export const MusicModal = () => {
@@ -137,6 +138,7 @@ export const MusicModal = () => {
     }
   };
   return (
+    // <FocusTrap>
     <Overlay onClick={handleOutsideClick} $hideModal={hideModal}>
       <Modal $hideModal={hideModal} $bgImage={isBackgroundActive} role="dialog" aria-labelledby="music-title">
         <ModalHeader>

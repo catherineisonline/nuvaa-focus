@@ -11,7 +11,7 @@ export const SettingsContent = styled.form`
   gap: 2rem;
   padding-bottom: 10rem;
   @media ${media.md} {
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
   }
 `;
 

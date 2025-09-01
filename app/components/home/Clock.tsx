@@ -3,13 +3,7 @@ import { setupDateTime } from "../../redux/slices/clockSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import {
-  ModeLabel,
-  TimeNow,
-  TimerContainer,
-  TimerContentCircle,
-  TimerDisplay,
-} from "./Page.styled";
+import { ModeLabel, TimeNow, TimerContainer, TimerContentCircle, TimerDisplay } from "./Page.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 
 const Clock = () => {

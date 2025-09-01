@@ -87,6 +87,7 @@ export const ModalBody = styled.div`
   @media ${media.md} {
     flex-direction: column;
     max-height: 85vh;
+    gap: 1rem;
   }
 `;
 
@@ -100,6 +101,7 @@ export const SettingsTabs = styled.section`
   min-width: auto;
   margin-bottom: 10rem;
   border-radius: var(--border-radius);
+  scroll-behavior: smooth;
   background-color: ${({ theme }) => theme.backgroundSecondary};
   box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   @media ${media.md} {

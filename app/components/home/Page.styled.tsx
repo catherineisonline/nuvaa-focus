@@ -11,6 +11,7 @@ export const TimerContainer = styled.div`
   align-items: center;
   @media ${media.md} {
     grid-template-rows: 12rem 5rem;
+    min-width: 20rem;
   }
 `;
 

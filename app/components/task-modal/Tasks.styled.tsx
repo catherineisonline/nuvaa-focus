@@ -63,6 +63,7 @@ export const ModalBody = styled.div`
   gap: 2rem;
   @media ${media.md} {
     max-height: 85vh;
+    gap: 1rem;
   }
 `;
 export const AddTaskSection = styled.section`
@@ -116,6 +117,9 @@ export const AddTaskButton = styled.button`
   &:active:not(:disabled) {
     box-shadow: ${({ theme }) => theme.boxShadowInsetSoft};
   }
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.highlight};
+  }
 `;
 
 export const TasksSection = styled.section`
@@ -158,7 +162,9 @@ export const CurrentTaskItem = styled.div`
     white-space: wrap;
     word-break: break-word;
   }
-
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.highlight};
+  }
   @media ${media.sm} {
     align-items: flex-start;
   }
@@ -186,6 +192,7 @@ export const RemoveCurrentBtn = styled.button`
 
 export const TaskListSection = styled.section`
   max-height: 95vh;
+  padding: 5px;
   h3 {
     margin: 0 0 12px 0;
     font-size: 1.2rem;
@@ -205,6 +212,10 @@ export const TaskItem = styled.li<{ $edit?: boolean; $completed?: boolean }>`
   align-items: center;
   gap: 10px;
   opacity: ${({ $completed }) => ($completed ? 0.7 : 1)};
+
+  &:focus-visible {
+    outline: none;
+  }
 `;
 
 export const DragPreview = styled.div`
@@ -232,6 +243,10 @@ export const TaskCheckbox = styled.input`
   width: 1rem;
   height: 1rem;
   cursor: pointer;
+
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.highlight};
+  }
 `;
 
 export const TaskText = styled.span<{
@@ -320,6 +335,10 @@ export const TaskActions = styled.div`
     ${TaskItem}:hover & {
       opacity: 1;
     }
+    ${TaskItem}:focus-within &,
+    ${TaskItem} &:focus-visible {
+      opacity: 1;
+    }
   }
 
   @media ${media.md} {
@@ -341,6 +360,13 @@ export const TaskActionBtn = styled.button<{ $type?: "edit" | "delete" }>`
   justify-content: center;
   color: ${({ $type, theme }) =>
     $type === "edit" ? theme.buttonText : $type === "delete" ? theme.highlight : "inherit"};
+
+  &:focus-visible {
+    svg {
+      transform: scale(1.4);
+    }
+    outline: none;
+  }
 `;
 
 export const CompletedSection = styled.section`
@@ -367,6 +393,9 @@ export const CloseBtn = styled.button`
   transition: var(--transition);
   color: ${({ theme }) => theme.text};
 
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.highlight};
+  }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       background-color: var(--color-glass);

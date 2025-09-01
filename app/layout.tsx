@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
           <StyledComponentsRegistry>
             <ThemeWrapper>
               <Initilizer />
-              <Overlay />
+              {/* <Overlay /> */}
               <Header />
               {children}
               <Modals />
