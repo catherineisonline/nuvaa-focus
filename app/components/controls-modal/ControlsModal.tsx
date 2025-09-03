@@ -2,38 +2,29 @@
 
 import CircleQuestionMark from "lucide-react/dist/esm/icons/circle-question-mark";
 import ListTodo from "lucide-react/dist/esm/icons/list-todo";
-
-import Music from "lucide-react/dist/esm/icons/music";
 import Settings from "lucide-react/dist/esm/icons/settings";
-
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import { toggleModal } from "../../redux/slices/navigationSlice";
 import { HamburgerButton } from "../header/Hamburger";
 import { HamburgerControls, IconButton, HamburgerModal, Title } from "./ControlsModal.style";
-import { setHideModal } from "../../redux/slices/musicSlice";
+import { setIsMusicPlaying } from "../../redux/slices/settingsSlice";
+import { RootState } from "../../redux/store";
 
 export const ControlsModal = () => {
   const dispatch = useDispatch();
-  const hideModal = useSelector((state: RootState) => state.music.hideModal);
-
+  const isMusicPlaying = useSelector((state: RootState) => state.settings.isMusicPlaying);
   const handleTasks = () => {
     dispatch(toggleModal({ target: "isTasksActive" }));
   };
-  const handleMusic = () => {
-    if (hideModal) {
-      dispatch(setHideModal({ value: false }));
+
+  const handleSettings = () => {
+    if (!isMusicPlaying) {
+      dispatch(toggleModal({ target: "isSettingsActive" }));
     } else {
-      dispatch(toggleModal({ target: "isMusicActive" }));
+      dispatch(setIsMusicPlaying({ value: false }));
     }
   };
 
-  const handleSettings = () => {
-    dispatch(toggleModal({ target: "isSettingsActive" }));
-  };
-  const handleRedirection = () => {
-    dispatch(setHideModal({ value: false }));
-  };
   return (
     <HamburgerModal>
       <HamburgerButton />
@@ -50,17 +41,12 @@ export const ControlsModal = () => {
           </IconButton>
         </li>
         <li>
-          <IconButton onClick={handleMusic} aria-label="Music">
-            <Music /> Music
-          </IconButton>
-        </li>
-        <li>
           <IconButton onClick={handleSettings} aria-label="Settings">
             <Settings /> Settings
           </IconButton>
         </li>
         <li>
-          <IconButton as="a" aria-label="How it works" href="/about" onClick={handleRedirection}>
+          <IconButton as="a" aria-label="How it works" href="/about">
             <CircleQuestionMark /> How it works
           </IconButton>
         </li>

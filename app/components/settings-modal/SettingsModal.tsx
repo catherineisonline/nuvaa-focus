@@ -5,7 +5,7 @@ import X from "lucide-react/dist/esm/icons/x";
 import TimerTab from "./timer-tab/TimerTab";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, toggleModal } from "../../redux/slices/navigationSlice";
-import { updateSettingsTab } from "../../redux/slices/settingsSlice";
+import { setIsMusicPlaying, updateSettingsTab } from "../../redux/slices/settingsSlice";
 import { RootState } from "../../redux/store";
 import {
   CloseButton,
@@ -22,12 +22,15 @@ import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 import { FeaturesTab } from "./features-tab/FeaturesTab";
 import { AnalyticsTab } from "./analytics-tab/AnalyticsTab";
 import { useRef } from "react";
+import { MusicTab } from "./music-tab/MusicTab";
 
 export const SettingsModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
   const settingsTab = useSelector((state: RootState) => state.settings.settingsTab);
+  const isMusicPlaying = useSelector((state: RootState) => state.settings.isMusicPlaying);
   const changesSavedMsg = useSelector((state: RootState) => state.app.changesSavedMsg);
+  const musicEnabled = useSelector((state: RootState) => state.music.musicEnabled);
   const lastTabRef = useRef<HTMLElement>(null);
 
   const handleSettingsTab = (tab: string) => {
@@ -40,17 +43,28 @@ export const SettingsModal = () => {
   };
 
   const handleOutsideClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
+    if (e.target === e.currentTarget && !musicEnabled) {
       dispatch(toggleModal({ target: "isSettingsActive" }));
+    } else if (e.target === e.currentTarget) {
+      dispatch(setIsMusicPlaying({ value: true }));
     }
   };
   const handleModalClose = () => {
-    dispatch(closeModal({ target: "isSettingsActive" }));
+    if (!musicEnabled) {
+      dispatch(closeModal({ target: "isSettingsActive" }));
+    } else {
+      dispatch(setIsMusicPlaying({ value: true }));
+    }
   };
 
   return (
-    <Overlay onClick={handleOutsideClick}>
-      <Modal $bgImage={isBackgroundActive} role="dialog" aria-labelledby="settings-title" aria-modal="true">
+    <Overlay onClick={handleOutsideClick} $isMusicPlaying={isMusicPlaying}>
+      <Modal
+        $isMusicPlaying={isMusicPlaying}
+        $bgImage={isBackgroundActive}
+        role="dialog"
+        aria-labelledby="settings-title"
+        aria-modal="true">
         <ModalHeader>
           <ModalTitle id="settings-title">Settings{changesSavedMsg && <span> {changesSavedMsg}</span>}</ModalTitle>
           <CloseButton aria-label="Close" onClick={handleModalClose}>
@@ -65,6 +79,9 @@ export const SettingsModal = () => {
             <TabButton $active={settingsTab === "appearance"} onClick={() => handleSettingsTab("appearance")}>
               Appearance
             </TabButton>
+            <TabButton $active={settingsTab === "music"} onClick={() => handleSettingsTab("music")}>
+              Music
+            </TabButton>
             <TabButton $active={settingsTab === "features"} onClick={() => handleSettingsTab("features")}>
               Features
             </TabButton>
@@ -77,6 +94,7 @@ export const SettingsModal = () => {
           </SettingsTabs>
           {settingsTab === "timer" && <TimerTab />}
           {settingsTab === "appearance" && <AppearanceTab />}
+          {settingsTab === "music" && <MusicTab />}
           {settingsTab === "features" && <FeaturesTab />}
           {settingsTab === "analytics" && <AnalyticsTab />}
         </ModalBody>

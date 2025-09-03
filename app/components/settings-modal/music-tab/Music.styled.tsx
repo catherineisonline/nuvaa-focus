@@ -1,91 +1,23 @@
 import styled from "styled-components";
-import { media } from "../../styles/breakpoints";
+import { media } from "../../../styles/breakpoints";
 
-export const Overlay = styled.div<{ $hideModal: boolean }>`
-  position: fixed;
-  visibility: ${({ $hideModal }) => ($hideModal ? "hidden" : "visible")};
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--shadow-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(5px);
-`;
-
-export const Modal = styled.div<{ $bgImage?: boolean; $hideModal: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 90%;
-  visibility: ${({ $hideModal }) => ($hideModal ? "hidden" : "visible")};
-  max-width: 45rem;
-  max-height: 90vh;
-  min-height: 70vh;
-  border-radius: 30px;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  overflow: hidden;
-  background: ${({ theme }) => theme.backgroundGradient};
-  box-shadow: ${({ $bgImage, theme }) => ($bgImage ? undefined : theme.boxShadowOuter)};
-  @media ${media.md} {
-    max-width: 100%;
-    max-height: 100%;
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-  }
-`;
-export const ModalHeader = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h2 {
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    color: ${({ theme }) => theme.text};
-    font-size: 2rem;
-    font-weight: 500;
-  }
-`;
 export const ModalBody = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  height: 100vh;
+  flex: 1;
   overflow-y: auto;
-  padding-bottom: 20rem;
+  padding-bottom: 10rem;
   @media ${media.md} {
     padding-bottom: 2rem;
-    gap: 1rem;
   }
 `;
 
-export const CloseBtn = styled.button`
-  background-color: transparent;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  border-radius: 8px;
-  color: ${({ theme }) => theme.text};
-
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      background-color: var(--color-glass);
-    }
-  }
-  &:focus-visible {
-    outline: 3px solid ${({ theme }) => theme.highlight};
-  }
+export const SectionHeading = styled.h3`
+  font-family: var(--font-outfit);
+  font-size: 1.1rem;
+  font-weight: 800;
 `;
-
 export const MusicOptions = styled.div<{ $bgActive: boolean }>`
   display: flex;
   flex-direction: column;
@@ -226,6 +158,8 @@ export const MusicPlayer = styled.div`
   padding: 20px;
   margin-bottom: 2rem;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 40rem;
 
   h4 {
     margin: 0 0 1rem 0;
@@ -255,17 +189,17 @@ export const SpotifyEmbed = styled.div`
   position: relative;
   padding-bottom: 3rem;
   wdith: 100%;
-  height: 10rem;
+  height: 30rem;
   overflow: hidden;
   iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 30rem;
     border: none;
   }
 `;
 export const YoutubeEmbed = styled(SpotifyEmbed)`
-  height: 22rem;
+  height: 20rem;
 `;

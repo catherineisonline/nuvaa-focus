@@ -4,37 +4,33 @@ import CircleQuestionMark from "lucide-react/dist/esm/icons/circle-question-mark
 import ListTodo from "lucide-react/dist/esm/icons/list-todo";
 import Maximize from "lucide-react/dist/esm/icons/maximize";
 import Minimize from "lucide-react/dist/esm/icons/minimize";
-import Music from "lucide-react/dist/esm/icons/music";
 import Settings from "lucide-react/dist/esm/icons/settings";
-
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../redux/slices/navigationSlice";
 import { RootState } from "../../redux/store";
 import { HeaderControls, IconButton } from "./Header.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
-import { setHideModal } from "../../redux/slices/musicSlice";
 import Link from "next/link";
+import { setIsMusicPlaying } from "../../redux/slices/settingsSlice";
+
 export const Controls = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
-
   const isFullscreen = useSelector((state: RootState) => state.navigation.isFullscreen);
-  const hideModal = useSelector((state: RootState) => state.music.hideModal);
+  const isMusicPlaying = useSelector((state: RootState) => state.settings.isMusicPlaying);
   const handleFullscreen = () => {
     dispatch(toggleModal({ target: "isFullscreen" }));
   };
   const handleTasks = () => {
     dispatch(toggleModal({ target: "isTasksActive" }));
   };
-  const handleMusic = () => {
-    if (hideModal) {
-      dispatch(setHideModal({ value: false }));
-    } else {
-      dispatch(toggleModal({ target: "isMusicActive" }));
-    }
-  };
+
   const handleSettings = () => {
-    dispatch(toggleModal({ target: "isSettingsActive" }));
+    if (!isMusicPlaying) {
+      dispatch(toggleModal({ target: "isSettingsActive" }));
+    } else {
+      dispatch(setIsMusicPlaying({ value: false }));
+    }
   };
 
   return (
@@ -42,11 +38,6 @@ export const Controls = () => {
       <li>
         <IconButton $bgImage={isBackgroundActive} onClick={handleTasks} aria-label="Todo list">
           <ListTodo />
-        </IconButton>
-      </li>
-      <li>
-        <IconButton $bgImage={isBackgroundActive} onClick={handleMusic} aria-label="Music">
-          <Music />
         </IconButton>
       </li>
       <li>

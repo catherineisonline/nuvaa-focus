@@ -8,8 +8,6 @@ const musicSlice = createSlice({
     musicUrl: "",
     youtubeId: "",
     musicEnabled: false,
-    musicModalOn: false,
-    hideModal: false,
   },
   reducers: {
     setSelectedOption(state, action) {
@@ -28,23 +26,8 @@ const musicSlice = createSlice({
       const value = action.payload.value;
       state.musicEnabled = value;
     },
-    setMusicModalOn(state, action) {
-      const value = action.payload.value;
-      state.musicModalOn = value;
-    },
-    setHideModal(state, action) {
-      const value = action.payload.value;
-      state.hideModal = value;
-    },
   },
 });
 
 export default musicSlice.reducer;
-export const {
-  setSelectedOption,
-  setCustomUrl,
-  setMusicUrl,
-  setMusicEnabled,
-  setMusicModalOn,
-  setHideModal,
-} = musicSlice.actions;
+export const { setSelectedOption, setCustomUrl, setMusicUrl, setMusicEnabled } = musicSlice.actions;

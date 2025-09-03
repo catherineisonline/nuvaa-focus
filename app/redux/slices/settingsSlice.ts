@@ -10,6 +10,7 @@ const settingsSlice = createSlice({
     is24Hour: true,
     autoStartNext: false,
     settingsTab: "timer",
+    isMusicPlaying: false,
   },
   reducers: {
     updateSettingsTab(state, action) {
@@ -24,8 +25,11 @@ const settingsSlice = createSlice({
       const cachedSettings = action.payload;
       state = cachedSettings;
     },
+    setIsMusicPlaying(state, action) {
+      const value = action.payload.value;
+      state.isMusicPlaying = value;
+    },
   },
 });
 export default settingsSlice.reducer;
-export const { updateSettings, setupSettings, updateSettingsTab } =
-  settingsSlice.actions;
+export const { updateSettings, setupSettings, updateSettingsTab, setIsMusicPlaying } = settingsSlice.actions;
