@@ -24,7 +24,7 @@ export const CustomPlayer = ({ id, linkType }) => {
             title="Spotify Playlist"
             loading="lazy"
             allow="autoplay; clipboard-write; encrypted-media 'self' https://open.spotify.com; fullscreen; picture-in-picture; encrypted-media:robustness=SW_SECURE_CRYPTO"
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+            sandbox="allow-scripts allow-same-origin"
           />
         </SpotifyEmbed>
       ) : linkType === "vimeo" ? (

@@ -6,7 +6,6 @@ const navigationSlice = createSlice({
     isFullscreen: false,
     isSettingsActive: false,
     isTasksActive: false,
-    isMusicActive: false,
     isHamburgerActive: false,
   },
   reducers: {
@@ -39,5 +38,4 @@ const navigationSlice = createSlice({
 });
 
 export default navigationSlice.reducer;
-export const { toggleModal, closeModal, toggleHamburger } =
-  navigationSlice.actions;
+export const { toggleModal, closeModal, toggleHamburger } = navigationSlice.actions;

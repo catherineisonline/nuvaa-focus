@@ -18,15 +18,9 @@ import { WeeklyChart } from "./WeeklyChart";
 import { TodaysChart } from "./TodaysChart";
 
 export const AnalyticsTab = () => {
-  const todayPomodoros = useSelector(
-    (state: RootState) => state.analytics.todayPomodoros
-  );
-  const todayFocusTime = useSelector(
-    (state: RootState) => state.analytics.todayFocusTime
-  );
-  const weeklyProgress = useSelector(
-    (state: RootState) => state.analytics.weeklyProgress
-  );
+  const todayPomodoros = useSelector((state: RootState) => state.analytics.todayPomodoros);
+  const todayFocusTime = useSelector((state: RootState) => state.analytics.todayFocusTime);
+  const weeklyProgress = useSelector((state: RootState) => state.analytics.weeklyProgress);
   return (
     <AnalyticsContent>
       <AnalyticsGroup>

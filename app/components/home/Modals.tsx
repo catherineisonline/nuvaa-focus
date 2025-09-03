@@ -8,7 +8,6 @@ const ControlsModal = dynamic(() => import("../controls-modal/ControlsModal").th
   ssr: false,
 });
 const TaskModal = dynamic(() => import("../task-modal/TaskModal").then((mod) => mod.TaskModal), { ssr: false });
-const MusicModal = dynamic(() => import("../music-modal/MusicModal").then((mod) => mod.MusicModal), { ssr: false });
 const SettingsModal = dynamic(() => import("../settings-modal/SettingsModal").then((mod) => mod.SettingsModal), {
   ssr: false,
 });
@@ -17,14 +16,12 @@ const Onboarding = dynamic(() => import("../onboarding/Onboarding").then((mod) =
 export const Modals = () => {
   const isTasksActive = useSelector((state: RootState) => state.navigation.isTasksActive);
   const isSettingsActive = useSelector((state: RootState) => state.navigation.isSettingsActive);
-  const isMusicActive = useSelector((state: RootState) => state.navigation.isMusicActive);
   const isHamburgerActive = useSelector((state: RootState) => state.navigation.isHamburgerActive);
   const isOnboardingActive = useSelector((state: RootState) => state.onboarding.isOnboardingActive);
   return (
     <React.Fragment>
       {isSettingsActive && <SettingsModal />}
       {isTasksActive && <TaskModal />}
-      {isMusicActive && <MusicModal />}
       {isHamburgerActive && <ControlsModal />}
       {isOnboardingActive && <Onboarding />}
     </React.Fragment>

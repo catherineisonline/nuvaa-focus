@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { media } from "../../styles/breakpoints";
 
-export const Overlay = styled.div`
+export const Overlay = styled.div<{ $isMusicPlaying: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -13,8 +13,10 @@ export const Overlay = styled.div`
   justify-content: center;
   z-index: 1000;
   backdrop-filter: blur(5px);
+  opacity: ${({ $isMusicPlaying }) => ($isMusicPlaying ? 0 : 1)};
+  pointer-events: ${({ $isMusicPlaying }) => ($isMusicPlaying ? "none" : "auto")};
 `;
-export const Modal = styled.div<{ $bgImage?: boolean }>`
+export const Modal = styled.div<{ $bgImage?: boolean; $isMusicPlaying: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -28,6 +30,8 @@ export const Modal = styled.div<{ $bgImage?: boolean }>`
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
   box-shadow: ${({ $bgImage, theme }) => ($bgImage ? undefined : theme.boxShadowOuter)};
+  opacity: ${({ $isMusicPlaying }) => ($isMusicPlaying ? 0 : 1)};
+  pointer-events: ${({ $isMusicPlaying }) => ($isMusicPlaying ? "none" : "auto")};
   @media ${media.md} {
     max-width: 100%;
     max-height: 100%;
