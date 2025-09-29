@@ -42,16 +42,17 @@ export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
     [focusTime, shortBreakTime, longBreakTime]
   );
   const prevTimesRef = useRef(times);
+  let mode = currentMode === "focus" ? "focusTime" : currentMode;
   useEffect(() => {
-    const previous = prevTimesRef.current[currentMode];
-    const current = times[currentMode];
+    const previous = prevTimesRef.current[mode];
+    const current = times[mode];
 
     if (previous !== current && timeLeft > 0) {
       dispatch(updateTimeLeft({ time: current }));
     }
 
     prevTimesRef.current = times;
-  }, [dispatch, times, currentMode, timeLeft]);
+  }, [dispatch, times, mode, timeLeft]);
   const handlePomodoroComplete = useCallback(() => {
     if (completedRef.current) return;
     completedRef.current = true;

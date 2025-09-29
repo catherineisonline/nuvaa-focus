@@ -41,22 +41,23 @@ const Focus = () => {
 
   const isRunning = useSelector((state: RootState) => state.pomodoro.isRunning);
   // const timeLeft = useSelector((state: RootState) => state.pomodoro.timeLeft);
-
+  let mode = currentMode === "focus" ? "focusTime" : currentMode;
   const isBackgroundActive = useBackgroundStatus();
-
+  console.log(currentMode);
   const totalTime = useMemo(() => {
     return {
       focusTime: focusTime,
       shortBreakTime: shortBreakTime,
       longBreakTime: longBreakTime,
-    }[currentMode];
-  }, [focusTime, shortBreakTime, longBreakTime, currentMode]);
+    }[mode];
+  }, [focusTime, shortBreakTime, longBreakTime, mode]);
 
   const runPomodoro = () => {
     dispatch(togglePomodoro());
   };
   const resetPomodoro = () => {
     dispatch(stopPomodoro());
+    console.log(totalTime);
     dispatch(updateTimeLeft({ time: totalTime }));
   };
   const skipPomodoro = () => {
