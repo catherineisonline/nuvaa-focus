@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <div>
       <MainWrapper>
-        <ModeTab />
+        {/* <ModeTab /> */}
         <ModeTime />
       </MainWrapper>
     </div>

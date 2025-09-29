@@ -57,7 +57,7 @@ export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
     completedRef.current = true;
     dispatch(stopPomodoro());
 
-    if (currentMode === "focusTime") {
+    if (currentMode === "focus") {
       dispatch(updateCount());
       dispatch(setStreak());
       const mode = getMode();
@@ -65,7 +65,7 @@ export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
       dispatch(updateMode({ mode: mode }));
       dispatch(updateTimeLeft({ time: modeTime }));
     } else {
-      dispatch(updateMode({ mode: "focusTime" }));
+      dispatch(updateMode({ mode: "focus" }));
       dispatch(updateTimeLeft({ time: focusTime }));
     }
     // ! note: add countdown before autostart

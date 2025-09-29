@@ -14,13 +14,23 @@ export const SettingsContent = styled.form`
     padding-bottom: 3rem;
   }
 `;
-
+export const SettingGroupContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  h3 {
+    font-weight: 600;
+    color: ${({ theme }) => theme.text};
+    font-size: 1.3rem;
+    font-family: var(--font-outfit);
+  }
+`;
 export const SettingGroup = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  gap: 1rem;
 `;
 
 export const SettingLabel = styled.label`

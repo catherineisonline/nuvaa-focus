@@ -16,7 +16,7 @@ export const ModeTab = () => {
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
 
   const updateTab = (tab: string) => {
-    if (currentTab === "focusTime" && isRunning) {
+    if (currentTab === "focus" && isRunning) {
       dispatch(togglePomodoro());
     } else if (currentTab === "stopwatch" && isRunningStopwatch) {
       dispatch(toggleStopwatch());
@@ -25,7 +25,7 @@ export const ModeTab = () => {
   };
   return (
     <ModeTabs $bgActive={isBackgroundActive}>
-      <ModeTabButton $active={currentTab === "focusTime"} onClick={() => updateTab("focusTime")}>
+      <ModeTabButton $active={currentTab === "focus"} onClick={() => updateTab("focus")}>
         Focus
       </ModeTabButton>
       <ModeTabButton $active={currentTab === "stopwatch"} onClick={() => updateTab("stopwatch")}>

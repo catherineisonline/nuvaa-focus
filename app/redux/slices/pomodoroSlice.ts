@@ -7,7 +7,7 @@ const pomodoroSlice = createSlice({
     pomodoroCount: 0,
     timeLeft: 1500,
     isRunning: false,
-    currentMode: "focusTime",
+    currentMode: "focus",
   },
   reducers: {
     togglePomodoro(state) {
@@ -38,11 +38,5 @@ const pomodoroSlice = createSlice({
 });
 
 export default pomodoroSlice.reducer;
-export const {
-  togglePomodoro,
-  updateTimeLeft,
-  updateCount,
-  timeTick,
-  stopPomodoro,
-  updateMode,
-} = pomodoroSlice.actions;
+export const { togglePomodoro, updateTimeLeft, updateCount, timeTick, stopPomodoro, updateMode } =
+  pomodoroSlice.actions;

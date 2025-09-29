@@ -38,12 +38,16 @@ export const QuoteDisplayInput = styled(QuoteDisplayText)`
   border: none;
   background-color: transparent;
   width: 100%;
-
+  color: ${({ theme }) => theme.text};
   &:focus,
   &:active {
     outline: none;
-    color: ${({ theme }) => theme.highlight};
     border-bottom: 2px solid ${({ theme }) => theme.highlight};
     cursor: auto;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: ${({ theme }) => theme.text};
+    }
   }
 `;

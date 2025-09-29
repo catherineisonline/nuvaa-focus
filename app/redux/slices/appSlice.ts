@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const appSlice = createSlice({
   name: "app",
-  initialState: { streak: 0, currentTab: "focusTime", changesSavedMsg: "" },
+  initialState: { streak: 0, currentTab: "focus", changesSavedMsg: "" },
   reducers: {
     initStreak(state, action) {
       const strk = action.payload.value;
@@ -22,5 +22,4 @@ const appSlice = createSlice({
   },
 });
 export default appSlice.reducer;
-export const { setStreak, initStreak, setCurrentTab, updateChangesSavedMsg } =
-  appSlice.actions;
+export const { setStreak, initStreak, setCurrentTab, updateChangesSavedMsg } = appSlice.actions;

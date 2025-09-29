@@ -18,8 +18,13 @@ const settingsSlice = createSlice({
       state.settingsTab = tab;
     },
     updateSettings(state, action) {
-      const { key, value } = action.payload;
-      state[key] = value;
+      const { key } = action.payload;
+      const format = state.is24Hour;
+      if (key === 0 && format === true) {
+        state.is24Hour = false;
+      } else {
+        state.is24Hour = true;
+      }
     },
     setupSettings(state, action) {
       const cachedSettings = action.payload;

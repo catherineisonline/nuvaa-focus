@@ -61,14 +61,14 @@ const Focus = () => {
   };
   const skipPomodoro = () => {
     dispatch(stopPomodoro());
-    if (currentMode === "focusTime") {
+    if (currentMode === "focus") {
       const mode = getMode();
       const modeTime = getModeTime();
       dispatch(updateCount());
       dispatch(updateMode({ mode: mode }));
       dispatch(updateTimeLeft({ time: modeTime }));
     } else {
-      dispatch(updateMode({ mode: "focusTime" }));
+      dispatch(updateMode({ mode: "focus" }));
       dispatch(updateTimeLeft({ time: focusTime }));
     }
   };

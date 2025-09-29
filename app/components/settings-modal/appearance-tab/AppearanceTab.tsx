@@ -91,7 +91,7 @@ export const AppearanceTab = () => {
   return (
     <SettingsContent>
       <SettingGroup>
-        <SectionHeading>Color Themes</SectionHeading>
+        <SectionHeading>Solid Themes</SectionHeading>
         <ThemeGrid>
           {themeMeta.map((theme) => (
             <ThemeOption
