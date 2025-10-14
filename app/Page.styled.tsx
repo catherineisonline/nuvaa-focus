@@ -16,7 +16,7 @@ export const MainWrapper = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
+  padding: 5rem 1rem;
   gap: 3rem;
 
   @media ${media.md} {

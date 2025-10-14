@@ -20,7 +20,7 @@ export const ModeTime = () => {
   return (
     <React.Fragment>
       <Quotes />
-      {currentTab === "focusTime" ? (
+      {currentTab === "focus" ? (
         <Focus />
       ) : currentTab === "stopwatch" ? (
         <StopWatch formatTime={formatTime} />

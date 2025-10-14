@@ -42,22 +42,23 @@ export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
     [focusTime, shortBreakTime, longBreakTime]
   );
   const prevTimesRef = useRef(times);
+  let mode = currentMode === "focus" ? "focusTime" : currentMode;
   useEffect(() => {
-    const previous = prevTimesRef.current[currentMode];
-    const current = times[currentMode];
+    const previous = prevTimesRef.current[mode];
+    const current = times[mode];
 
     if (previous !== current && timeLeft > 0) {
       dispatch(updateTimeLeft({ time: current }));
     }
 
     prevTimesRef.current = times;
-  }, [dispatch, times, currentMode, timeLeft]);
+  }, [dispatch, times, mode, timeLeft]);
   const handlePomodoroComplete = useCallback(() => {
     if (completedRef.current) return;
     completedRef.current = true;
     dispatch(stopPomodoro());
 
-    if (currentMode === "focusTime") {
+    if (currentMode === "focus") {
       dispatch(updateCount());
       dispatch(setStreak());
       const mode = getMode();
@@ -65,7 +66,7 @@ export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
       dispatch(updateMode({ mode: mode }));
       dispatch(updateTimeLeft({ time: modeTime }));
     } else {
-      dispatch(updateMode({ mode: "focusTime" }));
+      dispatch(updateMode({ mode: "focus" }));
       dispatch(updateTimeLeft({ time: focusTime }));
     }
     // ! note: add countdown before autostart

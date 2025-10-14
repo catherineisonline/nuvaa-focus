@@ -19,7 +19,19 @@ const settingsSlice = createSlice({
     },
     updateSettings(state, action) {
       const { key, value } = action.payload;
-      state[key] = value;
+      if (key === 0) {
+        state.is24Hour = false;
+      } else if (key === 1) {
+        state.is24Hour = true;
+      } else if (key === "focus") {
+        state.focusTime = value;
+      } else if (key === "shortBreakTime") {
+        state.shortBreakTime = value;
+      } else if (key === "longBreakTime") {
+        state.longBreakTime = value;
+      } else if (key === "autoStartNext") {
+        state.autoStartNext = true;
+      }
     },
     setupSettings(state, action) {
       const cachedSettings = action.payload;
