@@ -51,7 +51,6 @@ export const Onboarding = () => {
   };
 
   const currentStepData = ONBOARDING_STEPS[currentStep];
-  // const Icon = currentStepData.icon;
 
   const Icon = useMemo(() => currentStepData.icon, [currentStepData]);
 

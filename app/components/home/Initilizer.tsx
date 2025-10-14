@@ -39,7 +39,7 @@ export const Initilizer = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return; // SSR safety
+    if (typeof window === "undefined") return;
     const focusTimeStore = localStorage.getItem("focus");
     const shortBreakTimeStore = localStorage.getItem("shortBreakTime");
     const longBreakTimeStore = localStorage.getItem("longBreakTime");
