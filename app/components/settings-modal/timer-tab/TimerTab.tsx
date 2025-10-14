@@ -9,8 +9,6 @@ import Select from "react-select";
 import {
   CheckboxLabel,
   createCustomStyles,
-  RadioGroup,
-  RadioLabel,
   SettingGroup,
   SettingGroupContainer,
   SettingLabel,
@@ -32,7 +30,7 @@ const TimerTab = () => {
   const is24Hour = useSelector((state: RootState) => state.settings.is24Hour);
   const theme = useTheme();
   const customStyles = createCustomStyles(theme);
-  const defaultMode = MODE_OPTIONS.find((val) => val.label.toLowerCase() === currentTab);
+  const defaultMode = MODE_OPTIONS.find((val) => val.label.toLowerCase() === currentTab?.toLowerCase());
 
   const defaultLongBreak = TIMER_OPTIONS.find((opt) => opt.value === settings.longBreakTime);
   const defaultShortBreakTime = TIMER_OPTIONS.find((opt) => opt.value === settings.shortBreakTime);
@@ -43,12 +41,13 @@ const TimerTab = () => {
   ];
   const time_label = is24Hour ? TIME_OPTIONS[1] : TIME_OPTIONS[0];
   const changesSavedMsg = useSelector((state: RootState) => state.app.changesSavedMsg);
+
   const updateFormat = (k: number) => {
     dispatch(updateSettings({ key: k }));
     showMessage();
   };
-  const updateSetting = (k: string, v: boolean | number) => {
-    dispatch(updateSettings({ key: k, value: v }));
+  const updateSetting = (key: string, value: boolean | number) => {
+    dispatch(updateSettings({ key, value }));
     showMessage();
   };
   const updateMode = (v: string) => {

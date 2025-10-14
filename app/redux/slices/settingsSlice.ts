@@ -18,12 +18,19 @@ const settingsSlice = createSlice({
       state.settingsTab = tab;
     },
     updateSettings(state, action) {
-      const { key } = action.payload;
-      const format = state.is24Hour;
-      if (key === 0 && format === true) {
+      const { key, value } = action.payload;
+      if (key === 0) {
         state.is24Hour = false;
-      } else {
+      } else if (key === 1) {
         state.is24Hour = true;
+      } else if (key === "focus") {
+        state.focusTime = value;
+      } else if (key === "shortBreakTime") {
+        state.shortBreakTime = value;
+      } else if (key === "longBreakTime") {
+        state.longBreakTime = value;
+      } else if (key === "autoStartNext") {
+        state.autoStartNext = true;
       }
     },
     setupSettings(state, action) {

@@ -13,6 +13,7 @@ const appSlice = createSlice({
     },
     setCurrentTab(state, action) {
       const tab = action.payload.tab;
+      console.log(tab);
       state.currentTab = tab;
     },
     updateChangesSavedMsg(state, action) {

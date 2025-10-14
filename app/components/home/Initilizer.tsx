@@ -3,8 +3,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { tasksSelectors } from "../../redux/selectors/tasksSelectors";
-import { useEffect } from "react";
-import { setupSettings } from "../../redux/slices/settingsSlice";
+import { useEffect, useState } from "react";
+import { setupSettings, updateSettings } from "../../redux/slices/settingsSlice";
 import { initStreak, setCurrentTab } from "../../redux/slices/appSlice";
 import { initTasks, setCurrentTaskId } from "../../redux/slices/tasksSlice";
 import { initilizecustomBackgrounds, setCurrentBackground } from "../../redux/slices/appearanceSlice";
@@ -12,13 +12,15 @@ import { initilizeIsQuotesShown, setCurrentQuote, setCustomQuote } from "../../r
 import { setMusicEnabled, setMusicUrl, setSelectedOption } from "../../redux/slices/musicSlice";
 import { setOnboarding } from "../../redux/slices/onboardingSlice";
 import { appearanceSelectors } from "../../redux/selectors/appearanceSelectors";
+import { settingsSelectors } from "../../redux/selectors/settingsSelectors";
 
 export const Initilizer = () => {
   const dispatch = useDispatch();
+  const [hydrated, setHydrated] = useState(false);
 
   const streak = useSelector((state: RootState) => state.app.streak);
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
-
+  const { is24Hour, focusTime, shortBreakTime, longBreakTime, autoStartNext } = useSelector(settingsSelectors);
   const { tasks, currentTaskId } = useSelector(tasksSelectors);
   const { currentBackground, customBackgrounds } = useSelector(appearanceSelectors);
 
@@ -37,9 +39,15 @@ export const Initilizer = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (typeof window === "undefined") return; // SSR safety
+    const focusTimeStore = localStorage.getItem("focus");
+    const shortBreakTimeStore = localStorage.getItem("shortBreakTime");
+    const longBreakTimeStore = localStorage.getItem("longBreakTime");
+    const autoStartNextStore = localStorage.getItem("autoStartNext");
     const streakStore = localStorage.getItem("streak");
     const settingsStore = localStorage.getItem("settings");
-    const tabStore = localStorage.getItem("currentTab");
+    const currentTabStore = localStorage.getItem("currentTab");
+    const is24HourStore = localStorage.getItem("is24Hour");
     const currentTaskStore = localStorage.getItem("currentTaskId");
     const tasksStore = localStorage.getItem("tasks");
     const currentBackgroundStore = localStorage.getItem("currentBackground");
@@ -50,14 +58,31 @@ export const Initilizer = () => {
     const selectedOptionStore = localStorage.getItem("selectedOption");
     const musicUrlStore = localStorage.getItem("musicUrl");
     const musicEnabledStore = localStorage.getItem("musicEnabled");
+
+    if (focusTimeStore) {
+      dispatch(updateSettings({ key: "focus", value: JSON.parse(focusTimeStore) }));
+    }
+    if (shortBreakTimeStore) {
+      dispatch(updateSettings({ key: "shortBreakTime", value: JSON.parse(shortBreakTimeStore) }));
+    }
+    if (longBreakTimeStore) {
+      dispatch(updateSettings({ key: "longBreakTime", value: JSON.parse(longBreakTimeStore) }));
+    }
+    if (autoStartNextStore) {
+      dispatch(updateSettings({ key: "autoStartNext", value: JSON.parse(autoStartNextStore) }));
+    }
+
+    if (is24HourStore) {
+      dispatch(updateSettings({ key: Number(JSON.parse(is24HourStore)) }));
+    }
     if (streakStore !== null) {
       dispatch(initStreak({ value: JSON.parse(streakStore) }));
     }
     if (settingsStore !== null) {
       dispatch(setupSettings(JSON.parse(settingsStore)));
     }
-    if (tabStore !== null) {
-      dispatch(setCurrentTab({ tab: JSON.parse(tabStore) }));
+    if (currentTabStore !== null) {
+      dispatch(setCurrentTab({ tab: JSON.parse(currentTabStore) }));
     }
     if (tasksStore !== null) {
       dispatch(initTasks(JSON.parse(tasksStore)));
@@ -89,10 +114,12 @@ export const Initilizer = () => {
     if (musicEnabledStore !== null) {
       dispatch(setMusicEnabled({ value: JSON.parse(musicEnabledStore) }));
     }
+    setHydrated(true);
   }, [dispatch]);
 
   useEffect(() => {
-    localStorage.setItem("currentTab", JSON.stringify(currentTab));
+    if (!hydrated) return;
+
     localStorage.setItem("streak", JSON.stringify(streak));
     localStorage.setItem("tasks", JSON.stringify(tasks));
     localStorage.setItem("currentTaskId", JSON.stringify(currentTaskId));
@@ -103,8 +130,20 @@ export const Initilizer = () => {
     localStorage.setItem("selectedOption", JSON.stringify(selectedOption));
     localStorage.setItem("musicUrl", JSON.stringify(musicUrl));
     localStorage.setItem("musicEnabled", JSON.stringify(musicEnabled));
+    localStorage.setItem("currentTab", JSON.stringify(currentTab));
+    localStorage.setItem("is24Hour", JSON.stringify(is24Hour));
+
+    localStorage.setItem("focus", JSON.stringify(focusTime));
+    localStorage.setItem("shortBreakTime", JSON.stringify(shortBreakTime));
+    localStorage.setItem("longBreakTime", JSON.stringify(longBreakTime));
+    localStorage.setItem("autoStartNext", JSON.stringify(autoStartNext));
   }, [
+    shortBreakTime,
+    focusTime,
+    longBreakTime,
+    autoStartNext,
     currentTab,
+    is24Hour,
     streak,
     tasks,
     currentTaskId,
@@ -115,6 +154,7 @@ export const Initilizer = () => {
     selectedOption,
     musicUrl,
     musicEnabled,
+    hydrated,
   ]);
 
   return null;
