@@ -53,7 +53,7 @@ const Focus = () => {
   const resetPomodoro = () => {
     dispatch(stopPomodoro());
     console.log(totalTime);
-    dispatch(updateTimeLeft({ time: totalTime }));
+    dispatch(updateTimeLeft(totalTime));
   };
   const skipPomodoro = () => {
     dispatch(stopPomodoro());
@@ -61,11 +61,11 @@ const Focus = () => {
       const mode = getMode();
       const modeTime = getModeTime();
       dispatch(updateCount());
-      dispatch(updateMode({ mode: mode }));
-      dispatch(updateTimeLeft({ time: modeTime }));
+      dispatch(updateMode(mode));
+      dispatch(updateTimeLeft(modeTime));
     } else {
-      dispatch(updateMode({ mode: "focus" }));
-      dispatch(updateTimeLeft({ time: focusTime }));
+      dispatch(updateMode("focus"));
+      dispatch(updateTimeLeft(focusTime));
     }
   };
 

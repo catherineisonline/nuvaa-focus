@@ -23,37 +23,35 @@ import { RootState } from "../../../redux/store";
 import { setCustomUrl, setMusicEnabled, setMusicUrl, setSelectedOption } from "../../../redux/slices/musicSlice";
 import { CustomPlayer } from "./CustomPlayer";
 import { SpotifyPlayer } from "./SpotifyPlayer";
+import { musicSelectors } from "../../../redux/selectors/musicSelectors";
 type LinkType = "youtube" | "spotify" | "vimeo" | "apple-music" | "unknown";
 
 export const MusicTab = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
-  const selectedOption = useSelector((state: RootState) => state.music.selectedOption);
-  const customUrl = useSelector((state: RootState) => state.music.customUrl);
-  const musicUrl = useSelector((state: RootState) => state.music.musicUrl);
-  const musicEnabled = useSelector((state: RootState) => state.music.musicEnabled);
+  const { selectedOption, customUrl, musicUrl, musicEnabled } = useSelector(musicSelectors);
 
   const handleOptionChange = (option: string) => {
-    dispatch(setSelectedOption({ value: option }));
+    dispatch(setSelectedOption(option));
 
     if (option === "none") {
-      dispatch(setMusicEnabled({ value: false }));
-      dispatch(setMusicUrl({ value: "" }));
+      dispatch(setMusicEnabled(false));
+      dispatch(setMusicUrl(""));
     } else {
-      dispatch(setMusicEnabled({ value: true }));
+      dispatch(setMusicEnabled(true));
     }
   };
   const handleCustomUrlChange = (e: React.ChangeEvent) => {
     const url = e.target;
     const { value } = url as HTMLInputElement;
-    dispatch(setCustomUrl({ value: value }));
+    dispatch(setCustomUrl(value));
     if (selectedOption === "custom") {
-      dispatch(setMusicUrl({ value: value }));
+      dispatch(setMusicUrl(value));
     }
   };
   const handleCustomUrlBlur = () => {
     setTimeout(() => {
-      dispatch(setCustomUrl({ value: "" }));
+      dispatch(setCustomUrl(""));
     }, 2000);
   };
   const extractMediaId = (platform: string, url: string) => {

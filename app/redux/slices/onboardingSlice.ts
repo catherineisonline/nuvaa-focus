@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ONBOARDING_STEPS } from "../../lib/constants";
 
 const onboardingSlice = createSlice({
   name: "onboarding",
@@ -9,19 +8,15 @@ const onboardingSlice = createSlice({
   },
   reducers: {
     setNextStep(state, action) {
-      const val = action.payload.value;
-      state.currentStep = val;
+      state.currentStep = action.payload;
     },
-    toggleModal(state, action) {
-      const val = action.payload.value;
-      state.isOnboardingActive = val;
+    toggleOnboarding(state, action) {
+      state.isOnboardingActive = action.payload;
     },
     setOnboarding(state, action) {
-      const val = action.payload.value;
-      state.isOnboardingActive = val;
+      state.isOnboardingActive = action.payload;
     },
   },
 });
 export default onboardingSlice.reducer;
-export const { setNextStep, toggleModal, setOnboarding } =
-  onboardingSlice.actions;
+export const { setNextStep, toggleOnboarding, setOnboarding } = onboardingSlice.actions;

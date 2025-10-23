@@ -19,7 +19,7 @@ export default function ThemeWrapper({ children }: { children: React.ReactNode }
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     if (stored) {
-      dispatch(setCurrentTheme({ name: stored }));
+      dispatch(setCurrentTheme(stored));
     }
   }, [dispatch, themeObject]);
 

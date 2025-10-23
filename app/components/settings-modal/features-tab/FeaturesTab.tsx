@@ -12,32 +12,27 @@ import {
 } from "./Features.styled";
 
 import { setCurrentQuote, setCustomQuote, showQuotes } from "../../../redux/slices/quotesSlice";
-import { RootState } from "../../../redux/store";
 import { useCallback, useEffect } from "react";
 import { CheckboxLabel } from "../timer-tab/Timer.styled";
 
 import Shuffle from "lucide-react/dist/esm/icons/shuffle";
+import { quoteSelectors } from "../../../redux/selectors/quoteSelectors";
 
 export const FeaturesTab = () => {
   const dispatch = useDispatch();
-  const isQuotesShown = useSelector((state: RootState) => state.quotes.isQuotesShown);
-  const customQuote = useSelector((state: RootState) => state.quotes.customQuote);
-  const currentQuote = useSelector((state: RootState) => state.quotes.currentQuote);
-
-  const quotes = useSelector((state: RootState) => state.quotes.quotes);
-
+  const { isQuotesShown, customQuote, currentQuote, quotes } = useSelector(quoteSelectors);
   const handleShowQuotes = () => {
     dispatch(showQuotes());
   };
   const handleCustomQuote = (val: string) => {
-    dispatch(setCustomQuote({ value: val }));
+    dispatch(setCustomQuote(val));
   };
 
   const pickRandomQuote = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     localStorage.setItem("quoteIndex", JSON.stringify(randomIndex));
 
-    dispatch(setCurrentQuote({ index: randomIndex }));
+    dispatch(setCurrentQuote(randomIndex));
   }, [quotes, dispatch]);
 
   useEffect(() => {

@@ -4,30 +4,24 @@ const stopwatchSlice = createSlice({
   name: "stopwatch",
   initialState: {
     timeLeftStopwatch: 0,
-    stopwatchIsRunning: false,
+    isStopwatchRunning: false,
+    stopwatchTime: 0,
   },
   reducers: {
     updateStopwatchTime(state, action) {
-      const time = action.payload.time;
-      state.timeLeftStopwatch = time;
+      state.timeLeftStopwatch = action.payload;
     },
     tickStopwatchTime(state) {
       state.timeLeftStopwatch += 1;
     },
     toggleStopwatch(state) {
-      const current = state.stopwatchIsRunning;
-      state.stopwatchIsRunning = !current;
+      state.isStopwatchRunning = !state.isStopwatchRunning;
     },
     stopStopwatch(state) {
-      state.stopwatchIsRunning = false;
+      state.isStopwatchRunning = false;
     },
   },
 });
 
 export default stopwatchSlice.reducer;
-export const {
-  updateStopwatchTime,
-  tickStopwatchTime,
-  stopStopwatch,
-  toggleStopwatch,
-} = stopwatchSlice.actions;
+export const { updateStopwatchTime, tickStopwatchTime, stopStopwatch, toggleStopwatch } = stopwatchSlice.actions;

@@ -11,23 +11,19 @@ const pomodoroSlice = createSlice({
   },
   reducers: {
     togglePomodoro(state) {
-      const isActive = state.isRunning;
-      state.isRunning = !isActive;
+      state.isRunning = !state.isRunning;
     },
     stopPomodoro(state) {
       state.isRunning = false;
     },
     updateTimeLeft(state, action) {
-      const time = action.payload.time;
-      state.timeLeft = time;
+      state.timeLeft = action.payload;
     },
     updateCount(state) {
-      const currentCount = state.pomodoroCount;
-      state.pomodoroCount = currentCount + 1;
+      state.pomodoroCount += 1;
     },
     updateMode(state, action) {
-      const mode = action.payload.mode;
-      state.currentMode = mode;
+      state.currentMode = action.payload;
     },
     timeTick(state) {
       if (state.timeLeft > 0) {

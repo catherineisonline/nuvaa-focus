@@ -13,26 +13,21 @@ const tasksSlice = createSlice({
   },
   reducers: {
     initTasks(state, action) {
-      const tasks = action.payload;
-      state.tasks = tasks;
+      state.tasks = action.payload;
     },
     setTasks(state, action) {
-      const task = action.payload.task;
-      state.tasks.push(task);
+      state.tasks.push(action.payload);
     },
     toggleTaskAsComplete(state, action) {
-      const id = action.payload.id;
       state.tasks = state.tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
+        task.id === action.payload ? { ...task, completed: !task.completed } : task
       );
     },
     setEditingId(state, action) {
-      const id = action.payload.id;
-      state.editingId = id;
+      state.editingId = action.payload;
     },
     setEditText(state, action) {
-      const text = action.payload.text;
-      state.editText = text;
+      state.editText = action.payload;
     },
     toggleEdit(state, action) {
       const { id, text } = action.payload;
@@ -43,32 +38,25 @@ const tasksSlice = createSlice({
       state.newTaskText = "";
     },
     updateTaskfield(state, action) {
-      const text = action.payload.text;
-      state.newTaskText = text;
+      state.newTaskText = action.payload;
     },
     updatedEdit(state) {
       const id = state.editingId;
       const input = state.editText.trim();
-      state.tasks = state.tasks.map((task) =>
-        task.id === id ? { ...task, text: input } : task
-      );
+      state.tasks = state.tasks.map((task) => (task.id === id ? { ...task, text: input } : task));
     },
 
     deleteTask(state, action) {
-      const id = action.payload.id;
-      state.tasks = state.tasks.filter((task) => task.id !== id);
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
     },
     setCurrentTaskId(state, action) {
-      const id = action.payload.id;
-      state.currentTaskId = id;
+      state.currentTaskId = action.payload;
     },
     setActiveDrag(state, action) {
-      const drag = action.payload.drag;
-      state.activeDrag = drag;
+      state.activeDrag = action.payload;
     },
     moveTask(state, action) {
       const { activeId, overId } = action.payload;
-
       const oldIndex = state.tasks.findIndex((task) => task.id === activeId);
       const newIndex = state.tasks.findIndex((task) => task.id === overId);
       if (oldIndex !== -1 && newIndex !== -1) {

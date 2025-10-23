@@ -2,7 +2,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { ONBOARDING_STEPS } from "../../lib/constants";
-import { setNextStep, toggleModal } from "../../redux/slices/onboardingSlice";
+import { setNextStep, toggleOnboarding } from "../../redux/slices/onboardingSlice";
 import { RootState } from "../../redux/store";
 
 import X from "lucide-react/dist/esm/icons/x";
@@ -30,15 +30,15 @@ export const Onboarding = () => {
   const currentStep = useSelector((state: RootState) => state.onboarding.currentStep);
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      dispatch(toggleModal({ value: false }));
+      dispatch(toggleOnboarding(false));
     }
   };
   const handleCloseModal = () => {
-    dispatch(toggleModal({ value: false }));
+    dispatch(toggleOnboarding(false));
   };
   const nextStep = () => {
     if (currentStep < ONBOARDING_STEPS.length - 1) {
-      dispatch(setNextStep({ value: currentStep + 1 }));
+      dispatch(setNextStep(currentStep + 1));
     } else {
       handleCloseModal();
     }
@@ -46,7 +46,7 @@ export const Onboarding = () => {
 
   const prevStep = () => {
     if (currentStep > 0) {
-      dispatch(setNextStep({ value: currentStep - 1 }));
+      dispatch(setNextStep(currentStep - 1));
     }
   };
 

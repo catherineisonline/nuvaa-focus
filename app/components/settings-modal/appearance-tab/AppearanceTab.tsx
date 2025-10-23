@@ -44,26 +44,26 @@ export const AppearanceTab = () => {
 
   const handleThemeChange = (name: string) => {
     localStorage.setItem("theme", name);
-    dispatch(setCurrentTheme({ name: name }));
+    dispatch(setCurrentTheme(name));
   };
   const handleImageChange = (image: string | StaticImageData, action: string) => {
     if (action === "predefined") {
-      dispatch(setCurrentBackground({ image: image }));
+      dispatch(setCurrentBackground(image));
     } else if (action === "custom") {
-      dispatch(setCurrentCustomBackground({ image: image }));
+      dispatch(setCurrentCustomBackground(image));
     }
   };
   const handleBackgroundRemoval = () => {
     dispatch(removeBackground());
   };
   const handleCustomBackground = (src: string | StaticImageData) => {
-    dispatch(removeCustomBackground({ src: src }));
+    dispatch(removeCustomBackground(src));
   };
   const handleBackgroundBlur = (value: number) => {
-    dispatch(setBackgroundBlur({ value: value }));
+    dispatch(setBackgroundBlur(value));
   };
   const handleBackgroundDim = (value: number) => {
-    dispatch(setBackgroundDim({ value: value }));
+    dispatch(setBackgroundDim(value));
   };
   const handleBackgroundUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
@@ -82,7 +82,7 @@ export const AppearanceTab = () => {
       reader.onload = (event: ProgressEvent<FileReader>) => {
         const result = event.target?.result;
         if (typeof result === "string") {
-          dispatch(setCurrentCustomBackground({ image: result }));
+          dispatch(setCurrentCustomBackground(result));
         }
       };
       reader.readAsDataURL(file);

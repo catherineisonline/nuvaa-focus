@@ -47,20 +47,20 @@ const SortableTask = ({ editingId, task, toggleTask, currentTask, deleteTask, ca
 
   const handleTaskEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
-    dispatch(setEditText({ text: input }));
+    dispatch(setEditText(input));
   };
 
   const { editText } = useSelector(tasksSelectors);
   const setAsCurrentTask = (task: Task) => {
     if (task && task.completed) return;
-    dispatch(setCurrentTaskId({ id: task.id }));
+    dispatch(setCurrentTaskId(task.id));
   };
   const saveEdit = () => {
     if (editText) {
       dispatch(updatedEdit());
     }
-    dispatch(setEditingId({ id: null }));
-    dispatch(setEditText({ text: "" }));
+    dispatch(setEditingId(null));
+    dispatch(setEditText(""));
   };
   const startEditing = (task: Task) => {
     dispatch(toggleEdit({ id: task.id, text: task.text }));

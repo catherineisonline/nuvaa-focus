@@ -39,21 +39,21 @@ export const SettingsModal = () => {
         lastTabRef.current.scrollLeft = lastTabRef.current.scrollWidth;
       }
     }
-    dispatch(updateSettingsTab({ tab: tab }));
+    dispatch(updateSettingsTab(tab));
   };
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget && !musicEnabled) {
-      dispatch(toggleModal({ target: "isSettingsActive" }));
+      dispatch(toggleModal("isSettingsActive"));
     } else if (e.target === e.currentTarget) {
-      dispatch(setIsMusicPlaying({ value: true }));
+      dispatch(setIsMusicPlaying(true));
     }
   };
   const handleModalClose = () => {
     if (!musicEnabled) {
       dispatch(closeModal({ target: "isSettingsActive" }));
     } else {
-      dispatch(setIsMusicPlaying({ value: true }));
+      dispatch(setIsMusicPlaying(true));
     }
   };
 

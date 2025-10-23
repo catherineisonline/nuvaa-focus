@@ -10,7 +10,6 @@ import Play from "lucide-react/dist/esm/icons/play";
 import RefreshCcw from "lucide-react/dist/esm/icons/refresh-ccw";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import {
   ControlButton,
   ControlButtonSecondary,
@@ -21,16 +20,15 @@ import {
   TimerDisplay,
 } from "./Page.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
-import { TimeToDisplay } from "./TimeToDisplay";
+import { stopwatchSelectors } from "../../redux/selectors/stopwatchSelectors";
 const StopWatch = ({ formatTime }) => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
-  const timeLeftStopwatch = useSelector((state: RootState) => state.stopwatch.timeLeftStopwatch);
-  const stopwatchIsRunning = useSelector((state: RootState) => state.stopwatch.stopwatchIsRunning);
-  const stopwatchInitialTime = useSelector((state: RootState) => state.settings.stopwatch);
+  const { isStopwatchRunning, timeLeftStopwatch, stopwatchTime } = useSelector(stopwatchSelectors);
+
   const stopwatchRef = useRef(null);
   useEffect(() => {
-    if (stopwatchIsRunning) {
+    if (isStopwatchRunning) {
       stopwatchRef.current = setInterval(() => {
         dispatch(tickStopwatchTime());
       }, 1000);
@@ -39,11 +37,11 @@ const StopWatch = ({ formatTime }) => {
     }
 
     return () => clearInterval(stopwatchRef.current);
-  }, [stopwatchIsRunning, timeLeftStopwatch, dispatch]);
+  }, [isStopwatchRunning, timeLeftStopwatch, dispatch]);
 
   const resetStopwatch = () => {
     dispatch(stopStopwatch());
-    dispatch(updateStopwatchTime({ time: stopwatchInitialTime }));
+    dispatch(updateStopwatchTime(stopwatchTime));
   };
   const handleStopwatch = () => {
     dispatch(toggleStopwatch());
@@ -53,17 +51,17 @@ const StopWatch = ({ formatTime }) => {
     <TimerContainer>
       <StopwatchContent>
         <ModeLabel $bgImage={isBackgroundActive}>Stopwatch</ModeLabel>
-        {/* <TimeToDisplay timeType="stopwatch" /> */}
+
         <TimerDisplay $bgImage={isBackgroundActive}>{formatTime(timeLeftStopwatch)}</TimerDisplay>
       </StopwatchContent>
 
       <TimerControls>
         <ControlButton
-          $active={stopwatchIsRunning}
+          $active={isStopwatchRunning}
           $bgImage={isBackgroundActive}
           onClick={handleStopwatch}
-          aria-label={stopwatchIsRunning ? "Pause" : "Start"}>
-          {stopwatchIsRunning ? <Pause strokeWidth={2.8} /> : <Play strokeWidth={2.8} />}
+          aria-label={isStopwatchRunning ? "Pause" : "Start"}>
+          {isStopwatchRunning ? <Pause strokeWidth={2.8} /> : <Play strokeWidth={2.8} />}
         </ControlButton>
         <ControlButtonSecondary
           $active={false}

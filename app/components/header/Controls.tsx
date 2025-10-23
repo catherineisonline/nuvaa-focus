@@ -19,17 +19,17 @@ export const Controls = () => {
   const isFullscreen = useSelector((state: RootState) => state.navigation.isFullscreen);
   const isMusicPlaying = useSelector((state: RootState) => state.settings.isMusicPlaying);
   const handleFullscreen = () => {
-    dispatch(toggleModal({ target: "isFullscreen" }));
+    dispatch(toggleModal("isFullscreen"));
   };
   const handleTasks = () => {
-    dispatch(toggleModal({ target: "isTasksActive" }));
+    dispatch(toggleModal("isTasksActive"));
   };
 
   const handleSettings = () => {
     if (!isMusicPlaying) {
-      dispatch(toggleModal({ target: "isSettingsActive" }));
+      dispatch(toggleModal("isSettingsActive"));
     } else {
-      dispatch(setIsMusicPlaying({ value: false }));
+      dispatch(setIsMusicPlaying(false));
     }
   };
 

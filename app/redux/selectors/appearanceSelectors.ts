@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { AppearanceState } from "../slices/appearanceSlice";
+import { AppearanceState } from "../../types/appearance";
 
 export const selectCurrentTheme = (state: RootState): AppearanceState["currentTheme"] => state.appearance.currentTheme;
 export const selectCurrentBackground = (state: RootState): AppearanceState["currentBackground"] =>

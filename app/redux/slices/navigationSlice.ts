@@ -14,7 +14,7 @@ const navigationSlice = createSlice({
       state.isHamburgerActive = !current;
     },
     toggleModal(state, action) {
-      const modal = action.payload.target;
+      const modal = action.payload;
       const isActive = state[modal];
       if (modal === "isFullscreen") {
         if (!isActive) {
