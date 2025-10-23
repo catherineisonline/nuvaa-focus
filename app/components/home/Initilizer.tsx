@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { tasksSelectors } from "../../redux/selectors/tasksSelectors";
 import { useEffect, useState } from "react";
-import { setupSettings, updateSettings } from "../../redux/slices/settingsSlice";
+import { initSettings, updateSettings } from "../../redux/slices/settingsSlice";
 import { initStreak, setCurrentTab } from "../../redux/slices/appSlice";
 import { initTasks, setCurrentTaskId } from "../../redux/slices/tasksSlice";
 import { initilizecustomBackgrounds, setCurrentBackground } from "../../redux/slices/appearanceSlice";
@@ -13,6 +13,8 @@ import { setMusicEnabled, setMusicUrl, setSelectedOption } from "../../redux/sli
 import { setOnboarding } from "../../redux/slices/onboardingSlice";
 import { appearanceSelectors } from "../../redux/selectors/appearanceSelectors";
 import { settingsSelectors } from "../../redux/selectors/settingsSelectors";
+import { musicSelectors } from "../../redux/selectors/musicSelectors";
+import { quoteSelectors } from "../../redux/selectors/quoteSelectors";
 
 export const Initilizer = () => {
   const dispatch = useDispatch();
@@ -23,17 +25,13 @@ export const Initilizer = () => {
   const { is24Hour, focusTime, shortBreakTime, longBreakTime, autoStartNext } = useSelector(settingsSelectors);
   const { tasks, currentTaskId } = useSelector(tasksSelectors);
   const { currentBackground, customBackgrounds } = useSelector(appearanceSelectors);
-
-  const isQuotesShown = useSelector((state: RootState) => state.quotes.isQuotesShown);
-  const customQuote = useSelector((state: RootState) => state.quotes.customQuote);
-  const selectedOption = useSelector((state: RootState) => state.music.selectedOption);
-  const musicEnabled = useSelector((state: RootState) => state.music.musicEnabled);
-  const musicUrl = useSelector((state: RootState) => state.music.musicUrl);
+  const { selectedOption, musicEnabled, musicUrl } = useSelector(musicSelectors);
+  const { isQuotesShown, customQuote } = useSelector(quoteSelectors);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisited");
     if (!hasVisited) {
-      dispatch(setOnboarding({ value: true }));
+      dispatch(setOnboarding(true));
       localStorage.setItem("hasVisited", "true");
     }
   }, [dispatch]);
@@ -76,43 +74,43 @@ export const Initilizer = () => {
       dispatch(updateSettings({ key: Number(JSON.parse(is24HourStore)) }));
     }
     if (streakStore !== null) {
-      dispatch(initStreak({ value: JSON.parse(streakStore) }));
+      dispatch(initStreak(JSON.parse(streakStore)));
     }
     if (settingsStore !== null) {
-      dispatch(setupSettings(JSON.parse(settingsStore)));
+      dispatch(initSettings(JSON.parse(settingsStore)));
     }
     if (currentTabStore !== null) {
-      dispatch(setCurrentTab({ tab: JSON.parse(currentTabStore) }));
+      dispatch(setCurrentTab(JSON.parse(currentTabStore)));
     }
     if (tasksStore !== null) {
       dispatch(initTasks(JSON.parse(tasksStore)));
     }
     if (currentTaskStore !== null) {
-      dispatch(setCurrentTaskId({ id: JSON.parse(currentTaskStore) }));
+      dispatch(setCurrentTaskId(JSON.parse(currentTaskStore)));
     }
     if (currentBackgroundStore !== null) {
-      dispatch(setCurrentBackground({ image: JSON.parse(currentBackgroundStore) }));
+      dispatch(setCurrentBackground(JSON.parse(currentBackgroundStore)));
     }
     if (customBackgroundsStore !== null) {
-      dispatch(initilizecustomBackgrounds({ data: JSON.parse(customBackgroundsStore) }));
+      dispatch(initilizecustomBackgrounds(JSON.parse(customBackgroundsStore)));
     }
     if (isQuotesShownStore !== null) {
-      dispatch(initilizeIsQuotesShown({ val: JSON.parse(isQuotesShownStore) }));
+      dispatch(initilizeIsQuotesShown(JSON.parse(isQuotesShownStore)));
     }
     if (quoteIndexStore !== null) {
-      dispatch(setCurrentQuote({ index: JSON.parse(quoteIndexStore) }));
+      dispatch(setCurrentQuote(JSON.parse(quoteIndexStore)));
     }
     if (customQuoteStore !== null) {
-      dispatch(setCustomQuote({ value: JSON.parse(customQuoteStore) }));
+      dispatch(setCustomQuote(JSON.parse(customQuoteStore)));
     }
     if (selectedOptionStore !== null) {
-      dispatch(setSelectedOption({ value: JSON.parse(selectedOptionStore) }));
+      dispatch(setSelectedOption(JSON.parse(selectedOptionStore)));
     }
     if (musicUrlStore !== null) {
-      dispatch(setMusicUrl({ value: JSON.parse(musicUrlStore) }));
+      dispatch(setMusicUrl(JSON.parse(musicUrlStore)));
     }
     if (musicEnabledStore !== null) {
-      dispatch(setMusicEnabled({ value: JSON.parse(musicEnabledStore) }));
+      dispatch(setMusicEnabled(JSON.parse(musicEnabledStore)));
     }
     setHydrated(true);
   }, [dispatch]);

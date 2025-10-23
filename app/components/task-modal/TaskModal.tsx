@@ -74,7 +74,7 @@ export const TaskModal = () => {
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      dispatch(toggleModal({ target: "isTasksActive" }));
+      dispatch(toggleModal("isTasksActive"));
     }
   };
   const handleModalClose = () => {
@@ -88,29 +88,29 @@ export const TaskModal = () => {
         completed: false,
         createdAt: new Date().toISOString(),
       };
-      dispatch(setTasks({ task: newTask }));
+      dispatch(setTasks(newTask));
       dispatch(resetTaskfield());
     }
   };
 
   const toggleTask = (id: string) => {
-    dispatch(toggleTaskAsComplete({ id: id }));
+    dispatch(toggleTaskAsComplete(id));
     removeCurrentTask();
   };
 
   const cancelEdit = () => {
-    dispatch(setEditingId({ id: null }));
-    dispatch(setEditText({ text: "" }));
+    dispatch(setEditingId(null));
+    dispatch(setEditText(""));
   };
 
   const handleDelete = (id: string) => {
-    dispatch(deleteTask({ id: id }));
+    dispatch(deleteTask(id));
     if (currentTask && currentTask.id === id) {
-      dispatch(setCurrentTaskId({ id: null }));
+      dispatch(setCurrentTaskId(null));
     }
   };
   const removeCurrentTask = () => {
-    dispatch(setCurrentTaskId({ id: null }));
+    dispatch(setCurrentTaskId(null));
   };
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -132,17 +132,17 @@ export const TaskModal = () => {
 
   const handleDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
-    dispatch(setActiveDrag({ drag: null }));
+    dispatch(setActiveDrag(null));
     if (active.id !== over.id) {
       dispatch(moveTask({ activeId: active.id, overId: over.id }));
     }
   };
   const handleDrag = (e: DragStartEvent) => {
-    dispatch(setActiveDrag({ drag: e.active.id }));
+    dispatch(setActiveDrag(e.active.id));
   };
   const handleTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
-    dispatch(updateTaskfield({ text: input }));
+    dispatch(updateTaskfield(input));
   };
 
   return (

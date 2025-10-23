@@ -1,48 +1,27 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-import {
-  setCustomQuote,
-  setIsEditingQuote,
-  setTempCustomQuote,
-} from "../../../redux/slices/quotesSlice";
+import { setCustomQuote, setIsEditingQuote, setTempCustomQuote } from "../../../redux/slices/quotesSlice";
 
-import {
-  QuoteDisplayInput,
-  QuoteDisplayText,
-  QuoteSection,
-} from "./Quote.styled";
+import { QuoteDisplayInput, QuoteDisplayText, QuoteSection } from "./Quote.styled";
 import { useBackgroundStatus } from "../../../hooks/useBackgroundStatus";
 import React from "react";
+import { quoteSelectors } from "../../../redux/selectors/quoteSelectors";
 
 export const Quotes = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
-  const isQuotesShown = useSelector(
-    (state: RootState) => state.quotes.isQuotesShown
-  );
-  const isEditingQuote = useSelector(
-    (state: RootState) => state.quotes.isEditingQuote
-  );
-  const customQuote = useSelector(
-    (state: RootState) => state.quotes.customQuote
-  );
-  const currentQuote = useSelector(
-    (state: RootState) => state.quotes.currentQuote
-  );
-  const tempCustomQuote = useSelector(
-    (state: RootState) => state.quotes.tempCustomQuote
-  );
+  const { isQuotesShown, isEditingQuote, customQuote, currentQuote, tempCustomQuote } = useSelector(quoteSelectors);
+
   const handleIsEditingQuote = () => {
     dispatch(setIsEditingQuote());
-    dispatch(setTempCustomQuote({ value: customQuote || currentQuote }));
+    dispatch(setTempCustomQuote(customQuote || currentQuote));
   };
   const handleTempQuote = (val: string) => {
-    dispatch(setTempCustomQuote({ value: val }));
+    dispatch(setTempCustomQuote(val));
   };
   const handleCustomQuote = () => {
     dispatch(setIsEditingQuote());
-    dispatch(setCustomQuote({ value: tempCustomQuote }));
+    dispatch(setCustomQuote(tempCustomQuote));
   };
   return (
     <React.Fragment>
@@ -59,9 +38,7 @@ export const Quotes = () => {
               maxLength={65}
             />
           ) : (
-            <QuoteDisplayText
-              $bgImage={isBackgroundActive}
-              onClick={handleIsEditingQuote}>
+            <QuoteDisplayText $bgImage={isBackgroundActive} onClick={handleIsEditingQuote}>
               {customQuote || currentQuote}
             </QuoteDisplayText>
           )}

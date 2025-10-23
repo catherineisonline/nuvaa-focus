@@ -51,16 +51,16 @@ const TimerTab = () => {
     showMessage();
   };
   const updateMode = (v: string) => {
-    dispatch(setCurrentTab({ tab: v.toLowerCase() }));
+    dispatch(setCurrentTab(v.toLowerCase()));
   };
   const showMessage = debounce(() => {
-    dispatch(updateChangesSavedMsg({ msg: "Successfully updated" }));
+    dispatch(updateChangesSavedMsg("Successfully updated"));
   }, 1000);
 
   useEffect(() => {
     if (!changesSavedMsg) return;
     const timer = setTimeout(() => {
-      dispatch(updateChangesSavedMsg({ msg: "" }));
+      dispatch(updateChangesSavedMsg(""));
     }, 2000);
     return () => clearTimeout(timer);
   }, [changesSavedMsg, dispatch]);

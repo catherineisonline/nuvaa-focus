@@ -19,21 +19,17 @@ const quotesSlice = createSlice({
       }
     },
     initilizeIsQuotesShown(state, action) {
-      const isShown = action.payload.val;
-      state.isQuotesShown = isShown;
+      state.isQuotesShown = action.payload;
     },
     setCustomQuote(state, action) {
-      const val = action.payload.value;
-      state.customQuote = val;
+      state.customQuote = action.payload;
     },
     setTempCustomQuote(state, action) {
-      const val = action.payload.value;
-      state.tempCustomQuote = val;
+      state.tempCustomQuote = action.payload;
     },
 
     setCurrentQuote(state, action) {
-      const index = action.payload.index;
-      state.currentQuote = state.quotes[index];
+      state.currentQuote = state.quotes[action.payload];
     },
     setIsEditingQuote(state) {
       state.isEditingQuote = !state.isEditingQuote;

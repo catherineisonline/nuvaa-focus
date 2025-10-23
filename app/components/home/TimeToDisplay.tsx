@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 import { TimerDisplay } from "./Page.styled";
-import { RootState } from "../../redux/store";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { pomodoroSelectors } from "../../redux/selectors/pomodoroSelectors";
 import { settingsSelectors } from "../../redux/selectors/settingsSelectors";
@@ -15,6 +14,7 @@ import {
 } from "../../redux/slices/pomodoroSlice";
 import { setStreak } from "../../redux/slices/appSlice";
 import { usePomodoroMode } from "../../hooks/usePomodoroMode";
+import { stopwatchSelectors } from "../../redux/selectors/stopwatchSelectors";
 
 export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
   const dispatch = useDispatch();
@@ -23,9 +23,8 @@ export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
   const { currentMode } = useSelector(pomodoroSelectors);
   const { autoStartNext, focusTime, shortBreakTime, longBreakTime } = useSelector(settingsSelectors);
   const isBackgroundActive = useBackgroundStatus();
-  const timeLeft = useSelector((state: RootState) => state.pomodoro.timeLeft);
-  const timeLeftStopwatch = useSelector((state: RootState) => state.stopwatch.timeLeftStopwatch);
-  const isRunning = useSelector((state: RootState) => state.pomodoro.isRunning);
+  const { timeLeft, isRunning } = useSelector(pomodoroSelectors);
+  const { timeLeftStopwatch } = useSelector(stopwatchSelectors);
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
@@ -48,7 +47,7 @@ export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
     const current = times[mode];
 
     if (previous !== current && timeLeft > 0) {
-      dispatch(updateTimeLeft({ time: current }));
+      dispatch(updateTimeLeft(current));
     }
 
     prevTimesRef.current = times;
@@ -63,11 +62,11 @@ export const TimeToDisplay = ({ timeType }: { timeType: string }) => {
       dispatch(setStreak());
       const mode = getMode();
       const modeTime = getModeTime();
-      dispatch(updateMode({ mode: mode }));
-      dispatch(updateTimeLeft({ time: modeTime }));
+      dispatch(updateMode(mode));
+      dispatch(updateTimeLeft(modeTime));
     } else {
-      dispatch(updateMode({ mode: "focus" }));
-      dispatch(updateTimeLeft({ time: focusTime }));
+      dispatch(updateMode("focus"));
+      dispatch(updateTimeLeft(focusTime));
     }
     // ! note: add countdown before autostart
     if (autoStartNext) {

@@ -14,14 +14,14 @@ export const ControlsModal = () => {
   const dispatch = useDispatch();
   const isMusicPlaying = useSelector((state: RootState) => state.settings.isMusicPlaying);
   const handleTasks = () => {
-    dispatch(toggleModal({ target: "isTasksActive" }));
+    dispatch(toggleModal("isTasksActive"));
   };
 
   const handleSettings = () => {
     if (!isMusicPlaying) {
-      dispatch(toggleModal({ target: "isSettingsActive" }));
+      dispatch(toggleModal("isSettingsActive"));
     } else {
-      dispatch(setIsMusicPlaying({ value: false }));
+      dispatch(setIsMusicPlaying(false));
     }
   };
 

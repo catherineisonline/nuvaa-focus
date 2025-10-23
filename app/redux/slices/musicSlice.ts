@@ -11,20 +11,16 @@ const musicSlice = createSlice({
   },
   reducers: {
     setSelectedOption(state, action) {
-      const value = action.payload.value;
-      state.selectedOption = value;
+      state.selectedOption = action.payload;
     },
     setCustomUrl(state, action) {
-      const value = action.payload.value;
-      state.customUrl = value;
+      state.customUrl = action.payload;
     },
     setMusicUrl(state, action) {
-      const value = action.payload.value;
-      state.musicUrl = value;
+      state.musicUrl = action.payload;
     },
     setMusicEnabled(state, action) {
-      const value = action.payload.value;
-      state.musicEnabled = value;
+      state.musicEnabled = action.payload;
     },
   },
 });

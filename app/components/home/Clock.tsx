@@ -21,9 +21,9 @@ const Clock = () => {
         second: "2-digit",
       });
     };
-    dispatch(setupDateTime({ time: formatTime() }));
+    dispatch(setupDateTime(formatTime()));
     const interval = setInterval(() => {
-      dispatch(setupDateTime({ time: formatTime() }));
+      dispatch(setupDateTime(formatTime()));
     }, 1000);
 
     return () => clearInterval(interval);

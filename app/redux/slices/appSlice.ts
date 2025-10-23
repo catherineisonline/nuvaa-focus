@@ -5,20 +5,16 @@ const appSlice = createSlice({
   initialState: { streak: 0, currentTab: "focus", changesSavedMsg: "" },
   reducers: {
     initStreak(state, action) {
-      const strk = action.payload.value;
-      state.streak = strk;
+      state.streak = action.payload;
     },
     setStreak(state) {
       state.streak += 1;
     },
     setCurrentTab(state, action) {
-      const tab = action.payload.tab;
-      console.log(tab);
-      state.currentTab = tab;
+      state.currentTab = action.payload;
     },
     updateChangesSavedMsg(state, action) {
-      const msg = action.payload.msg;
-      state.changesSavedMsg = msg;
+      state.changesSavedMsg = action.payload;
     },
   },
 });

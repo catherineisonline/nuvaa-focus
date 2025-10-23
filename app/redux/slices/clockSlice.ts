@@ -5,8 +5,7 @@ const clockSlice = createSlice({
   initialState: { dateTime: "" },
   reducers: {
     setupDateTime(state, action) {
-      const time = action.payload.time;
-      state.dateTime = time;
+      state.dateTime = action.payload;
     },
   },
 });

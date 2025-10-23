@@ -7,21 +7,23 @@ import { setCurrentTab } from "../../redux/slices/appSlice";
 import { togglePomodoro } from "../../redux/slices/pomodoroSlice";
 import { ModeTabs, ModeTabButton } from "./Page.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
+import { pomodoroSelectors } from "../../redux/selectors/pomodoroSelectors";
+import { stopwatchSelectors } from "../../redux/selectors/stopwatchSelectors";
 
 export const ModeTab = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
-  const isRunning = useSelector((state: RootState) => state.pomodoro.isRunning);
-  const isRunningStopwatch = useSelector((state: RootState) => state.stopwatch.stopwatchIsRunning);
+  const { isRunning } = useSelector(pomodoroSelectors);
+  const { isStopwatchRunning } = useSelector(stopwatchSelectors);
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
 
   const updateTab = (tab: string) => {
     if (currentTab === "focus" && isRunning) {
       dispatch(togglePomodoro());
-    } else if (currentTab === "stopwatch" && isRunningStopwatch) {
+    } else if (currentTab === "stopwatch" && isStopwatchRunning) {
       dispatch(toggleStopwatch());
     }
-    dispatch(setCurrentTab({ tab: tab }));
+    dispatch(setCurrentTab(tab));
   };
   return (
     <ModeTabs $bgActive={isBackgroundActive}>

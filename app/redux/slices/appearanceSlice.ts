@@ -1,16 +1,7 @@
 "use client";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { PREDEFINED_BACKGROUNDS } from "../../styles/backgrounds";
-import type { StaticImageData } from "next/image";
-
-export interface AppearanceState {
-  currentTheme: string;
-  currentBackground: string | null | StaticImageData;
-  backgrounds: (string | StaticImageData)[];
-  customBackgrounds: (string | StaticImageData)[];
-  backgroundBlur: number;
-  backgroundDim: number;
-}
+import { AppearanceState } from "../../types/appearance";
 
 const initialState: AppearanceState = {
   currentTheme: "primary",
@@ -24,39 +15,36 @@ const appearanceSlice = createSlice({
   name: "appearance",
   initialState,
   reducers: {
-    setBackgroundBlur(state, action: PayloadAction<{ value: number }>) {
-      state.backgroundBlur = action.payload.value;
+    setBackgroundBlur(state, action) {
+      state.backgroundBlur = action.payload;
     },
-    setBackgroundDim(state, action: PayloadAction<{ value: number }>) {
-      state.backgroundDim = action.payload.value;
+    setBackgroundDim(state, action) {
+      state.backgroundDim = action.payload;
     },
-    initilizecustomBackgrounds(state, action: PayloadAction<{ data: (string | StaticImageData)[] }>) {
-      state.customBackgrounds = [...action.payload.data];
+    initilizecustomBackgrounds(state, action) {
+      state.customBackgrounds = [...action.payload];
     },
-    setCurrentTheme(state, action: PayloadAction<{ name: string }>) {
-      state.currentTheme = action.payload.name;
+    setCurrentTheme(state, action) {
+      state.currentTheme = action.payload;
     },
-    setCurrentBackground(state, action: PayloadAction<{ image: string | StaticImageData }>) {
-      const img = action.payload.image;
-      state.currentBackground = img;
+    setCurrentBackground(state, action) {
+      state.currentBackground = action.payload;
     },
-    setCurrentCustomBackground(state, action: PayloadAction<{ image: string | StaticImageData }>) {
-      const img = action.payload.image;
-      if (!state.customBackgrounds.includes(img)) {
-        state.customBackgrounds.push(img);
+    setCurrentCustomBackground(state, action) {
+      if (!state.customBackgrounds.includes(action.payload)) {
+        state.customBackgrounds.push(action.payload);
       }
-      state.currentBackground = img;
+      state.currentBackground = action.payload;
     },
     removeBackground(state) {
       state.currentBackground = null;
     },
-    removeCustomBackground(state, action: PayloadAction<{ src: string | StaticImageData }>) {
-      const src = action.payload.src;
-      if (state.currentBackground === src) {
+    removeCustomBackground(state, action) {
+      if (state.currentBackground === action.payload) {
         state.currentBackground = null;
       }
       const bgs = state.customBackgrounds;
-      state.customBackgrounds = bgs.filter((img) => img !== src);
+      state.customBackgrounds = bgs.filter((img) => img !== action.payload);
     },
   },
 });

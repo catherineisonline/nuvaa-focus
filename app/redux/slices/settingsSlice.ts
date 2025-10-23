@@ -6,16 +6,17 @@ const settingsSlice = createSlice({
     focusTime: 1500,
     shortBreakTime: 300,
     longBreakTime: 900,
-    stopwatch: 0,
     is24Hour: true,
     autoStartNext: false,
     settingsTab: "timer",
     isMusicPlaying: false,
   },
   reducers: {
+    initSettings(state, action) {
+      state = action.payload;
+    },
     updateSettingsTab(state, action) {
-      const tab = action.payload.tab;
-      state.settingsTab = tab;
+      state.settingsTab = action.payload;
     },
     updateSettings(state, action) {
       const { key, value } = action.payload;
@@ -33,15 +34,10 @@ const settingsSlice = createSlice({
         state.autoStartNext = true;
       }
     },
-    setupSettings(state, action) {
-      const cachedSettings = action.payload;
-      state = cachedSettings;
-    },
     setIsMusicPlaying(state, action) {
-      const value = action.payload.value;
-      state.isMusicPlaying = value;
+      state.isMusicPlaying = action.payload;
     },
   },
 });
 export default settingsSlice.reducer;
-export const { updateSettings, setupSettings, updateSettingsTab, setIsMusicPlaying } = settingsSlice.actions;
+export const { updateSettings, initSettings, updateSettingsTab, setIsMusicPlaying } = settingsSlice.actions;
