@@ -3,7 +3,6 @@ import ReduxProvider from "./redux/ReduxProvider";
 import { Lexend, Outfit } from "next/font/google";
 import ThemeWrapper from "./components/ThemeWrapper";
 import { Initilizer } from "./components/home/Initilizer";
-import { Overlay } from "./Page.styled";
 import Header from "./components/header/Header";
 import { Modals } from "./components/home/Modals";
 
@@ -38,7 +37,6 @@ export default function RootLayout({ children }) {
           <StyledComponentsRegistry>
             <ThemeWrapper>
               <Initilizer />
-              {/* <Overlay /> */}
               <Header />
               {children}
               <Modals />

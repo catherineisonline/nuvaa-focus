@@ -23,6 +23,7 @@ import { FeaturesTab } from "./features-tab/FeaturesTab";
 import { AnalyticsTab } from "./analytics-tab/AnalyticsTab";
 import { useRef } from "react";
 import { MusicTab } from "./music-tab/MusicTab";
+import ProfileTab from "./profile-tab/ProfileTab";
 
 export const SettingsModal = () => {
   const dispatch = useDispatch();
@@ -97,6 +98,7 @@ export const SettingsModal = () => {
           {settingsTab === "music" && <MusicTab />}
           {settingsTab === "features" && <FeaturesTab />}
           {settingsTab === "analytics" && <AnalyticsTab />}
+          {settingsTab === "account" && <ProfileTab />}
         </ModalBody>
       </Modal>
     </Overlay>

@@ -38,7 +38,7 @@ const Focus = () => {
   const isRunning = useSelector((state: RootState) => state.pomodoro.isRunning);
   let mode = currentMode === "focus" ? "focusTime" : currentMode;
   const isBackgroundActive = useBackgroundStatus();
-  console.log(currentMode);
+
   const totalTime = useMemo(() => {
     return {
       focusTime: focusTime,
@@ -52,7 +52,7 @@ const Focus = () => {
   };
   const resetPomodoro = () => {
     dispatch(stopPomodoro());
-    console.log(totalTime);
+
     dispatch(updateTimeLeft(totalTime));
   };
   const skipPomodoro = () => {

@@ -12,6 +12,9 @@ import quotesSlice from "./slices/quotesSlice";
 import analyticsSlice from "./slices/analyticsSlice";
 import musicSlice from "./slices/musicSlice";
 import onboardingSlice from "./slices/onboardingSlice";
+import registerSlice from "./slices/registerSlice";
+import loginSlice from "./slices/loginSlice";
+import profileSlice from "./slices/profileSlice";
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +30,9 @@ export const store = configureStore({
     analytics: analyticsSlice,
     music: musicSlice,
     onboarding: onboardingSlice,
+    register: registerSlice,
+    login: loginSlice,
+    profile: profileSlice,
   },
 });
 
