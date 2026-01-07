@@ -1,5 +1,3 @@
-import "server-only";
-
 import { createClient } from "@libsql/client";
 
 export const turso = createClient({
