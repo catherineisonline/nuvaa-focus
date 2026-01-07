@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { AccountContent, EditButton, TabSwitcher, TabButton } from "./Profile.styled";
+import { ModalBody, EditButton, TabSwitcher, TabButton, ModalHeading, EditProfileActions } from "./Profile.styled";
 import { useAuth } from "../../../hooks/useAuth";
 import { Register } from "./components/auth/Register";
 import { Login } from "./components/auth/Login";
@@ -8,7 +8,8 @@ import { Profile } from "./components/profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { setIsProfileEditing, setUser } from "../../../redux/slices/profileSlice";
-import { setActiveTab } from "../../../redux/slices/loginSlice";
+import { setActiveTab, setErrors as setErrorsL } from "../../../redux/slices/loginSlice";
+import { setErrors as setErrorsR } from "../../../redux/slices/registerSlice";
 
 export default function ProfileTab() {
   const editProfile = useSelector((state: RootState) => state.profile.isProfileEditing);
@@ -27,22 +28,25 @@ export default function ProfileTab() {
     dispatch(setIsProfileEditing(val));
   };
   const handleActiveTab = (tab: string) => {
+    if (tab === "login") dispatch(setErrorsR(null));
+    else dispatch(setErrorsL(null));
+
     dispatch(setActiveTab(tab));
   };
 
   return (
-    <AccountContent>
-      <div>
+    <ModalBody>
+      <ModalHeading>
         <h2>{user ? user?.fullname : activeTab === "login" ? "Login" : "Register"}</h2>{" "}
         {user && (
-          <div>
+          <EditProfileActions>
             <EditButton onClick={() => handleEditToggle(!editProfile)}>
               {editProfile ? "Save changes" : "Edit profile"}
             </EditButton>
             {editProfile && <EditButton onClick={() => handleEditToggle(false)}>Cancel</EditButton>}
-          </div>
+          </EditProfileActions>
         )}
-      </div>
+      </ModalHeading>
 
       {!user && (
         <>
@@ -57,6 +61,6 @@ export default function ProfileTab() {
         </>
       )}
       {user && <Profile />}
-    </AccountContent>
+    </ModalBody>
   );
 }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { media } from "../../../styles/breakpoints";
 
-export const AccountContent = styled.section`
+export const ModalBody = styled.section`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -14,12 +14,31 @@ export const AccountContent = styled.section`
   }
 `;
 
+export const ModalHeading = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const EditProfileActions = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+`;
+
 export const EditButton = styled.button`
   background-color: transparent;
   border: none;
   color: ${({ theme }) => theme.highlight};
   cursor: pointer;
   font-weight: 500;
+  width: max-content;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: ${({ theme }) => theme.text};
+    }
+  }
 `;
 
 export const TabSwitcher = styled.div`
@@ -58,12 +77,13 @@ export const ProfileField = styled.div`
   }
 `;
 
-export const AddTaskButton = styled.button`
+export const ActionButton = styled.button`
   color: ${({ theme }) => theme.buttonText};
   border: none;
   padding: 14px 8px;
   width: 8rem;
   height: auto;
+  margin-top: 1rem;
   cursor: pointer;
   transition: var(--transition);
   display: flex;
@@ -89,8 +109,17 @@ export const AddTaskButton = styled.button`
     outline: 3px solid ${({ theme }) => theme.highlight};
   }
 `;
-
-export const TaskInput = styled.input`
+export const AuthForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+export const AuthInputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+export const AuthInput = styled.input`
   padding: 15px 10px;
   border: none;
   border-radius: 8px;
@@ -104,4 +133,31 @@ export const TaskInput = styled.input`
     outline: none;
     box-shadow: ${({ theme }) => theme.boxShadowInput};
   }
+`;
+
+export const InputLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  color: ${({ theme }) => theme.text};
+  font-size: 1rem;
+  font-family: var(--font-outfit);
+`;
+export const InputError = styled.span`
+  font-weight: 600;
+  color: ${({ theme }) => theme.highlight};
+  font-size: 0.9rem;
+  font-family: var(--font-outfit);
+`;
+
+export const ProfileActions = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+export const ProfileActionsGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
 `;

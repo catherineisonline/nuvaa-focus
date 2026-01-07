@@ -14,7 +14,7 @@ export const register = async (form: Form) => {
   });
   const data = await res.json();
   if (!data.success) {
-    throw new Error(data);
+    throw new Error(data.message);
   }
   return true;
 };

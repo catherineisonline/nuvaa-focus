@@ -8,8 +8,9 @@ export const login = async ({ email, password }: { email: string; password: stri
     body: JSON.stringify({ email: email, password: password }),
   });
   const data = await res.json();
+
   if (!data.success) {
-    throw new Error(data);
+    throw new Error(data.message);
   }
   return data.user;
 };

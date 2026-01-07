@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
       if (match) {
         const { id, email, fullname } = rows[0];
         const token = jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: "7d" });
-
         return Response.json(
           { success: true, user: { id, email, fullname } },
           {

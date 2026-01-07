@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { AddTaskButton, TaskInput } from "../../Profile.styled";
+import { ActionButton, AuthForm, AuthInput, InputError, InputLabel } from "../../Profile.styled";
 import { RootState } from "../../../../../redux/store";
 import { validate } from "../../helpers/validate";
 import { login } from "../../helpers/login";
@@ -26,25 +26,27 @@ export const Login = () => {
       dispatch(setUser(user));
       dispatch(setErrors(null));
     } catch (error) {
-      console.log(error.message);
+      dispatch(setErrors({ general: error.message || "Login failed!" }));
+      console.log(error);
     }
   };
   return (
-    <form>
-      <label htmlFor="email">
+    <AuthForm>
+      {errors?.general && <InputError>{errors.general}</InputError>}
+      <InputLabel htmlFor="email">
         Email
-        <TaskInput
+        <AuthInput
           name="email"
           id="email"
           placeholder="e.g. bilbob@gmail.com"
           value={form?.email || ""}
           onChange={(e) => handleChange(e.target)}
         />
-      </label>
-      {errors?.email && <span>{errors.email}</span>}
-      <label htmlFor="password">
+      </InputLabel>
+      {errors?.email && <InputError>{errors.email}</InputError>}
+      <InputLabel htmlFor="password">
         Password
-        <TaskInput
+        <AuthInput
           name="password"
           id="password"
           placeholder="password min. 8 characters"
@@ -52,11 +54,11 @@ export const Login = () => {
           value={form?.password || ""}
           onChange={(e) => handleChange(e.target)}
         />
-      </label>
-      {errors?.password && <span>{errors.password}</span>}
-      <AddTaskButton type="button" onClick={handleLogin}>
+      </InputLabel>
+      {errors?.password && <InputError>{errors.password}</InputError>}
+      <ActionButton type="button" onClick={handleLogin}>
         Login
-      </AddTaskButton>
-    </form>
+      </ActionButton>
+    </AuthForm>
   );
 };

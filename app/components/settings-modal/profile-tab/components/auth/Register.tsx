@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { AddTaskButton, TaskInput } from "../../Profile.styled";
+import { ActionButton, AuthForm, AuthInput, InputError, InputLabel } from "../../Profile.styled";
 import { RootState } from "../../../../../redux/store";
 import { setErrors, setForm } from "../../../../../redux/slices/registerSlice";
 import { validate } from "../../helpers/validate";
 import { register } from "../../helpers/register";
+import { setActiveTab } from "../../../../../redux/slices/loginSlice";
 
 export const Register = () => {
   const dispatch = useDispatch();
@@ -21,42 +22,43 @@ export const Register = () => {
     }
     try {
       const res = await register(form);
+
       if (res) {
         dispatch(setErrors(null));
         dispatch(setForm("reset"));
-        // setActiveTab("login");
+        dispatch(setActiveTab("login"));
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
   return (
-    <form>
-      <label htmlFor="fullname">
+    <AuthForm>
+      <InputLabel htmlFor="fullname">
         Full Name
-        <TaskInput
+        <AuthInput
           name="fullname"
           id="fullname"
           placeholder="e.g. Bilbo Baggins"
           value={form?.fullname}
           onChange={(e) => handleChange(e.target)}
         />
-      </label>
-      {errors?.fullname && <span>{errors.fullname}</span>}
-      <label htmlFor="email">
+      </InputLabel>
+      {errors?.fullname && <InputError>{errors.fullname}</InputError>}
+      <InputLabel htmlFor="email">
         Email
-        <TaskInput
+        <AuthInput
           name="email"
           id="email"
           placeholder="e.g. bilbob@gmail.com"
           value={form?.email}
           onChange={(e) => handleChange(e.target)}
         />
-      </label>
-      {errors?.email && <span>{errors.email}</span>}
-      <label htmlFor="password">
+      </InputLabel>
+      {errors?.email && <InputError>{errors.email}</InputError>}
+      <InputLabel htmlFor="password">
         Password
-        <TaskInput
+        <AuthInput
           name="password"
           id="password"
           placeholder="password min. 8 characters"
@@ -64,11 +66,11 @@ export const Register = () => {
           value={form?.password}
           onChange={(e) => handleChange(e.target)}
         />
-      </label>
-      {errors?.password && <span>{errors.password}</span>}
-      <label htmlFor="repeatPassword">
+      </InputLabel>
+      {errors?.password && <InputError>{errors.password}</InputError>}
+      <InputLabel htmlFor="repeatPassword">
         Repeat password
-        <TaskInput
+        <AuthInput
           name="repeatPassword"
           id="repeatPassword"
           placeholder="the same password as above"
@@ -76,11 +78,11 @@ export const Register = () => {
           value={form?.repeatPassword}
           onChange={(e) => handleChange(e.target)}
         />
-      </label>
-      {errors?.repeatPassword && <span>{errors.repeatPassword}</span>}
-      <AddTaskButton type="button" onClick={handleRegister}>
+      </InputLabel>
+      {errors?.repeatPassword && <InputError>{errors.repeatPassword}</InputError>}
+      <ActionButton type="button" onClick={handleRegister}>
         Register
-      </AddTaskButton>
-    </form>
+      </ActionButton>
+    </AuthForm>
   );
 };
