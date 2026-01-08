@@ -62,23 +62,22 @@ export const CurrentQuoteWarning = styled(CurrentQuote)`
 `;
 
 export const QuoteTextArea = styled.textarea`
-  width: 100%;
-  max-width: 18rem;
-  max-height: 13rem;
-  padding: 12px;
-  border: 2px solid ${({ theme }) => theme.text};
+  flex: 1;
+  padding: 15px 10px;
+  border: none;
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.backgroundSecondary}
-  font-size: 0.9rem;
-  color:  ${({ theme }) => theme.text}
-
-   @media ${media.md} {
-    max-width: 30rem;
-  }
-
-  &:focus, &:active {
-   outline: none;
-    border: 2px solid ${({ theme }) => theme.highlight};
-    cursor: auto;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: var(--transition);
+  border-radius: var(--border-radius);
+  color: ${({ theme }) => theme.text};
+  background-color: ${({ theme }) => theme.inputInner};
+  box-shadow: ${({ theme }) => theme.boxShadowInputDisabled};
+  &:focus {
+    outline: none;
+    box-shadow: ${({ theme }) => theme.boxShadowInput};
   }
 `;

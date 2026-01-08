@@ -105,9 +105,9 @@ export const UrlInput = styled.input`
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  color: ${({ theme }) => theme.text};
   transition: var(--transition);
   border-radius: var(--border-radius);
+  color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.inputInner};
   box-shadow: ${({ theme }) => theme.boxShadowInputDisabled};
   &:focus {
