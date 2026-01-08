@@ -90,6 +90,7 @@ export const ActionButton = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: var(--border-radius);
+  background-color: ${({ theme }) => theme.background};
   box-shadow: ${({ theme }) => theme.boxShadowOuter};
 
   @media (hover: hover) and (pointer: fine) {
@@ -120,13 +121,14 @@ export const AuthInputGroup = styled.div`
   gap: 1rem;
 `;
 export const AuthInput = styled.input`
+  flex: 1;
   padding: 15px 10px;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  color: ${({ theme }) => theme.text};
   transition: var(--transition);
   border-radius: var(--border-radius);
+  color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.inputInner};
   box-shadow: ${({ theme }) => theme.boxShadowInputDisabled};
   &:focus {
