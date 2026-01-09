@@ -3,7 +3,7 @@ import { ActionButton, AuthForm, AuthInput, InputError, InputLabel } from "../..
 import { RootState } from "../../../../../redux/store";
 import { validate } from "../../helpers/validate";
 import { login } from "../../helpers/login";
-import { setErrors, setForm } from "../../../../../redux/slices/loginSlice";
+import { resetForm, setErrors, setForm } from "../../../../../redux/slices/loginSlice";
 import { setUser } from "../../../../../redux/slices/profileSlice";
 
 export const Login = () => {
@@ -23,8 +23,9 @@ export const Login = () => {
     }
     try {
       const user = await login(form);
-      dispatch(setUser(user));
       dispatch(setErrors(null));
+      dispatch(resetForm());
+      dispatch(setUser(user));
     } catch (error) {
       dispatch(setErrors({ general: error.message || "Login failed!" }));
       console.log(error);

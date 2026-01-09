@@ -5,7 +5,7 @@ export const logout = async () => {
   });
   const data = await res.json();
   if (!data.success) {
-    throw new Error(data);
+    throw new Error(data.message);
   }
   return data.success;
 };

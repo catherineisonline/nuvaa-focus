@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-const LOGINFORM = {
+const getInitialLoginForm = () => ({
   email: "",
   password: "",
-};
+});
 export const loginSlice = createSlice({
   name: "login",
   initialState: {
-    form: LOGINFORM,
+    form: getInitialLoginForm(),
     errors: null,
     activeTab: "login",
   },
@@ -21,8 +21,11 @@ export const loginSlice = createSlice({
     setActiveTab(state, action) {
       state.activeTab = action.payload;
     },
+    resetForm(state) {
+      state.form = getInitialLoginForm();
+    },
   },
 });
 
 export default loginSlice.reducer;
-export const { setForm, setErrors, setActiveTab } = loginSlice.actions;
+export const { setForm, setErrors, setActiveTab, resetForm } = loginSlice.actions;
