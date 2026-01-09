@@ -9,6 +9,13 @@ export const ModalBody = styled.section`
   overflow-y: auto;
   padding: 1rem;
   padding-bottom: 10rem;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
   @media ${media.md} {
     padding-bottom: 2rem;
   }

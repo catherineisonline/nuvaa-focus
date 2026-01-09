@@ -8,6 +8,13 @@ export const ModalBody = styled.div`
   flex: 1;
   overflow-y: auto;
   padding-bottom: 10rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media ${media.md} {
     padding-bottom: 2rem;
   }
