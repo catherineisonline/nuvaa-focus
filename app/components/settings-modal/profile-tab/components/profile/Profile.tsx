@@ -30,8 +30,7 @@ export const Profile = () => {
   const handleLogout = async () => {
     try {
       const response = await logout();
-      const loggedOut = await response.json();
-      if (loggedOut) {
+      if (response) {
         dispatch(setUser(null));
         dispatch(setActiveTab("login"));
       }
