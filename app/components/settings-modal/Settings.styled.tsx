@@ -88,6 +88,13 @@ export const ModalBody = styled.div`
   min-height: 60vh;
   max-height: 80vh;
   gap: 2rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media ${media.md} {
     flex-direction: column;
     max-height: 85vh;

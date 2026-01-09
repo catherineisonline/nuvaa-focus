@@ -61,6 +61,7 @@ export const ModalBody = styled.div`
   min-height: 60vh;
   max-height: 80vh;
   gap: 2rem;
+
   @media ${media.md} {
     max-height: 85vh;
     gap: 1rem;
@@ -128,6 +129,12 @@ export const TasksSection = styled.section`
   gap: 2rem;
   overflow-y: auto;
   padding-bottom: 10rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
   @media ${media.md} {
     padding-bottom: 2rem;
   }

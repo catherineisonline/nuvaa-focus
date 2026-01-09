@@ -8,6 +8,13 @@ export const SettingsContent = styled.form`
   flex: 1;
   overflow-y: auto;
   padding-bottom: 10rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media ${media.md} {
     padding-bottom: 2rem;
   }
@@ -48,8 +55,7 @@ export const ThemeOption = styled.button<{
   border: 1px solid transparent;
   color: ${({ theme }) => theme.text};
   background: ${({ $colorBackground }) => $colorBackground};
-  border-color: ${({ $active, $colorBorder, $colorBackground }) =>
-    $active ? $colorBorder : $colorBackground};
+  border-color: ${({ $active, $colorBorder, $colorBackground }) => ($active ? $colorBorder : $colorBackground)};
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -74,8 +80,7 @@ export const BackgroundOption = styled.button<{ $isActive: boolean }>`
   background: none;
   border-width: 2px;
   border-style: solid;
-  border-color: ${({ $isActive }) =>
-    $isActive ? "var(--color-button-bg)" : "transparent"};
+  border-color: ${({ $isActive }) => ($isActive ? "var(--color-button-bg)" : "transparent")};
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
@@ -110,7 +115,7 @@ export const RemoveBackgroundButton = styled.button`
   right: -8px;
   background-color: ${({ theme }) => theme.boxShadowTimer};
   border-radius: 50%;
-  border-size: 1px;
+  border-width: 1px;
   border-style: solid;
   border-color: ${({ theme }) => theme.text};
   width: 2rem;
@@ -212,6 +217,7 @@ export const SliderContainer = styled.div`
 
 export const Slider = styled.input<{ $value?: number }>`
   width: 100%;
+  appearance: none;
   -webkit-appearance: none;
   max-width: 18rem;
   width: 100%;
@@ -240,8 +246,8 @@ export const Slider = styled.input<{ $value?: number }>`
   }
 
   &::-moz-range-thumb {
-    height: 1.2rem
-    width: 1.2rem
+    height: 1.2rem;
+    width: 1.2rem;
     border-radius: 50%;
     background-color: ${({ theme }) => theme.highlight};
     cursor: pointer;
@@ -249,8 +255,8 @@ export const Slider = styled.input<{ $value?: number }>`
   }
 
   &::-ms-thumb {
-    height: 1.2rem
-    width: 1.2rem
+    height: 1.2rem;
+    width: 1.2rem;
     border-radius: 50%;
     background-color: ${({ theme }) => theme.highlight};
     cursor: pointer;
