@@ -33,6 +33,7 @@ export default function ProfileTab() {
 
     dispatch(setActiveTab(tab));
   };
+  const submitForm = () => {};
 
   return (
     <ModalBody>
@@ -40,10 +41,21 @@ export default function ProfileTab() {
         <h2>{user ? user?.fullname : activeTab === "login" ? "Login" : "Register"}</h2>{" "}
         {user && (
           <EditProfileActions>
-            <EditButton onClick={() => handleEditToggle(!editProfile)}>
-              {editProfile ? "Save changes" : "Edit profile"}
-            </EditButton>
-            {editProfile && <EditButton onClick={() => handleEditToggle(false)}>Cancel</EditButton>}
+            {!editProfile && (
+              <EditButton type="button" onClick={() => handleEditToggle(true)}>
+                Edit profile
+              </EditButton>
+            )}
+            {editProfile && (
+              <EditButton type="button" onClick={submitForm}>
+                Save changes
+              </EditButton>
+            )}
+            {editProfile && (
+              <EditButton type="button" onClick={() => handleEditToggle(false)}>
+                Cancel
+              </EditButton>
+            )}
           </EditProfileActions>
         )}
       </ModalHeading>
