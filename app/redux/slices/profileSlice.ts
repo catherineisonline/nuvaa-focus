@@ -13,6 +13,9 @@ export const profileSlice = createSlice({
       const { key, value } = action.payload;
       state.form = { ...state.form, [key]: value };
     },
+    resetForm(state) {
+      state.form = null;
+    },
     setErrors(state, action) {
       state.errors = action.payload;
     },
@@ -26,4 +29,4 @@ export const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const { setForm, setErrors, setIsProfileEditing, setUser } = profileSlice.actions;
+export const { setForm, setErrors, setIsProfileEditing, setUser, resetForm } = profileSlice.actions;

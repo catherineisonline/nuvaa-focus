@@ -7,9 +7,11 @@ import { Login } from "./components/auth/Login";
 import { Profile } from "./components/profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { setIsProfileEditing, setUser } from "../../../redux/slices/profileSlice";
+import { resetForm, setIsProfileEditing, setUser } from "../../../redux/slices/profileSlice";
 import { setActiveTab, setErrors as setErrorsL } from "../../../redux/slices/loginSlice";
 import { setErrors as setErrorsR } from "../../../redux/slices/registerSlice";
+import { setErrors as setErrorsProfile } from "../../../redux/slices/profileSlice";
+import { validate } from "./helpers/validate";
 
 export default function ProfileTab() {
   const editProfile = useSelector((state: RootState) => state.profile.isProfileEditing);
@@ -26,6 +28,7 @@ export default function ProfileTab() {
 
   const handleEditToggle = (val: boolean) => {
     dispatch(setIsProfileEditing(val));
+    dispatch(resetForm());
   };
   const handleActiveTab = (tab: string) => {
     if (tab === "login") dispatch(setErrorsR(null));
@@ -33,7 +36,15 @@ export default function ProfileTab() {
 
     dispatch(setActiveTab(tab));
   };
-  const submitForm = () => {};
+  const form = useSelector((state: RootState) => state.profile.form);
+
+  const submitForm = () => {
+    const validation = validate(form, "edit");
+    if (Object.keys(validation).length > 0) {
+      dispatch(setErrorsProfile(validation));
+      return;
+    }
+  };
 
   return (
     <ModalBody>

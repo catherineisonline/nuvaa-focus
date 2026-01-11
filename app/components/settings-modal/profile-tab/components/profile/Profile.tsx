@@ -9,6 +9,7 @@ import {
   AuthInputGroup,
   ProfileActions,
   ProfileActionsGroup,
+  InputError,
 } from "../../Profile.styled";
 import { RootState } from "../../../../../redux/store";
 import { setForm, setUser } from "../../../../../redux/slices/profileSlice";
@@ -22,9 +23,11 @@ export const Profile = () => {
   const user = useSelector((state: RootState) => state.profile.user);
   const form = useSelector((state: RootState) => state.profile.form);
   const editProfile = useSelector((state: RootState) => state.profile.isProfileEditing);
+  const errors = useSelector((state: RootState) => state.profile.errors);
 
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
+    console.log(name, value);
     dispatch(setForm({ key: name, value: value }));
   };
   const handleLogout = async () => {
@@ -50,20 +53,24 @@ export const Profile = () => {
             <strong>Full Name</strong>
             <AuthInput
               id="fullname"
+              name="fullname"
               placeholder={user.fullname}
               value={form?.fullname}
               onChange={(e) => handleChange(e.target)}
             />
           </InputLabel>
+          {errors?.fullname && <InputError>{errors.fullname}</InputError>}
           <InputLabel htmlFor="email">
             <strong>Email</strong>
             <AuthInput
               id="email"
+              name="email"
               placeholder={user.email}
               value={form?.email}
               onChange={(e) => handleChange(e.target)}
             />
           </InputLabel>
+          {errors?.email && <InputError>{errors.email}</InputError>}
           <InputLabel htmlFor="password">
             <strong>Password</strong>
             <AuthInputGroup>
@@ -75,14 +82,16 @@ export const Profile = () => {
                 value={form?.oldPassword}
                 onChange={(e) => handleChange(e.target)}
               />
+              {errors?.oldPassword && <InputError>{errors.oldPassword}</InputError>}
               <AuthInput
-                id="password"
+                id="newPassword"
                 name="newPassword"
                 placeholder="New password"
                 type="password"
                 value={form?.newPassword}
                 onChange={(e) => handleChange(e.target)}
               />
+              {errors?.newPassword && <InputError>{errors.newPassword}</InputError>}
             </AuthInputGroup>
           </InputLabel>
         </AuthForm>
