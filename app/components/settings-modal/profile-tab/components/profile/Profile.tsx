@@ -15,7 +15,7 @@ import { RootState } from "../../../../../redux/store";
 import { setForm, setUser } from "../../../../../redux/slices/profileSlice";
 import { logout } from "../../helpers/logout";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
-
+import { setErrors } from "../../../../../redux/slices/profileSlice";
 export const Profile = () => {
   const dispatch = useDispatch();
 
@@ -36,6 +36,7 @@ export const Profile = () => {
         dispatch(setActiveTab("login"));
       }
     } catch (error) {
+      dispatch(setErrors({ general: error.message || "Editing failed!" }));
       console.log(error);
     }
   };
@@ -43,6 +44,7 @@ export const Profile = () => {
     <>
       {editProfile ? (
         <AuthForm>
+          {errors?.general && <InputError>{errors.general}</InputError>}
           <InputLabel htmlFor="id">
             <strong>ID</strong>
             <AuthInput id="id" readOnly value={user.id} />

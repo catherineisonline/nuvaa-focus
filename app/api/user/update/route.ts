@@ -63,6 +63,10 @@ export async function PATCH(req: NextRequest) {
     }
     return Response.json({ success: false, message: "No user found" }, { status: 404 });
   } catch (error) {
+    if (error instanceof Error && error.message === "INVALID_OLD_PASSWORD") {
+      return Response.json({ success: false, message: "Old password is incorrect" }, { status: 400 });
+    }
+
     return Response.json({ success: false, message: "Something went wrong" }, { status: 500 });
   }
 }
