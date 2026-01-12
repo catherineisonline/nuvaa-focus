@@ -13,16 +13,24 @@ export const validate = (form: Form, action: string) => {
 
   // EDIT PROFILE
   if (action === "edit") {
-    const { oldPassword = null, newPassword = null } = form;
-    if (newPassword || oldPassword) {
-      if (newPassword.trim().length > 0 && oldPassword.trim().length === 0) {
-        errors["password"] = "Include old password to change to a new one";
+    console.log(form);
+    if (form) {
+      const { oldPassword = null, newPassword = null, email = null, fullname = null } = form;
+      if (email && !emailReg.test(email)) {
+        errors["email"] = "Email format seems to be wrong";
       }
-      if (!passwordReg.test(oldPassword)) {
-        errors["oldPassword"] = "Password must be 8-16 characters and include at least 1 digit";
+      if (fullname && fullname.length <= 1) {
+        errors["fullname"] = "Full name is not valid";
       }
-      if (!passwordReg.test(newPassword)) {
-        errors["newPassword"] = "Password must be 8-16 characters and include at least 1 digit";
+      if (newPassword) {
+        if (newPassword.trim().length > 0 && oldPassword.trim().length === 0) {
+          errors["oldPassword"] = "Include old password to change to a new one";
+        } else if (!passwordReg.test(oldPassword)) {
+          errors["oldPassword"] = "Password must be 8-16 characters and include at least 1 digit";
+        }
+        if (!passwordReg.test(newPassword)) {
+          errors["newPassword"] = "Password must be 8-16 characters and include at least 1 digit";
+        }
       }
     }
   }

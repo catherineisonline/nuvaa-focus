@@ -14,7 +14,6 @@ import {
 import { RootState } from "../../../../../redux/store";
 import { setForm, setUser } from "../../../../../redux/slices/profileSlice";
 import { logout } from "../../helpers/logout";
-import { useRouter } from "next/router";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
 
 export const Profile = () => {
@@ -27,7 +26,6 @@ export const Profile = () => {
 
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
-    console.log(name, value);
     dispatch(setForm({ key: name, value: value }));
   };
   const handleLogout = async () => {
@@ -55,7 +53,7 @@ export const Profile = () => {
               id="fullname"
               name="fullname"
               placeholder={user.fullname}
-              value={form?.fullname}
+              value={form?.fullname || ""}
               onChange={(e) => handleChange(e.target)}
             />
           </InputLabel>
@@ -66,7 +64,7 @@ export const Profile = () => {
               id="email"
               name="email"
               placeholder={user.email}
-              value={form?.email}
+              value={form?.email || ""}
               onChange={(e) => handleChange(e.target)}
             />
           </InputLabel>
@@ -79,7 +77,7 @@ export const Profile = () => {
                 name="oldPassword"
                 placeholder="Old password"
                 type="password"
-                value={form?.oldPassword}
+                value={form?.oldPassword || ""}
                 onChange={(e) => handleChange(e.target)}
               />
               {errors?.oldPassword && <InputError>{errors.oldPassword}</InputError>}
@@ -88,7 +86,7 @@ export const Profile = () => {
                 name="newPassword"
                 placeholder="New password"
                 type="password"
-                value={form?.newPassword}
+                value={form?.newPassword || ""}
                 onChange={(e) => handleChange(e.target)}
               />
               {errors?.newPassword && <InputError>{errors.newPassword}</InputError>}

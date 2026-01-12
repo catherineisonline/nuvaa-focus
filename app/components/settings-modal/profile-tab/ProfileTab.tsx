@@ -12,6 +12,7 @@ import { setActiveTab, setErrors as setErrorsL } from "../../../redux/slices/log
 import { setErrors as setErrorsR } from "../../../redux/slices/registerSlice";
 import { setErrors as setErrorsProfile } from "../../../redux/slices/profileSlice";
 import { validate } from "./helpers/validate";
+import { edit } from "./helpers/edit";
 
 export default function ProfileTab() {
   const editProfile = useSelector((state: RootState) => state.profile.isProfileEditing);
@@ -38,11 +39,21 @@ export default function ProfileTab() {
   };
   const form = useSelector((state: RootState) => state.profile.form);
 
-  const submitForm = () => {
+  const submitForm = async () => {
     const validation = validate(form, "edit");
     if (Object.keys(validation).length > 0) {
       dispatch(setErrorsProfile(validation));
       return;
+    }
+    try {
+      const user = await edit(form);
+      dispatch(setErrorsProfile(null));
+      dispatch(resetForm());
+      dispatch(setUser(user));
+      dispatch(setIsProfileEditing(false));
+    } catch (error) {
+      dispatch(setErrorsProfile({ general: error.message || "Edit failed!" }));
+      console.log(error);
     }
   };
 
