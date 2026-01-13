@@ -30,6 +30,9 @@ export default function ProfileTab() {
   const handleEditToggle = (val: boolean) => {
     dispatch(setIsProfileEditing(val));
     dispatch(resetForm());
+    if (!val) {
+      dispatch(setErrorsProfile(null));
+    }
   };
   const handleActiveTab = (tab: string) => {
     if (tab === "login") dispatch(setErrorsR(null));
