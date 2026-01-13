@@ -52,6 +52,7 @@ export default function ProfileTab() {
       dispatch(setUser(user));
       dispatch(setIsProfileEditing(false));
     } catch (error) {
+      dispatch(resetForm());
       dispatch(setErrorsProfile({ general: error.message || "Edit failed!" }));
       console.log(error);
     }
