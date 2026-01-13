@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { media } from "../../../styles/breakpoints";
 
 export const ModalBody = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -166,6 +167,33 @@ export const ProfileActions = styled.section`
 `;
 
 export const ProfileActionsGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+`;
+
+export const ConfirmationModal = styled.section`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: var(--shadow-light);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  p {
+    text-align: center;
+    text-transform: uppercase;
+  }
+`;
+export const ModalActions = styled.div`
   display: flex;
   flex-direction: row;
   gap: 2rem;

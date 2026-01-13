@@ -10,18 +10,22 @@ import {
   ProfileActions,
   ProfileActionsGroup,
   InputError,
+  ConfirmationModal,
+  ModalActions,
 } from "../../Profile.styled";
 import { RootState } from "../../../../../redux/store";
-import { setForm, setUser } from "../../../../../redux/slices/profileSlice";
+import { setForm, setIsConfirmationActive, setUser } from "../../../../../redux/slices/profileSlice";
 import { logout } from "../../helpers/logout";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
 import { setErrors } from "../../../../../redux/slices/profileSlice";
+import { deleteAccount } from "../../helpers/delete-account";
 export const Profile = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.profile.user);
   const form = useSelector((state: RootState) => state.profile.form);
   const editProfile = useSelector((state: RootState) => state.profile.isProfileEditing);
+  const isConfirmationActive = useSelector((state: RootState) => state.profile.isConfirmationActive);
   const errors = useSelector((state: RootState) => state.profile.errors);
 
   const handleChange = (e: HTMLInputElement) => {
@@ -39,6 +43,26 @@ export const Profile = () => {
       dispatch(setErrors({ general: error.message || "Editing failed!" }));
       console.log(error);
     }
+  };
+
+  const cancelDeletion = () => {
+    dispatch(setIsConfirmationActive(false));
+  };
+  const handleAccountDeletion = async () => {
+    try {
+      const response = await deleteAccount();
+      if (response) {
+        dispatch(setUser(null));
+        dispatch(setIsConfirmationActive(false));
+        dispatch(setActiveTab("login"));
+      }
+    } catch (error) {
+      dispatch(setErrors({ general: error.message || "Deletion failed!" }));
+      console.log(error);
+    }
+  };
+  const toggleAccountDeletion = () => {
+    dispatch(setIsConfirmationActive(true));
   };
   return (
     <>
@@ -121,11 +145,28 @@ export const Profile = () => {
             <ProfileActions>
               <h3>Danger Zone</h3>
               <ProfileActionsGroup>
-                <EditButton>Delete account</EditButton>
+                <EditButton onClick={toggleAccountDeletion}>Delete account</EditButton>
                 <EditButton>Reset analytics</EditButton>
               </ProfileActionsGroup>
             </ProfileActions>
           </ProfileActions>
+          {isConfirmationActive && (
+            <ConfirmationModal>
+              <p>
+                You are about to delete your account. <br />
+                All data associated with this account will be removed and you will no longer be able to access your
+                account and analytics.
+              </p>
+              <ModalActions>
+                <ActionButton type="button" onClick={handleAccountDeletion}>
+                  Delete
+                </ActionButton>
+                <ActionButton type="button" onClick={cancelDeletion}>
+                  Cancel
+                </ActionButton>
+              </ModalActions>
+            </ConfirmationModal>
+          )}
         </>
       )}
     </>
