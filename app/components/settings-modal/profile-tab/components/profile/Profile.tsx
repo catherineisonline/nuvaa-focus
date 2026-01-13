@@ -9,19 +9,20 @@ import {
   AuthInputGroup,
   ProfileActions,
   ProfileActionsGroup,
+  InputError,
 } from "../../Profile.styled";
 import { RootState } from "../../../../../redux/store";
 import { setForm, setUser } from "../../../../../redux/slices/profileSlice";
 import { logout } from "../../helpers/logout";
-import { useRouter } from "next/router";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
-
+import { setErrors } from "../../../../../redux/slices/profileSlice";
 export const Profile = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.profile.user);
   const form = useSelector((state: RootState) => state.profile.form);
   const editProfile = useSelector((state: RootState) => state.profile.isProfileEditing);
+  const errors = useSelector((state: RootState) => state.profile.errors);
 
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
@@ -35,6 +36,7 @@ export const Profile = () => {
         dispatch(setActiveTab("login"));
       }
     } catch (error) {
+      dispatch(setErrors({ general: error.message || "Editing failed!" }));
       console.log(error);
     }
   };
@@ -42,6 +44,7 @@ export const Profile = () => {
     <>
       {editProfile ? (
         <AuthForm>
+          {errors?.general && <InputError>{errors.general}</InputError>}
           <InputLabel htmlFor="id">
             <strong>ID</strong>
             <AuthInput id="id" readOnly value={user.id} />
@@ -50,20 +53,24 @@ export const Profile = () => {
             <strong>Full Name</strong>
             <AuthInput
               id="fullname"
+              name="fullname"
               placeholder={user.fullname}
-              value={form?.fullname}
+              value={form?.fullname || ""}
               onChange={(e) => handleChange(e.target)}
             />
           </InputLabel>
+          {errors?.fullname && <InputError>{errors.fullname}</InputError>}
           <InputLabel htmlFor="email">
             <strong>Email</strong>
             <AuthInput
               id="email"
+              name="email"
               placeholder={user.email}
-              value={form?.email}
+              value={form?.email || ""}
               onChange={(e) => handleChange(e.target)}
             />
           </InputLabel>
+          {errors?.email && <InputError>{errors.email}</InputError>}
           <InputLabel htmlFor="password">
             <strong>Password</strong>
             <AuthInputGroup>
@@ -72,17 +79,19 @@ export const Profile = () => {
                 name="oldPassword"
                 placeholder="Old password"
                 type="password"
-                value={form?.oldPassword}
+                value={form?.oldPassword || ""}
                 onChange={(e) => handleChange(e.target)}
               />
+              {errors?.oldPassword && <InputError>{errors.oldPassword}</InputError>}
               <AuthInput
-                id="password"
+                id="newPassword"
                 name="newPassword"
                 placeholder="New password"
                 type="password"
-                value={form?.newPassword}
+                value={form?.newPassword || ""}
                 onChange={(e) => handleChange(e.target)}
               />
+              {errors?.newPassword && <InputError>{errors.newPassword}</InputError>}
             </AuthInputGroup>
           </InputLabel>
         </AuthForm>

@@ -3,6 +3,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { turso } from "../../lib/turso.db";
 
 interface JWTPayloadI extends JwtPayload {
+  id: string;
   email: string;
 }
 
