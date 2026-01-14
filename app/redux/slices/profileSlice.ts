@@ -7,11 +7,15 @@ export const profileSlice = createSlice({
     errors: null,
     user: null,
     isProfileEditing: false,
+    isConfirmationActive: false,
   },
   reducers: {
     setForm(state, action) {
       const { key, value } = action.payload;
       state.form = { ...state.form, [key]: value };
+    },
+    setIsConfirmationActive(state, action) {
+      state.isConfirmationActive = action.payload;
     },
     resetForm(state) {
       state.form = null;
@@ -29,4 +33,5 @@ export const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const { setForm, setErrors, setIsProfileEditing, setUser, resetForm } = profileSlice.actions;
+export const { setForm, setErrors, setIsProfileEditing, setUser, resetForm, setIsConfirmationActive } =
+  profileSlice.actions;
