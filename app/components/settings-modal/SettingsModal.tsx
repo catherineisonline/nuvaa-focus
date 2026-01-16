@@ -86,9 +86,6 @@ export const SettingsModal = () => {
             <TabButton $active={settingsTab === "features"} onClick={() => handleSettingsTab("features")}>
               Features
             </TabButton>
-            <TabButton $active={settingsTab === "analytics"} onClick={() => handleSettingsTab("analytics")}>
-              Analytics
-            </TabButton>
             <TabButton $active={settingsTab === "account"} onClick={() => handleSettingsTab("account")}>
               Account
             </TabButton>

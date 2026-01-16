@@ -146,7 +146,6 @@ export const Profile = () => {
               <h3>Danger Zone</h3>
               <ProfileActionsGroup>
                 <EditButton onClick={toggleAccountDeletion}>Delete account</EditButton>
-                <EditButton>Reset analytics</EditButton>
               </ProfileActionsGroup>
             </ProfileActions>
           </ProfileActions>
