@@ -1,4 +1,4 @@
-import StyledComponentsRegistry from "./lib/registry";
+import StyledComponentsRegistry from "./components/registry";
 import ReduxProvider from "./redux/ReduxProvider";
 import { Lexend, Outfit } from "next/font/google";
 import ThemeWrapper from "./components/ThemeWrapper";
