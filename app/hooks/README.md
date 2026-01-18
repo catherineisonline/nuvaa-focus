@@ -1,0 +1,1 @@
+The hooks folder includes all custom React hooks used in the original project. Each hook abstracts reusable logic such as authentication checks, Redux state selection, and feature-specific behavior to reduce duplication across components.

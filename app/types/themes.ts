@@ -1,0 +1,20 @@
+export type ThemeType = {
+  name: string;
+  background: string;
+  backgroundSecondary: string;
+  backgroundGradient: string;
+  backgroundGradientTimer: string;
+  text: string;
+  buttonText: string;
+  buttonTextDisabled: string;
+  buttonBackgroundActive: string;
+  inputInner: string;
+  highlight: string;
+  boxShadowInsetSoft: string;
+  boxShadowOuter: string;
+  boxShadowOuterStrong: string;
+  boxShadowTimer: string;
+  boxShadowTimerStrong: string;
+  boxShadowInputDisabled: string;
+  boxShadowInput: string;
+};

@@ -1,0 +1,1 @@
+The api folder contains the complete API-related logic used in the original project. This includes request handlers, data-fetching logic, and related utilities that manage communication between the application and external or internal services.
