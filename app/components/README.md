@@ -1,0 +1,1 @@
+The components folder contains reusable and feature-level UI components. This repository includes the full homepage and onboarding components, as well as a partially included settings modal. Within the settings modal, only the Profile section is fully implemented to demonstrate authentication and user profile handling. Other settings sections are omitted for brevity.

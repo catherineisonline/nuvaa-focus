@@ -6,13 +6,21 @@
 
 ## ⛵️ Navigating Around
 
-This repository is primarily a **showcase of the Nuvaa Focus**.  
-It demonstrates the app's features, design, and architecture for portfolio purposes.  
-For learning or reference, **code snippets** for specific components, hooks, and features are provided in the `.snippets` folder.
+This repository is primarily a **showcase of the Nuvaa Focus website**.  
+It demonstrates selected features, design decisions, and overall architecture for portfolio purposes.
 
-The full source code is **not publicly available** and is intentionally kept private.  
-However, for **recruiters, potential employers, or collaborators**, you are welcome to **contact me directly** to discuss the code, request examples, or review implementation details.  
-This allows you to see my work while keeping the main codebase secure.
+The project is intentionally **not a full public release**.  
+Only representative parts of the codebase are included to highlight how the application is structured and how key features are implemented.
+
+Each main folder contains its own `README` file explaining:
+
+- what that part of the code is responsible for
+- which sections are fully included
+- and which parts are intentionally omitted or simplified for demonstration
+
+The complete source code is kept **private by design**.  
+However, **recruiters, potential employers, or collaborators** are welcome to contact me directly to discuss the implementation in more detail or review additional examples.
+
 Thank you for your understanding.
 
 ## ✨ Features

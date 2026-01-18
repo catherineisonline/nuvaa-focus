@@ -1,0 +1,40 @@
+"use client";
+import { configureStore } from "@reduxjs/toolkit";
+import pomodoroSlice from "./slices/pomodoroSlice";
+import navigationSlice from "./slices/navigationSlice";
+import settingsSlice from "./slices/settingsSlice";
+import clockSlice from "./slices/clockSlice";
+import stopwatchSlice from "./slices/stopwatchSlice";
+import tasksSlice from "./slices/tasksSlice";
+import appSLice from "./slices/appSlice";
+import appearanceSlice from "./slices/appearanceSlice";
+import quotesSlice from "./slices/quotesSlice";
+import analyticsSlice from "./slices/analyticsSlice";
+import musicSlice from "./slices/musicSlice";
+import onboardingSlice from "./slices/onboardingSlice";
+import registerSlice from "./slices/registerSlice";
+import loginSlice from "./slices/loginSlice";
+import profileSlice from "./slices/profileSlice";
+
+export const store = configureStore({
+  reducer: {
+    pomodoro: pomodoroSlice,
+    navigation: navigationSlice,
+    settings: settingsSlice,
+    clock: clockSlice,
+    stopwatch: stopwatchSlice,
+    tasks: tasksSlice,
+    app: appSLice,
+    appearance: appearanceSlice,
+    quotes: quotesSlice,
+    analytics: analyticsSlice,
+    music: musicSlice,
+    onboarding: onboardingSlice,
+    register: registerSlice,
+    login: loginSlice,
+    profile: profileSlice,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
