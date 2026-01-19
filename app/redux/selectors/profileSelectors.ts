@@ -6,7 +6,7 @@ export const selectProfileErrors = (state: RootState) => state.profile.errors;
 export const selectProfileUser = (state: RootState) => state.profile.user;
 export const selectProfileIsProfileEditing = (state: RootState) => state.profile.isProfileEditing;
 export const selectProfileIsConfirmationActive = (state: RootState) => state.profile.isConfirmationActive;
-export const registerSelectors = createSelector(
+export const profileSelectors = createSelector(
   [
     selectProfileForm,
     selectProfileErrors,

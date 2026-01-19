@@ -13,20 +13,15 @@ import {
   ConfirmationModal,
   ModalActions,
 } from "../../Profile.styled";
-import { RootState } from "../../../../../redux/store";
 import { setForm, setIsConfirmationActive, setUser } from "../../../../../redux/slices/profileSlice";
 import { logout } from "../../helpers/logout";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
 import { setErrors } from "../../../../../redux/slices/profileSlice";
 import { deleteAccount } from "../../helpers/delete-account";
+import { profileSelectors } from "../../../../../redux/selectors/profileSelectors";
 export const Profile = () => {
   const dispatch = useDispatch();
-
-  const user = useSelector((state: RootState) => state.profile.user);
-  const form = useSelector((state: RootState) => state.profile.form);
-  const editProfile = useSelector((state: RootState) => state.profile.isProfileEditing);
-  const isConfirmationActive = useSelector((state: RootState) => state.profile.isConfirmationActive);
-  const errors = useSelector((state: RootState) => state.profile.errors);
+  const { user, form, errors, isProfileEditing, isConfirmationActive } = useSelector(profileSelectors);
 
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
@@ -66,7 +61,7 @@ export const Profile = () => {
   };
   return (
     <>
-      {editProfile ? (
+      {isProfileEditing ? (
         <AuthForm>
           {errors?.general && <InputError>{errors.general}</InputError>}
           <InputLabel htmlFor="id">

@@ -6,18 +6,18 @@ import { Register } from "./components/auth/Register";
 import { Login } from "./components/auth/Login";
 import { Profile } from "./components/profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 import { resetForm, setIsProfileEditing, setUser } from "../../../redux/slices/profileSlice";
 import { setActiveTab, setErrors as setErrorsL } from "../../../redux/slices/loginSlice";
 import { setErrors as setErrorsR } from "../../../redux/slices/registerSlice";
 import { setErrors as setErrorsProfile } from "../../../redux/slices/profileSlice";
 import { validate } from "./helpers/validate";
 import { edit } from "./helpers/edit";
+import { profileSelectors } from "../../../redux/selectors/profileSelectors";
+import { loginSelectors } from "../../../redux/selectors/loginSelectors";
 
 export default function ProfileTab() {
-  const editProfile = useSelector((state: RootState) => state.profile.isProfileEditing);
-  const user = useSelector((state: RootState) => state.profile.user);
-  const activeTab = useSelector((state: RootState) => state.login.activeTab);
+  const { user, isProfileEditing, form } = useSelector(profileSelectors);
+  const { activeTab } = useSelector(loginSelectors);
   const loggedUser = useAuth();
   const dispatch = useDispatch();
 
@@ -40,7 +40,6 @@ export default function ProfileTab() {
 
     dispatch(setActiveTab(tab));
   };
-  const form = useSelector((state: RootState) => state.profile.form);
 
   const submitForm = async () => {
     const validation = validate(form, "edit");
@@ -67,17 +66,17 @@ export default function ProfileTab() {
         <h2>{user ? user?.fullname : activeTab === "login" ? "Login" : "Register"}</h2>{" "}
         {user && (
           <EditProfileActions>
-            {!editProfile && (
+            {!isProfileEditing && (
               <EditButton type="button" onClick={() => handleEditToggle(true)}>
                 Edit profile
               </EditButton>
             )}
-            {editProfile && (
+            {isProfileEditing && (
               <EditButton type="button" onClick={submitForm}>
                 Save changes
               </EditButton>
             )}
-            {editProfile && (
+            {isProfileEditing && (
               <EditButton type="button" onClick={() => handleEditToggle(false)}>
                 Cancel
               </EditButton>
