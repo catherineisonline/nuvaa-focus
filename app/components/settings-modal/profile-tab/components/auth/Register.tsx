@@ -5,11 +5,11 @@ import { setErrors, setForm } from "../../../../../redux/slices/registerSlice";
 import { validate } from "../../helpers/validate";
 import { register } from "../../helpers/register";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
+import { registerSelectors } from "../../../../../redux/selectors/registerSelectors";
 
 export const Register = () => {
   const dispatch = useDispatch();
-  const form = useSelector((state: RootState) => state.register.form);
-  const errors = useSelector((state: RootState) => state.register.errors);
+  const { form, errors } = useSelector(registerSelectors);
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
     dispatch(setForm({ key: name, value: value }));

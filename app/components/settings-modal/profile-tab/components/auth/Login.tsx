@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ActionButton, AuthForm, AuthInput, InputError, InputLabel } from "../../Profile.styled";
-import { RootState } from "../../../../../redux/store";
 import { validate } from "../../helpers/validate";
 import { login } from "../../helpers/login";
 import { resetForm, setErrors, setForm } from "../../../../../redux/slices/loginSlice";
 import { setUser } from "../../../../../redux/slices/profileSlice";
+import { loginSelectors } from "../../../../../redux/selectors/loginSelectors";
 
 export const Login = () => {
   const dispatch = useDispatch();
-  const form = useSelector((state: RootState) => state.login.form);
-  const errors = useSelector((state: RootState) => state.login.errors);
-
+  const { form, errors } = useSelector(loginSelectors);
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
     dispatch(setForm({ key: name, value: value }));

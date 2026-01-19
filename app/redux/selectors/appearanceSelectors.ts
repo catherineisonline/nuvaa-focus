@@ -29,5 +29,5 @@ export const appearanceSelectors = createSelector(
     customBackgrounds,
     backgroundBlur,
     backgroundDim,
-  })
+  }),
 );
