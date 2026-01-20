@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { ModalBody, EditButton, TabSwitcher, TabButton, ModalHeading, EditProfileActions } from "./Profile.styled";
+import { ModalBody, SecondaryButton, TabSwitcher, TabButton, ModalHeading, EditProfileActions } from "./Profile.styled";
 import { useAuth } from "../../../hooks/useAuth";
 import { Register } from "./components/auth/Register";
 import { Login } from "./components/auth/Login";
@@ -67,19 +67,19 @@ export default function ProfileTab() {
         {user && (
           <EditProfileActions>
             {!isProfileEditing && (
-              <EditButton type="button" onClick={() => handleEditToggle(true)}>
+              <SecondaryButton type="button" onClick={() => handleEditToggle(true)}>
                 Edit profile
-              </EditButton>
+              </SecondaryButton>
             )}
             {isProfileEditing && (
-              <EditButton type="button" onClick={submitForm}>
+              <SecondaryButton type="button" onClick={submitForm}>
                 Save changes
-              </EditButton>
+              </SecondaryButton>
             )}
             {isProfileEditing && (
-              <EditButton type="button" onClick={() => handleEditToggle(false)}>
+              <SecondaryButton type="button" onClick={() => handleEditToggle(false)}>
                 Cancel
-              </EditButton>
+              </SecondaryButton>
             )}
           </EditProfileActions>
         )}

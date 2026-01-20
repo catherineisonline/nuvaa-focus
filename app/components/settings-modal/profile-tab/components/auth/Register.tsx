@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ActionButton, AuthForm, AuthInput, InputError, InputLabel } from "../../Profile.styled";
-import { RootState } from "../../../../../redux/store";
+import { PrimaryButton, AuthForm, AuthInput, AuthError, AuthLabel } from "../../Profile.styled";
 import { setErrors, setForm } from "../../../../../redux/slices/registerSlice";
 import { validate } from "../../helpers/validate";
 import { register } from "../../helpers/register";
@@ -34,7 +33,7 @@ export const Register = () => {
   };
   return (
     <AuthForm>
-      <InputLabel htmlFor="fullname">
+      <AuthLabel htmlFor="fullname">
         Full Name
         <AuthInput
           name="fullname"
@@ -43,9 +42,9 @@ export const Register = () => {
           value={form?.fullname}
           onChange={(e) => handleChange(e.target)}
         />
-      </InputLabel>
-      {errors?.fullname && <InputError>{errors.fullname}</InputError>}
-      <InputLabel htmlFor="email">
+      </AuthLabel>
+      {errors?.fullname && <AuthError>{errors.fullname}</AuthError>}
+      <AuthLabel htmlFor="email">
         Email
         <AuthInput
           name="email"
@@ -54,9 +53,9 @@ export const Register = () => {
           value={form?.email}
           onChange={(e) => handleChange(e.target)}
         />
-      </InputLabel>
-      {errors?.email && <InputError>{errors.email}</InputError>}
-      <InputLabel htmlFor="password">
+      </AuthLabel>
+      {errors?.email && <AuthError>{errors.email}</AuthError>}
+      <AuthLabel htmlFor="password">
         Password
         <AuthInput
           name="password"
@@ -66,9 +65,9 @@ export const Register = () => {
           value={form?.password}
           onChange={(e) => handleChange(e.target)}
         />
-      </InputLabel>
-      {errors?.password && <InputError>{errors.password}</InputError>}
-      <InputLabel htmlFor="repeatPassword">
+      </AuthLabel>
+      {errors?.password && <AuthError>{errors.password}</AuthError>}
+      <AuthLabel htmlFor="repeatPassword">
         Repeat password
         <AuthInput
           name="repeatPassword"
@@ -78,11 +77,11 @@ export const Register = () => {
           value={form?.repeatPassword}
           onChange={(e) => handleChange(e.target)}
         />
-      </InputLabel>
-      {errors?.repeatPassword && <InputError>{errors.repeatPassword}</InputError>}
-      <ActionButton type="button" onClick={handleRegister}>
+      </AuthLabel>
+      {errors?.repeatPassword && <AuthError>{errors.repeatPassword}</AuthError>}
+      <PrimaryButton type="button" onClick={handleRegister}>
         Register
-      </ActionButton>
+      </PrimaryButton>
     </AuthForm>
   );
 };

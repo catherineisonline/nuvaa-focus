@@ -10,7 +10,6 @@ export const ModalBody = styled.section`
   overflow-y: auto;
   padding: 1rem;
   padding-bottom: 10rem;
-
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -35,7 +34,7 @@ export const EditProfileActions = styled.div`
   gap: 1rem;
 `;
 
-export const EditButton = styled.button`
+export const SecondaryButton = styled.button`
   background-color: transparent;
   border: none;
   color: ${({ theme }) => theme.highlight};
@@ -85,7 +84,7 @@ export const ProfileField = styled.div`
   }
 `;
 
-export const ActionButton = styled.button`
+export const PrimaryButton = styled.button`
   color: ${({ theme }) => theme.buttonText};
   border: none;
   padding: 14px 8px;
@@ -145,7 +144,7 @@ export const AuthInput = styled.input`
   }
 `;
 
-export const InputLabel = styled.label`
+export const AuthLabel = styled.label`
   display: flex;
   flex-direction: column;
   font-weight: 400;
@@ -153,7 +152,7 @@ export const InputLabel = styled.label`
   font-size: 1rem;
   font-family: var(--font-outfit);
 `;
-export const InputError = styled.span`
+export const AuthError = styled.span`
   font-weight: 600;
   color: ${({ theme }) => theme.highlight};
   font-size: 0.9rem;
