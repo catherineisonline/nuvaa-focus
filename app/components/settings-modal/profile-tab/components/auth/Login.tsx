@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ActionButton, AuthForm, AuthInput, InputError, InputLabel } from "../../Profile.styled";
-import { RootState } from "../../../../../redux/store";
+import { PrimaryButton, AuthForm, AuthInput, AuthError, AuthLabel } from "../../Profile.styled";
 import { validate } from "../../helpers/validate";
 import { login } from "../../helpers/login";
 import { resetForm, setErrors, setForm } from "../../../../../redux/slices/loginSlice";
@@ -32,8 +31,8 @@ export const Login = () => {
   };
   return (
     <AuthForm>
-      {errors?.general && <InputError>{errors.general}</InputError>}
-      <InputLabel htmlFor="email">
+      {errors?.general && <AuthError>{errors.general}</AuthError>}
+      <AuthLabel htmlFor="email">
         Email
         <AuthInput
           name="email"
@@ -42,9 +41,9 @@ export const Login = () => {
           value={form?.email || ""}
           onChange={(e) => handleChange(e.target)}
         />
-      </InputLabel>
-      {errors?.email && <InputError>{errors.email}</InputError>}
-      <InputLabel htmlFor="password">
+      </AuthLabel>
+      {errors?.email && <AuthError>{errors.email}</AuthError>}
+      <AuthLabel htmlFor="password">
         Password
         <AuthInput
           name="password"
@@ -54,11 +53,11 @@ export const Login = () => {
           value={form?.password || ""}
           onChange={(e) => handleChange(e.target)}
         />
-      </InputLabel>
-      {errors?.password && <InputError>{errors.password}</InputError>}
-      <ActionButton type="button" onClick={handleLogin}>
+      </AuthLabel>
+      {errors?.password && <AuthError>{errors.password}</AuthError>}
+      <PrimaryButton type="button" onClick={handleLogin}>
         Login
-      </ActionButton>
+      </PrimaryButton>
     </AuthForm>
   );
 };
