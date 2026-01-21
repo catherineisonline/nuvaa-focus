@@ -25,6 +25,20 @@ Thank you for your understanding.
 
 ## ✨ Features
 
+### User Authentication
+
+- **User Accounts** - Secure access to personal data
+- **Registration** - Create a new user account
+- **Login** - Authenticate users with email and password
+- **JWT Sessions** - Maintain logged-in state using JSON Web Tokens
+- **Password Security** - Passwords are securely hashed with bcrypt
+
+### Profile Management
+
+- **View Profile** - Access user profile information
+- **Edit Profile** - Update personal details
+- **Account Deletion** - Permanently delete user account and related data
+
 ### Focus Timer
 
 - **Focus Time** - Track focused work sessions
