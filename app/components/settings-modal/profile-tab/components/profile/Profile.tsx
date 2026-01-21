@@ -1,15 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  EditButton,
+  SecondaryButton,
   ProfileField,
   AuthInput,
-  ActionButton,
+  PrimaryButton,
   AuthForm,
-  InputLabel,
+  AuthLabel,
   AuthInputGroup,
   ProfileActions,
-  ProfileActionsGroup,
-  InputError,
+  AuthError,
   ConfirmationModal,
   ModalActions,
 } from "../../Profile.styled";
@@ -63,12 +62,12 @@ export const Profile = () => {
     <>
       {isProfileEditing ? (
         <AuthForm>
-          {errors?.general && <InputError>{errors.general}</InputError>}
-          <InputLabel htmlFor="id">
+          {errors?.general && <AuthError>{errors.general}</AuthError>}
+          <AuthLabel htmlFor="id">
             <strong>ID</strong>
             <AuthInput id="id" readOnly value={user.id} />
-          </InputLabel>
-          <InputLabel htmlFor="fullname">
+          </AuthLabel>
+          <AuthLabel htmlFor="fullname">
             <strong>Full Name</strong>
             <AuthInput
               id="fullname"
@@ -77,9 +76,9 @@ export const Profile = () => {
               value={form?.fullname || ""}
               onChange={(e) => handleChange(e.target)}
             />
-          </InputLabel>
-          {errors?.fullname && <InputError>{errors.fullname}</InputError>}
-          <InputLabel htmlFor="email">
+          </AuthLabel>
+          {errors?.fullname && <AuthError>{errors.fullname}</AuthError>}
+          <AuthLabel htmlFor="email">
             <strong>Email</strong>
             <AuthInput
               id="email"
@@ -88,9 +87,9 @@ export const Profile = () => {
               value={form?.email || ""}
               onChange={(e) => handleChange(e.target)}
             />
-          </InputLabel>
-          {errors?.email && <InputError>{errors.email}</InputError>}
-          <InputLabel htmlFor="password">
+          </AuthLabel>
+          {errors?.email && <AuthError>{errors.email}</AuthError>}
+          <AuthLabel htmlFor="password">
             <strong>Password</strong>
             <AuthInputGroup>
               <AuthInput
@@ -101,7 +100,7 @@ export const Profile = () => {
                 value={form?.oldPassword || ""}
                 onChange={(e) => handleChange(e.target)}
               />
-              {errors?.oldPassword && <InputError>{errors.oldPassword}</InputError>}
+              {errors?.oldPassword && <AuthError>{errors.oldPassword}</AuthError>}
               <AuthInput
                 id="newPassword"
                 name="newPassword"
@@ -110,9 +109,9 @@ export const Profile = () => {
                 value={form?.newPassword || ""}
                 onChange={(e) => handleChange(e.target)}
               />
-              {errors?.newPassword && <InputError>{errors.newPassword}</InputError>}
+              {errors?.newPassword && <AuthError>{errors.newPassword}</AuthError>}
             </AuthInputGroup>
-          </InputLabel>
+          </AuthLabel>
         </AuthForm>
       ) : (
         <>
@@ -134,14 +133,12 @@ export const Profile = () => {
             </ProfileField>
           </AuthForm>
           <ProfileActions>
-            <ActionButton type="button" onClick={handleLogout}>
+            <PrimaryButton type="button" onClick={handleLogout}>
               Log out
-            </ActionButton>
+            </PrimaryButton>
             <ProfileActions>
               <h3>Danger Zone</h3>
-              <ProfileActionsGroup>
-                <EditButton onClick={toggleAccountDeletion}>Delete account</EditButton>
-              </ProfileActionsGroup>
+              <SecondaryButton onClick={toggleAccountDeletion}>Delete account</SecondaryButton>
             </ProfileActions>
           </ProfileActions>
           {isConfirmationActive && (
@@ -152,12 +149,12 @@ export const Profile = () => {
                 account and analytics.
               </p>
               <ModalActions>
-                <ActionButton type="button" onClick={handleAccountDeletion}>
+                <PrimaryButton type="button" onClick={handleAccountDeletion}>
                   Delete
-                </ActionButton>
-                <ActionButton type="button" onClick={cancelDeletion}>
+                </PrimaryButton>
+                <PrimaryButton type="button" onClick={cancelDeletion}>
                   Cancel
-                </ActionButton>
+                </PrimaryButton>
               </ModalActions>
             </ConfirmationModal>
           )}
