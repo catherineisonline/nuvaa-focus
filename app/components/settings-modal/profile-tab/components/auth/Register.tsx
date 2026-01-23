@@ -28,11 +28,13 @@ export const Register = () => {
         dispatch(setActiveTab("login"));
       }
     } catch (error) {
+      dispatch(setErrors({ general: error.message || "Registration failed!" }));
       console.log(error);
     }
   };
   return (
     <AuthForm>
+      {errors?.general && <AuthError>{errors.general}</AuthError>}
       <AuthLabel htmlFor="fullname">
         Full Name
         <AuthInput
