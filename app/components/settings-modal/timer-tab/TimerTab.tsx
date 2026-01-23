@@ -49,7 +49,6 @@ const TimerTab = () => {
     showMessage();
   };
   const updateSetting = (key: string, value: boolean | number) => {
-    console.log(key, value);
     dispatch(updateSettings({ key, value }));
     showMessage();
   };
