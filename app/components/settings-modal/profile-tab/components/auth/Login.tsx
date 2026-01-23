@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { PrimaryButton, AuthForm, AuthInput, AuthError, AuthLabel } from "../../Profile.styled";
 import { validate } from "../../helpers/validate";
 import { login } from "../../helpers/login";
-import { resetForm, setErrors, setForm } from "../../../../../redux/slices/loginSlice";
+import { resetLoginForm, setErrors, setForm } from "../../../../../redux/slices/loginSlice";
 import { setUser } from "../../../../../redux/slices/profileSlice";
 import { loginSelectors } from "../../../../../redux/selectors/loginSelectors";
 
@@ -22,7 +22,7 @@ export const Login = () => {
     try {
       const user = await login(form);
       dispatch(setErrors(null));
-      dispatch(resetForm());
+      dispatch(resetLoginForm());
       dispatch(setUser(user));
     } catch (error) {
       dispatch(setErrors({ general: error.message || "Login failed!" }));
