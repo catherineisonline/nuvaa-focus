@@ -18,6 +18,7 @@ import {
 } from "./Timer.styled";
 import { useTheme } from "styled-components";
 import { TIMER_OPTIONS } from "../../../lib/constants";
+import { settingsSelectors } from "../../../redux/selectors/settingsSelectors";
 
 const MODE_OPTIONS = [
   { value: 0, label: "Focus" },
@@ -27,22 +28,21 @@ const MODE_OPTIONS = [
 
 const TimerTab = () => {
   const dispatch = useDispatch();
-  const settings = useSelector((state: RootState) => state.settings);
+  const { focusTime, shortBreakTime, longBreakTime, is24Hour, autoStartNext } = useSelector(settingsSelectors);
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
-  const is24Hour = useSelector((state: RootState) => state.settings.is24Hour);
+  const changesSavedMsg = useSelector((state: RootState) => state.app.changesSavedMsg);
   const theme = useTheme();
   const customStyles = createCustomStyles(theme);
   const defaultMode = MODE_OPTIONS.find((val) => val.label.toLowerCase() === currentTab?.toLowerCase());
 
-  const defaultLongBreak = TIMER_OPTIONS.find((opt) => opt.value === settings.longBreakTime);
-  const defaultShortBreakTime = TIMER_OPTIONS.find((opt) => opt.value === settings.shortBreakTime);
-  const defaultFocusTime = TIMER_OPTIONS.find((opt) => opt.value === settings.focusTime);
+  const defaultLongBreak = TIMER_OPTIONS.find((opt) => opt.value === longBreakTime);
+  const defaultShortBreakTime = TIMER_OPTIONS.find((opt) => opt.value === shortBreakTime);
+  const defaultFocusTime = TIMER_OPTIONS.find((opt) => opt.value === focusTime);
   const TIME_OPTIONS = [
     { value: 0, label: "12-Hour" },
     { value: 1, label: "24-Hour" },
   ];
   const time_label = is24Hour ? TIME_OPTIONS[1] : TIME_OPTIONS[0];
-  const changesSavedMsg = useSelector((state: RootState) => state.app.changesSavedMsg);
 
   const updateFormat = (k: number) => {
     dispatch(updateSettings({ key: k }));
@@ -148,7 +148,7 @@ const TimerTab = () => {
             id="autoStartNext"
             type="checkbox"
             name="autoStartNext"
-            checked={settings.autoStartNext}
+            checked={autoStartNext}
             onChange={(e) => updateSetting("autoStartNext", e.target.checked)}
           />
           <Checkmark></Checkmark>
