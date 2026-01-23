@@ -7,7 +7,9 @@ import { useEffect } from "react";
 import { RootState } from "../../../redux/store";
 import Select from "react-select";
 import {
+  Checkbox,
   CheckboxLabel,
+  Checkmark,
   createCustomStyles,
   SettingGroup,
   SettingGroupContainer,
@@ -142,13 +144,14 @@ const TimerTab = () => {
 
       <SettingGroup>
         <CheckboxLabel htmlFor="autoStartNext">
-          <input
+          <Checkbox
             id="autoStartNext"
             type="checkbox"
             name="autoStartNext"
             checked={settings.autoStartNext}
             onChange={(e) => updateSetting("autoStartNext", e.target.checked)}
           />
+          <Checkmark></Checkmark>
           Auto-start next interval
         </CheckboxLabel>
       </SettingGroup>
