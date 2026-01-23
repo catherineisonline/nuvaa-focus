@@ -1,6 +1,9 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Checkbox,
+  CheckboxLabel,
+  Checkmark,
   CurrentQuote,
   CurrentQuoteWarning,
   QuoteGroup,
@@ -13,7 +16,6 @@ import {
 
 import { setCurrentQuote, setCustomQuote, showQuotes } from "../../../redux/slices/quotesSlice";
 import { useCallback, useEffect } from "react";
-import { CheckboxLabel } from "../timer-tab/Timer.styled";
 
 import Shuffle from "lucide-react/dist/esm/icons/shuffle";
 import { quoteSelectors } from "../../../redux/selectors/quoteSelectors";
@@ -37,9 +39,12 @@ export const FeaturesTab = () => {
 
   useEffect(() => {
     pickRandomQuote();
-    const interval = setInterval(() => {
-      pickRandomQuote();
-    }, 25 * 60 * 1000);
+    const interval = setInterval(
+      () => {
+        pickRandomQuote();
+      },
+      25 * 60 * 1000,
+    );
     return () => clearInterval(interval);
   }, [dispatch, quotes, pickRandomQuote]);
   return (
@@ -47,7 +52,8 @@ export const FeaturesTab = () => {
       <SettingGroup>
         <SectionHeading>Motivational Quotes</SectionHeading>
         <CheckboxLabel htmlFor="showQuote">
-          <input id="showQuote" type="checkbox" checked={isQuotesShown} onChange={handleShowQuotes} />
+          <Checkbox id="showQuote" type="checkbox" checked={isQuotesShown} onChange={handleShowQuotes} />
+          <Checkmark></Checkmark>
           Show motivational quotes
         </CheckboxLabel>
       </SettingGroup>

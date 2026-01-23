@@ -87,3 +87,56 @@ export const QuoteTextArea = styled.textarea`
     box-shadow: ${({ theme }) => theme.boxShadowInput};
   }
 `;
+
+export const CheckboxLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  font-size: 1rem;
+  user-select: none;
+  color: ${({ theme }) => theme.text};
+`;
+export const Checkbox = styled.input`
+  display: none;
+
+  &:not(:checked) + span {
+    background-color: transparent;
+  }
+
+  &:not(:checked) + span::after {
+    content: none;
+  }
+  &:checked + span {
+    background-color: ${({ theme }) => theme.highlight};
+    border-color: ${({ theme }) => theme.highlight};
+  }
+
+  &:checked + span::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 10px;
+    border-style: solid;
+    border-color: ${({ theme }) => theme.background};
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+`;
+
+export const Checkmark = styled.span`
+  width: 1.2rem;
+  height: 1.2rem;
+  border-style: solid;
+  border-width: 2px;
+  border-color: ${({ theme }) => theme.text};
+  background-color: transparent;
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+  &::after {
+    content: none;
+  }
+`;
