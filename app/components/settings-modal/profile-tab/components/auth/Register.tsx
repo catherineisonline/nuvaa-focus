@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { PrimaryButton, AuthForm, AuthInput, AuthError, AuthLabel } from "../../Profile.styled";
-import { setErrors, setForm } from "../../../../../redux/slices/registerSlice";
+import { resetRegisterForm, setErrors, setForm } from "../../../../../redux/slices/registerSlice";
 import { validate } from "../../helpers/validate";
 import { register } from "../../helpers/register";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
@@ -24,7 +24,7 @@ export const Register = () => {
 
       if (res) {
         dispatch(setErrors(null));
-        dispatch(setForm("reset"));
+        dispatch(resetRegisterForm());
         dispatch(setActiveTab("login"));
       }
     } catch (error) {
