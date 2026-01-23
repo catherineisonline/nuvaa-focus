@@ -13,7 +13,6 @@ export const validate = (form: Form, action: string) => {
 
   // EDIT PROFILE
   if (action === "edit") {
-    console.log(form);
     if (form) {
       const { oldPassword = null, newPassword = null, email = null, fullname = null } = form;
       if (email && !emailReg.test(email)) {
