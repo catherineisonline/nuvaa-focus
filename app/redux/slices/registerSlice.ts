@@ -14,17 +14,17 @@ export const registerSlice = createSlice({
   },
   reducers: {
     setForm(state, action) {
-      if (action.payload === "reset") {
-        state.form = getInitialRegistrationForm();
-      }
       const { key, value } = action.payload;
       state.form = { ...state.form, [key]: value };
     },
     setErrors(state, action) {
       state.errors = action.payload;
     },
+    resetRegisterForm(state) {
+      state.form = getInitialRegistrationForm();
+    },
   },
 });
 
 export default registerSlice.reducer;
-export const { setForm, setErrors } = registerSlice.actions;
+export const { setForm, setErrors, resetRegisterForm } = registerSlice.actions;

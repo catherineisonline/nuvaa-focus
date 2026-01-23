@@ -21,11 +21,11 @@ export const loginSlice = createSlice({
     setActiveTab(state, action) {
       state.activeTab = action.payload;
     },
-    resetForm(state) {
+    resetLoginForm(state) {
       state.form = getInitialLoginForm();
     },
   },
 });
 
 export default loginSlice.reducer;
-export const { setForm, setErrors, setActiveTab, resetForm } = loginSlice.actions;
+export const { setForm, setErrors, setActiveTab, resetLoginForm } = loginSlice.actions;
