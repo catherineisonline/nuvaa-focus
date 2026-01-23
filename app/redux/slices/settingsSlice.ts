@@ -31,7 +31,7 @@ const settingsSlice = createSlice({
       } else if (key === "longBreakTime") {
         state.longBreakTime = value;
       } else if (key === "autoStartNext") {
-        state.autoStartNext = true;
+        state.autoStartNext = !state.autoStartNext;
       }
     },
     setIsMusicPlaying(state, action) {
