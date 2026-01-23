@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     if (error.name === "LibsqlError") {
       if (error.code === "SQLITE_CONSTRAINT") {
-        return Response.json({ success: false, message: "User already exsists" }, { status: 409 });
+        return Response.json({ success: false, message: "User with such email already exists" }, { status: 409 });
       } else return Response.json({ success: false }, { status: 500 });
     }
     return Response.json({ success: false }, { status: 500 });
