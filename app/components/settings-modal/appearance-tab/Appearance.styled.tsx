@@ -33,41 +33,48 @@ export const SectionHeading = styled.legend`
 
 export const ThemeGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(3rem, 4rem));
+  grid-template-columns: repeat(auto-fit, 6rem);
   gap: 5px;
 `;
 export const ThemeOption = styled.button<{
   $active?: boolean;
-  $colorBackground: string;
   $colorBorder: string;
 }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 4rem;
+  border-width: 2px;
+  border-style: solid;
+  border-color: ${({ $active }) => ($active ? "var(--color-button-bg)" : "transparent")};
+  border-radius: 8px;
+  padding: 4px;
+  width: 6rem;
   height: 4rem;
   cursor: pointer;
   transition: var(--transition);
-  border-radius: var(--border-radius);
-  text-align: center;
-  font-family: var(--font-lexend);
-  border: 1px solid transparent;
-  color: ${({ theme }) => theme.text};
-  background: ${({ $colorBackground }) => $colorBackground};
-  border-color: ${({ $active, $colorBorder, $colorBackground }) => ($active ? $colorBorder : $colorBackground)};
+  background: transparent;
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      opacity: 0.7;
-      transform: var(--hover-transform);
+      border-color: var(--color-accent);
     }
   }
 `;
-export const ThemeLabel = styled.span`
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--color-text);
+export const ThemeLabel = styled.span<{ $colorBackground: string }>`
+  font-size: 1rem;
+  text-transform: capitalize;
+  font-family: var(--font-lexend);
+  color: ${({ theme }) => theme.text};
+  background: ${({ $colorBackground }) => $colorBackground};
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  text-align: center;
+  border-radius: 4px;
 `;
 
 export const BackgroundGrid = styled.div`
