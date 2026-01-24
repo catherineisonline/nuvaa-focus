@@ -99,10 +99,9 @@ export const AppearanceTab = () => {
               key={theme.name}
               aria-label={`Select theme ${theme.name}`}
               $active={currentTheme === theme.name}
-              $colorBackground={theme.backgroundGradientTimer}
               $colorBorder={theme.highlight}
               onClick={() => handleThemeChange(theme.name)}>
-              <ThemeLabel>{theme.name.toUpperCase()}</ThemeLabel>
+              <ThemeLabel $colorBackground={theme.backgroundGradientTimer}>{theme.name}</ThemeLabel>
             </ThemeOption>
           ))}
         </ThemeGrid>
