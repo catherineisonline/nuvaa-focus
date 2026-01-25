@@ -69,6 +69,14 @@ export default function Page() {
               preventing burnout. Celebrate your progress and keep adjusting tasks for maximum focus!
             </AboutStepParagraph>
           </AboutStep>
+          <AboutStep>
+            <AboutStepHeading>6. Review and adjust</AboutStepHeading>
+            <AboutStepParagraph>
+              At the end of your work cycle, take a moment to review what you completed. Check which tasks took longer
+              than expected and adjust your future focus sessions accordingly. Over time, this helps you better estimate
+              effort, improve planning, and use Nuvaa Focus in a way that fits your personal work rhythm.
+            </AboutStepParagraph>
+          </AboutStep>
         </AboutSteps>
       </AboutSection>
     </About>
