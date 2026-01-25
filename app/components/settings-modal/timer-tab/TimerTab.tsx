@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateSettings } from "../../../redux/slices/settingsSlice";
 import { setCurrentTab, updateChangesSavedMsg } from "../../../redux/slices/appSlice";
 import { debounce } from "lodash";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { RootState } from "../../../redux/store";
 import Select from "react-select";
 import {
@@ -55,9 +55,19 @@ const TimerTab = () => {
   const updateMode = (v: string) => {
     dispatch(setCurrentTab(v.toLowerCase()));
   };
-  const showMessage = debounce(() => {
-    dispatch(updateChangesSavedMsg("Successfully updated"));
-  }, 1000);
+  const showMessage = useMemo(
+    () =>
+      debounce(() => {
+        dispatch(updateChangesSavedMsg("Successfully updated"));
+      }, 1000),
+    [dispatch],
+  );
+  useEffect(() => {
+    return () => {
+      showMessage.cancel();
+      dispatch(updateChangesSavedMsg(""));
+    };
+  }, [showMessage]);
 
   useEffect(() => {
     if (!changesSavedMsg) return;
