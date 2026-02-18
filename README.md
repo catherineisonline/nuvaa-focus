@@ -1,5 +1,6 @@
 # Nuvaa Focus [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
+// 
 **Nuvaa Focus** is a focus timer app designed to help users stay focused and manage their time effectively. It offers a clean, distraction-free interface and a range of features to optimize productivity, including customizable timers, task management, account management and ADHD-friendly themes.
 This repository demonstrates selected features, design decisions, and overall architecture for portfolio purposes and an attempt to practice Next.js.
 
