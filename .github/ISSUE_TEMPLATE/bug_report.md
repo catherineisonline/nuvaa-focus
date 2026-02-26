@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: Report a bug in existing functionality
-title: "[BUG] "
+title: "Component Name: Sub-Component name: "
 labels: ["bug", "open for contribution"]
 ---
 
@@ -19,15 +19,15 @@ Clearly describe the bug.
 
 ---
 
-## Expected Behavior
+## Actual Result
 
-What should happen?
+What actually happens?
 
 ---
 
-## Actual Behavior
+## Expected Result
 
-What actually happens?
+What should happen?
 
 ---
 
@@ -35,7 +35,6 @@ What actually happens?
 
 - Browser:
 - OS:
-- Version:
 
 ## Screenshots (recommended)
 
