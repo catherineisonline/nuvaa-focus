@@ -20,6 +20,7 @@ const settingsSlice = createSlice({
     },
     updateSettings(state, action) {
       const { key, value } = action.payload;
+      console.log(key, value);
       if (key === 0) {
         state.is24Hour = false;
       } else if (key === 1) {
@@ -31,7 +32,7 @@ const settingsSlice = createSlice({
       } else if (key === "longBreakTime") {
         state.longBreakTime = value;
       } else if (key === "autoStartNext") {
-        state.autoStartNext = !state.autoStartNext;
+        state.autoStartNext = value;
       }
     },
     setIsMusicPlaying(state, action) {
