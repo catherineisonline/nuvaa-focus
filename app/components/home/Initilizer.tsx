@@ -7,7 +7,12 @@ import { useEffect, useState } from "react";
 import { initSettings, updateSettings } from "../../redux/slices/settingsSlice";
 import { initStreak, setCurrentTab } from "../../redux/slices/appSlice";
 import { initTasks, setCurrentTaskId } from "../../redux/slices/tasksSlice";
-import { initilizecustomBackgrounds, setCurrentBackground } from "../../redux/slices/appearanceSlice";
+import {
+  initilizecustomBackgrounds,
+  setBackgroundBlur,
+  setBackgroundDim,
+  setCurrentBackground,
+} from "../../redux/slices/appearanceSlice";
 import { initilizeIsQuotesShown, setCurrentQuote, setCustomQuote } from "../../redux/slices/quotesSlice";
 import { setMusicEnabled, setMusicUrl, setSelectedOption } from "../../redux/slices/musicSlice";
 import { setOnboarding } from "../../redux/slices/onboardingSlice";
@@ -24,7 +29,7 @@ export const Initilizer = () => {
   const currentTab = useSelector((state: RootState) => state.app.currentTab);
   const { is24Hour, focusTime, shortBreakTime, longBreakTime, autoStartNext } = useSelector(settingsSelectors);
   const { tasks, currentTaskId } = useSelector(tasksSelectors);
-  const { currentBackground, customBackgrounds } = useSelector(appearanceSelectors);
+  const { currentBackground, customBackgrounds, backgroundBlur, backgroundDim } = useSelector(appearanceSelectors);
   const { selectedOption, musicEnabled, musicUrl } = useSelector(musicSelectors);
   const { isQuotesShown, customQuote } = useSelector(quoteSelectors);
 
@@ -50,6 +55,8 @@ export const Initilizer = () => {
     const tasksStore = localStorage.getItem("tasks");
     const currentBackgroundStore = localStorage.getItem("currentBackground");
     const customBackgroundsStore = localStorage.getItem("customBackgrounds");
+    const backgroundBlurStore = localStorage.getItem("backgroundBlur");
+    const backgroundDimStore = localStorage.getItem("backgroundDim");
     const isQuotesShownStore = localStorage.getItem("isQuotesShown");
     const quoteIndexStore = localStorage.getItem("quoteIndex");
     const customQuoteStore = localStorage.getItem("customQuote");
@@ -94,6 +101,12 @@ export const Initilizer = () => {
     if (customBackgroundsStore !== null) {
       dispatch(initilizecustomBackgrounds(JSON.parse(customBackgroundsStore)));
     }
+    if (backgroundBlurStore !== null) {
+      dispatch(setBackgroundBlur(JSON.parse(backgroundBlurStore)));
+    }
+    if (backgroundDimStore !== null) {
+      dispatch(setBackgroundDim(JSON.parse(backgroundDimStore)));
+    }
     if (isQuotesShownStore !== null) {
       dispatch(initilizeIsQuotesShown(JSON.parse(isQuotesShownStore)));
     }
@@ -123,6 +136,8 @@ export const Initilizer = () => {
     localStorage.setItem("currentTaskId", JSON.stringify(currentTaskId));
     localStorage.setItem("currentBackground", JSON.stringify(currentBackground));
     localStorage.setItem("customBackgrounds", JSON.stringify(customBackgrounds));
+    localStorage.setItem("backgroundBlur", JSON.stringify(backgroundBlur));
+    localStorage.setItem("backgroundDim", JSON.stringify(backgroundDim));
     localStorage.setItem("isQuotesShown", JSON.stringify(isQuotesShown));
     localStorage.setItem("customQuote", JSON.stringify(customQuote));
     localStorage.setItem("selectedOption", JSON.stringify(selectedOption));
@@ -147,6 +162,8 @@ export const Initilizer = () => {
     currentTaskId,
     currentBackground,
     customBackgrounds,
+    backgroundBlur,
+    backgroundDim,
     isQuotesShown,
     customQuote,
     selectedOption,
