@@ -101,6 +101,7 @@ export const TimerDisplay = styled.time<{ $bgImage?: boolean }>`
   font-weight: 500;
   line-height: 7.5rem;
   color: ${({ $bgImage, theme }) => ($bgImage ? theme.background : theme.text)};
+  font-variant-numeric: tabular-nums;
   @media ${media.md} {
     font-size: clamp(6rem, 10vw, 10rem);
     line-height: 2.5rem;
