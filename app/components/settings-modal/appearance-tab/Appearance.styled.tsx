@@ -120,11 +120,12 @@ export const RemoveBackgroundButton = styled.button`
   z-index: 9999;
   top: -8px;
   right: -8px;
-  background-color: ${({ theme }) => theme.boxShadowTimer};
+  background-color: ${({ theme }) => theme.highlight};
   border-radius: 50%;
   border-width: 1px;
   border-style: solid;
   border-color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.background};
   width: 2rem;
   height: 2rem;
   cursor: pointer;
@@ -135,7 +136,7 @@ export const RemoveBackgroundButton = styled.button`
   transition: var(--transition);
 
   svg {
-    border-color: ${({ theme }) => theme.text};
+    border-color: ${({ theme }) => theme.background};
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
