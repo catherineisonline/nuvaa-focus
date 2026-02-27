@@ -36,6 +36,7 @@ import Upload from "lucide-react/dist/esm/icons/upload";
 
 import { MAX_FILE_SIZE_BYTES, MAX_FILE_SIZE_MB } from "../../../lib/constants";
 import { appearanceSelectors } from "../../../redux/selectors/appearanceSelectors";
+import { Trash } from "lucide-react";
 export const AppearanceTab = () => {
   const dispatch = useDispatch();
 
@@ -134,8 +135,10 @@ export const AppearanceTab = () => {
                   onClick={() => handleImageChange(bg, "custom")}>
                   <Image src={bg} alt={`Background ${index + 1}`} width={300} height={300} />
                 </BackgroundOption>
-                <RemoveBackgroundButton aria-label="Remove this background">
-                  <X onClick={() => handleCustomBackground(bg)} />
+                <RemoveBackgroundButton
+                  aria-label="Delete this image permanently"
+                  title="Delete this image permanently">
+                  <Trash size={20} onClick={() => handleCustomBackground(bg)} />
                 </RemoveBackgroundButton>
               </SingleBackground>
             ))}
