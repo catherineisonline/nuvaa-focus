@@ -22,7 +22,7 @@ export const validate = (form: Form, action: string) => {
         errors["fullname"] = "Full name is not valid";
       }
       if (newPassword) {
-        if (newPassword.trim().length > 0 && oldPassword.trim().length === 0) {
+        if (newPassword.trim().length > 0 && !oldPassword) {
           errors["oldPassword"] = "Include old password to change to a new one";
         } else if (!passwordReg.test(oldPassword)) {
           errors["oldPassword"] = "Password must be 8-16 characters and include at least 1 digit";
