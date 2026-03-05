@@ -9,7 +9,8 @@ interface User {
   hashed_password: string;
 }
 export async function POST(req: NextRequest) {
-  const { email, fullname, password } = await req.json();
+  const { form, captchaToken } = await req.json();
+  const { email, fullname, password } = form;
   const uniqueId = uuidv4();
   const hashed = await hashPassword(password);
 
@@ -20,6 +21,20 @@ export async function POST(req: NextRequest) {
     hashed_password: hashed,
   };
   try {
+    const formData = new URLSearchParams({
+      secret: process.env.TURNSTILE_SECRET_KEY!,
+      response: captchaToken,
+    });
+    const result = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: formData,
+    });
+
+    const outcome = await result.json();
+
+    if (!outcome.success) {
+      return Response.json({ success: false, message: "Captcha verification failed" }, { status: 400 });
+    }
     await turso.execute({
       sql: "INSERT INTO users (id, email, fullname, hashed_password) VALUES (?, ?, ?, ?);",
       args: [user.id, user.email, user.fullname, user.hashed_password],

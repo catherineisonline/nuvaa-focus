@@ -1,11 +1,15 @@
-export const login = async ({ email, password }: { email: string; password: string }) => {
+export const login = async (form: { email: string; password: string }, captchaToken: string) => {
   const res = await fetch("/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ email: email, password: password }),
+    body: JSON.stringify({
+      email: form.email,
+      password: form.password,
+      token: captchaToken,
+    }),
   });
   const data = await res.json();
 

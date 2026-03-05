@@ -4,13 +4,13 @@ type Form = {
   password: string;
   repeatPassword: string;
 };
-export const register = async (form: Form) => {
+export const register = async (form: Form, captchaToken: string) => {
   const res = await fetch("/api/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(form),
+    body: JSON.stringify({ form, captchaToken }),
   });
   const data = await res.json();
   if (!data.success) {

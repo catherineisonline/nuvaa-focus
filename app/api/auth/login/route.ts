@@ -10,8 +10,22 @@ interface Rows {
   fullname?: string;
 }
 export async function POST(req: NextRequest) {
-  const { email, password } = await req.json();
+  const { email, password, token } = await req.json();
   try {
+    const formData = new URLSearchParams({
+      secret: process.env.TURNSTILE_SECRET_KEY!,
+      response: token,
+    });
+    const result = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: formData,
+    });
+
+    const outcome = await result.json();
+
+    if (!outcome.success) {
+      return Response.json({ success: false, message: "Captcha verification failed" }, { status: 400 });
+    }
     const { rows } = await turso.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [email] });
     if (rows?.length > 0) {
       const { hashed_password } = rows[0] as Rows;
@@ -24,7 +38,7 @@ export async function POST(req: NextRequest) {
           {
             status: 200,
             headers: { "Set-Cookie": `token=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=604800` },
-          }
+          },
         );
       }
       return Response.json({ success: false, message: "Password doesn't match the user" }, { status: 404 });

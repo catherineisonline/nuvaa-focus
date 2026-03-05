@@ -5,9 +5,12 @@ import { validate } from "../../helpers/validate";
 import { register } from "../../helpers/register";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
 import { registerSelectors } from "../../../../../redux/selectors/registerSelectors";
+import { useState } from "react";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 export const Register = () => {
   const dispatch = useDispatch();
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const { form, errors } = useSelector(registerSelectors);
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
@@ -20,8 +23,12 @@ export const Register = () => {
       dispatch(setErrors(validation));
       return;
     }
+    if (!captchaToken) {
+      dispatch(setErrors({ general: "Please verify you are human." }));
+      return;
+    }
     try {
-      const res = await register(form);
+      const res = await register(form, captchaToken);
 
       if (res) {
         dispatch(setErrors(null));
@@ -83,6 +90,13 @@ export const Register = () => {
       </AuthLabel>
       {errors?.repeatPassword && <AuthError>{errors.repeatPassword}</AuthError>}
       <PrimaryButton type="submit">Register</PrimaryButton>
+      <Turnstile
+        options={{
+          theme: "light",
+        }}
+        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+        onSuccess={(token: string) => setCaptchaToken(token)}
+      />
     </AuthForm>
   );
 };
