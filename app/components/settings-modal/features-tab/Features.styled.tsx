@@ -8,6 +8,7 @@ export const SettingsContent = styled.form`
   flex: 1;
   overflow-y: auto;
   padding-bottom: 10rem;
+  padding-left: 1rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -98,8 +99,14 @@ export const CheckboxLabel = styled.label`
   color: ${({ theme }) => theme.text};
 `;
 export const Checkbox = styled.input`
-  display: none;
-
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  &:focus-visible + span {
+    outline: 3px solid ${({ theme }) => theme.highlight};
+    outline-offset: 3px;
+  }
   &:not(:checked) + span {
     background-color: transparent;
   }

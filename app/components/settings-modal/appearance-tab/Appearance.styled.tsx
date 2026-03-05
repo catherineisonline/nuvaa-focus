@@ -8,6 +8,7 @@ export const SettingsContent = styled.form`
   flex: 1;
   overflow-y: auto;
   padding-bottom: 10rem;
+  padding-left: 1rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -184,10 +185,13 @@ export const FileUploadSection = styled.div`
   color: ${({ theme }) => theme.text};
   text-align: center;
   cursor: pointer;
-  padding: 1rem;
+  /* padding: 1rem; */
   border-radius: 8px;
   position: relative;
-
+  &:focus-within {
+    outline: 2px solid ${({ theme }) => theme.highlight};
+    outline-offset: 3px;
+  }
   label {
     font-size: 1rem;
     font-family: var(--font-outfit);
@@ -240,7 +244,7 @@ export const Slider = styled.input<{ $value?: number }>`
       ${theme.background} 100%
     )
   `};
-  outline: none;
+
   transition: var(--transition);
 
   &::-webkit-slider-thumb {

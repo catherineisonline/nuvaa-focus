@@ -22,12 +22,21 @@ import {
   SecondaryNavigationBtn,
 } from "./Onboarding.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
+import { useEscapeKey } from "../../hooks/useEscKey";
 
 export const Onboarding = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
   const currentStep = useSelector((state: RootState) => state.onboarding.currentStep);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    modalRef.current?.focus();
+  }, []);
+  useFocusTrap(modalRef, true);
+
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       dispatch(toggleOnboarding(false));
@@ -36,6 +45,7 @@ export const Onboarding = () => {
   const handleCloseModal = () => {
     dispatch(toggleOnboarding(false));
   };
+  useEscapeKey(handleCloseModal, true);
   const nextStep = () => {
     if (currentStep < ONBOARDING_STEPS.length - 1) {
       dispatch(setNextStep(currentStep + 1));
@@ -56,7 +66,7 @@ export const Onboarding = () => {
 
   return (
     <Overlay onClick={handleOutsideClick}>
-      <Modal $bgImage={isBackgroundActive}>
+      <Modal $bgImage={isBackgroundActive} ref={modalRef} tabIndex={-1} role="dialog" aria-modal="true">
         <ModalHeader>
           <ModalTitle>Getting Started</ModalTitle>
           <CloseButton onClick={handleCloseModal} aria-label="Close">

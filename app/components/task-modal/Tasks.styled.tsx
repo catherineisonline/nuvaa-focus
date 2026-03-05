@@ -29,6 +29,9 @@ export const Modal = styled.div<{ $bgImage?: boolean }>`
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundGradient};
   box-shadow: ${({ $bgImage, theme }) => ($bgImage ? undefined : theme.boxShadowOuter)};
+  &:focus {
+    outline: none;
+  }
   @media ${media.md} {
     max-width: 100%;
     max-height: 100%;

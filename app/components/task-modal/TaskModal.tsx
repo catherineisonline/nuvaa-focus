@@ -60,17 +60,27 @@ import {
   TaskText,
 } from "./Tasks.styled";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
+import { useEffect, useRef } from "react";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
+import { useEscapeKey } from "../../hooks/useEscKey";
 
 export const TaskModal = () => {
   const dispatch = useDispatch();
   const isBackgroundActive = useBackgroundStatus();
   const { editingId, newTaskText, tasks, activeDrag } = useSelector(tasksSelectors);
   const currentTask = useSelector((state: RootState) =>
-    state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId)
+    state.tasks.tasks.find((task) => task.id === state.tasks.currentTaskId),
   );
 
   const activeTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);
+
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    modalRef.current?.focus();
+  }, []);
+  useFocusTrap(modalRef, true);
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -80,6 +90,7 @@ export const TaskModal = () => {
   const handleModalClose = () => {
     dispatch(closeModal({ target: "isTasksActive" }));
   };
+  useEscapeKey(handleModalClose, true);
   const addTask = () => {
     if (newTaskText.trim()) {
       const newTask = {
@@ -127,7 +138,7 @@ export const TaskModal = () => {
         delay: 250,
         tolerance: 5,
       },
-    })
+    }),
   );
 
   const handleDragEnd = (e: DragEndEvent) => {
@@ -147,7 +158,13 @@ export const TaskModal = () => {
 
   return (
     <Overlay onClick={handleOutsideClick}>
-      <Modal $bgImage={isBackgroundActive} role="dialog" aria-labelledby="tasks-title">
+      <Modal
+        ref={modalRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        $bgImage={isBackgroundActive}
+        aria-labelledby="tasks-title">
         <ModalHeader>
           <h2 id="tasks-title">Tasks</h2>
           <CloseBtn aria-label="Close" onClick={handleModalClose}>

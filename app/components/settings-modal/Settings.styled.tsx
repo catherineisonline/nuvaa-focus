@@ -32,6 +32,10 @@ export const Modal = styled.div<{ $bgImage?: boolean; $isMusicPlaying: boolean }
   box-shadow: ${({ $bgImage, theme }) => ($bgImage ? undefined : theme.boxShadowOuter)};
   opacity: ${({ $isMusicPlaying }) => ($isMusicPlaying ? 0 : 1)};
   pointer-events: ${({ $isMusicPlaying }) => ($isMusicPlaying ? "none" : "auto")};
+
+  &:focus {
+    outline: none;
+  }
   @media ${media.md} {
     max-width: 100%;
     max-height: 100%;
