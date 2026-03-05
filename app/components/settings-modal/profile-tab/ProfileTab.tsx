@@ -10,13 +10,12 @@ import { resetProfileForm, setIsProfileEditing, setUser } from "../../../redux/s
 import { resetLoginForm, setActiveTab, setErrors as setErrorsL } from "../../../redux/slices/loginSlice";
 import { resetRegisterForm, setErrors as setErrorsR } from "../../../redux/slices/registerSlice";
 import { setErrors as setErrorsProfile } from "../../../redux/slices/profileSlice";
-import { validate } from "./helpers/validate";
-import { edit } from "./helpers/edit";
+
 import { profileSelectors } from "../../../redux/selectors/profileSelectors";
 import { loginSelectors } from "../../../redux/selectors/loginSelectors";
 
 export default function ProfileTab() {
-  const { user, isProfileEditing, form } = useSelector(profileSelectors);
+  const { user, isProfileEditing } = useSelector(profileSelectors);
   const { activeTab } = useSelector(loginSelectors);
   const loggedUser = useAuth();
   const dispatch = useDispatch();
@@ -46,25 +45,6 @@ export default function ProfileTab() {
     dispatch(setActiveTab(tab));
   };
 
-  const submitForm = async () => {
-    const validation = validate(form, "edit");
-    if (Object.keys(validation).length > 0) {
-      dispatch(setErrorsProfile(validation));
-      return;
-    }
-    try {
-      const user = await edit(form);
-      dispatch(setErrorsProfile(null));
-      dispatch(resetProfileForm());
-      dispatch(setUser(user));
-      dispatch(setIsProfileEditing(false));
-    } catch (error) {
-      dispatch(resetProfileForm());
-      dispatch(setErrorsProfile({ general: error.message || "Edit failed!" }));
-      console.log(error);
-    }
-  };
-
   return (
     <ModalBody>
       <ModalHeading>
@@ -77,7 +57,7 @@ export default function ProfileTab() {
               </SecondaryButton>
             )}
             {isProfileEditing && (
-              <SecondaryButton type="button" onClick={submitForm}>
+              <SecondaryButton type="submit" form="profile-form">
                 Save changes
               </SecondaryButton>
             )}
