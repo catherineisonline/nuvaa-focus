@@ -2,8 +2,10 @@
 
 Resolves #<issue-number>
 
+_Tip: (add x inside [] to confirm)_
+
 - [ ] I am assigned to this issue
-- [ ] The issue is marked "open for contribution"
+- [ ] The issue is marked "open for contribution."
 
 ---
 
@@ -16,16 +18,16 @@ Resolves #<issue-number>
 
 ## What was implemented or fixed?
 
-Explain what changed.
+Explain what changed
 
 ---
 
-## Screenshots (optional)
+## Screenshots (recommended)
 
-Provide screenshots of the feature or fix.
+Provide screenshots of the feature or fix
 
 ---
 
 ## Checklist
 
-- [ ] I have read [Contibution Rules](https://gist.github.com/catherineisonline/4e35fb3f38e0711eac2d8d026cf6d040)
+- [ ] I have read [Contribution Rules](https://gist.github.com/catherineisonline/4e35fb3f38e0711eac2d8d026cf6d040)
