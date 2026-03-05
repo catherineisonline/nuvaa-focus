@@ -41,44 +41,32 @@ export const MusicOptions = styled.div<{ $bgActive: boolean }>`
   }
 `;
 
-export const MusicOption = styled.div<{ $active: boolean }>`
-  position: relative;
-  border: none;
-  padding: 20px;
+export const RadioOption = styled.label<{ $active: boolean }>`
   cursor: pointer;
+  position: relative;
   transition: var(--transition);
   color: ${({ theme }) => theme.text};
   min-width: 6rem;
   font-size: 1.1rem;
   font-weight: 800;
   font-family: var(--font-outfit);
-  background-color: ${({ $active, theme }) => ($active ? theme.buttonBackgroundActive : "transparent")};
+  display: block;
+  padding: 20px;
+  cursor: pointer;
   border-radius: var(--border-radius);
+  background-color: ${({ $active, theme }) => ($active ? theme.buttonBackgroundActive : "transparent")};
   box-shadow: ${({ $active, theme }) => ($active ? theme.boxShadowOuterStrong : undefined)};
-
   &:hover {
     color: ${({ theme }) => theme.highlight};
   }
-
-  &:has(input[type="radio"]:focus-visible) {
+  &:focus-within {
     outline: 3px solid ${({ theme }) => theme.highlight};
-  }
-`;
-
-export const RadioOption = styled.label`
-  cursor: pointer;
-  &:has(input:checked) {
-    border-color: ${({ theme }) => theme.text};
+    outline-offset: 3px;
   }
 `;
 export const HiddenRadio = styled.input.attrs({ type: "radio" })`
   position: absolute;
-  top: 0;
-  left: 0;
   opacity: 0;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
 `;
 export const OptionContent = styled.div`
   display: flex;

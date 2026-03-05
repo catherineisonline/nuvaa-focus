@@ -6,7 +6,6 @@ import {
   HiddenRadio,
   ModalBody,
   MusicControls,
-  MusicOption,
   MusicOptions,
   OptionContent,
   OptionText,
@@ -19,7 +18,6 @@ import { useBackgroundStatus } from "../../../hooks/useBackgroundStatus";
 import AudioLines from "lucide-react/dist/esm/icons/audio-lines";
 import Link from "lucide-react/dist/esm/icons/link";
 import VolumeOff from "lucide-react/dist/esm/icons/volume-off";
-import { RootState } from "../../../redux/store";
 import { setCustomUrl, setMusicEnabled, setMusicUrl, setSelectedOption } from "../../../redux/slices/musicSlice";
 import { CustomPlayer } from "./CustomPlayer";
 import { SpotifyPlayer } from "./SpotifyPlayer";
@@ -106,59 +104,51 @@ export const MusicTab = () => {
     <ModalBody>
       <SectionHeading>Choose Your Focus Music</SectionHeading>
       <MusicOptions $bgActive={isBackgroundActive}>
-        <MusicOption $active={selectedOption === "none"}>
-          <RadioOption>
-            <HiddenRadio
-              type="radio"
-              name="musicOption"
-              checked={selectedOption === "none"}
-              onChange={() => handleOptionChange("none")}
-            />
-            <OptionContent>
-              <VolumeOff />
-              <OptionText>
-                <h4>No Music</h4>
-                <p>Focus in silence</p>
-              </OptionText>
-            </OptionContent>
-          </RadioOption>
-        </MusicOption>
-
-        <MusicOption $active={selectedOption === "lofi"}>
-          <RadioOption>
-            <HiddenRadio
-              type="radio"
-              name="musicOption"
-              checked={selectedOption === "lofi"}
-              onChange={() => handleOptionChange("lofi")}
-            />
-            <OptionContent>
-              <AudioLines />
-              <OptionText>
-                <h4>Lo-fi Music</h4>
-                <p>Curated chill beats for focus</p>
-              </OptionText>
-            </OptionContent>
-          </RadioOption>
-        </MusicOption>
-
-        <MusicOption $active={selectedOption === "custom"}>
-          <RadioOption>
-            <HiddenRadio
-              type="radio"
-              name="musicOption"
-              checked={selectedOption === "custom"}
-              onChange={() => handleOptionChange("custom")}
-            />
-            <OptionContent>
-              <Link />
-              <OptionText>
-                <h4>Custom Music</h4>
-                <p>Your own music URL</p>
-              </OptionText>
-            </OptionContent>
-          </RadioOption>
-        </MusicOption>
+        <RadioOption $active={selectedOption === "none"}>
+          <HiddenRadio
+            type="radio"
+            name="musicOption"
+            checked={selectedOption === "none"}
+            onChange={() => handleOptionChange("none")}
+          />
+          <OptionContent>
+            <VolumeOff />
+            <OptionText>
+              <h4>No Music</h4>
+              <p>Focus in silence</p>
+            </OptionText>
+          </OptionContent>
+        </RadioOption>
+        <RadioOption $active={selectedOption === "lofi"}>
+          <HiddenRadio
+            type="radio"
+            name="musicOption"
+            checked={selectedOption === "lofi"}
+            onChange={() => handleOptionChange("lofi")}
+          />
+          <OptionContent>
+            <AudioLines />
+            <OptionText>
+              <h4>Lo-fi Music</h4>
+              <p>Curated chill beats for focus</p>
+            </OptionText>
+          </OptionContent>
+        </RadioOption>
+        <RadioOption $active={selectedOption === "custom"}>
+          <HiddenRadio
+            type="radio"
+            name="musicOption"
+            checked={selectedOption === "custom"}
+            onChange={() => handleOptionChange("custom")}
+          />
+          <OptionContent>
+            <Link />
+            <OptionText>
+              <h4>Custom Music</h4>
+              <p>Your own music URL</p>
+            </OptionText>
+          </OptionContent>
+        </RadioOption>
       </MusicOptions>
       {selectedOption === "custom" && (
         <CustomUrlSection>

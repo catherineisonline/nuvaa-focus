@@ -21,9 +21,11 @@ import { AppearanceTab } from "./appearance-tab/AppearanceTab";
 import { useBackgroundStatus } from "../../hooks/useBackgroundStatus";
 import { FeaturesTab } from "./features-tab/FeaturesTab";
 import { AnalyticsTab } from "./analytics-tab/AnalyticsTab";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { MusicTab } from "./music-tab/MusicTab";
 import ProfileTab from "./profile-tab/ProfileTab";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
+import { useEscapeKey } from "../../hooks/useEscKey";
 
 export const SettingsModal = () => {
   const dispatch = useDispatch();
@@ -33,6 +35,12 @@ export const SettingsModal = () => {
   const changesSavedMsg = useSelector((state: RootState) => state.app.changesSavedMsg);
   const musicEnabled = useSelector((state: RootState) => state.music.musicEnabled);
   const lastTabRef = useRef<HTMLElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    modalRef.current?.focus();
+  }, []);
+  useFocusTrap(modalRef, true);
 
   const handleSettingsTab = (tab: string) => {
     if (tab === "account") {
@@ -57,15 +65,18 @@ export const SettingsModal = () => {
       dispatch(setIsMusicPlaying(true));
     }
   };
+  useEscapeKey(handleModalClose, true);
 
   return (
     <Overlay onClick={handleOutsideClick} $isMusicPlaying={isMusicPlaying}>
       <Modal
+        ref={modalRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
         $isMusicPlaying={isMusicPlaying}
         $bgImage={isBackgroundActive}
-        role="dialog"
-        aria-labelledby="settings-title"
-        aria-modal="true">
+        aria-labelledby="settings-title">
         <ModalHeader>
           <ModalTitle id="settings-title">Settings{changesSavedMsg && <span> {changesSavedMsg}</span>}</ModalTitle>
           <CloseButton aria-label="Close" onClick={handleModalClose}>

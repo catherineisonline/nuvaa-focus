@@ -18,6 +18,7 @@ export const Modals = () => {
   const isSettingsActive = useSelector((state: RootState) => state.navigation.isSettingsActive);
   const isHamburgerActive = useSelector((state: RootState) => state.navigation.isHamburgerActive);
   const isOnboardingActive = useSelector((state: RootState) => state.onboarding.isOnboardingActive);
+
   return (
     <React.Fragment>
       {isSettingsActive && <SettingsModal />}

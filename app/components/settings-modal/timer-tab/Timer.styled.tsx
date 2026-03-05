@@ -10,6 +10,7 @@ export const SettingsContent = styled.form`
   flex-direction: column;
   gap: 2rem;
   padding-bottom: 10rem;
+  padding-left: 1rem;
   @media ${media.md} {
     padding-bottom: 3rem;
   }
@@ -64,8 +65,14 @@ export const CheckboxLabel = styled.label`
   color: ${({ theme }) => theme.text};
 `;
 export const Checkbox = styled.input`
-  display: none;
-
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  &:focus-visible + span {
+    outline: 3px solid ${({ theme }) => theme.highlight};
+    outline-offset: 3px;
+  }
   &:not(:checked) + span {
     background-color: transparent;
   }
