@@ -12,12 +12,22 @@ import {
   ConfirmationModal,
   ModalActions,
 } from "../../Profile.styled";
-import { setForm, setIsConfirmationActive, setUser } from "../../../../../redux/slices/profileSlice";
+import {
+  resetProfileForm,
+  setForm,
+  setIsConfirmationActive,
+  setIsProfileEditing,
+  setUser,
+} from "../../../../../redux/slices/profileSlice";
 import { logout } from "../../helpers/logout";
 import { setActiveTab } from "../../../../../redux/slices/loginSlice";
 import { setErrors } from "../../../../../redux/slices/profileSlice";
 import { deleteAccount } from "../../helpers/delete-account";
 import { profileSelectors } from "../../../../../redux/selectors/profileSelectors";
+import { validate } from "../../helpers/validate";
+import { edit } from "../../helpers/edit";
+import { FormEvent } from "react";
+
 export const Profile = () => {
   const dispatch = useDispatch();
   const { user, form, errors, isProfileEditing, isConfirmationActive } = useSelector(profileSelectors);
@@ -58,10 +68,29 @@ export const Profile = () => {
   const toggleAccountDeletion = () => {
     dispatch(setIsConfirmationActive(true));
   };
+  const submitForm = async (e: FormEvent) => {
+    e.preventDefault();
+    const validation = validate(form, "edit");
+    if (Object.keys(validation).length > 0) {
+      dispatch(setErrors(validation));
+      return;
+    }
+    try {
+      const user = await edit(form);
+      dispatch(setErrors(null));
+      dispatch(resetProfileForm());
+      dispatch(setUser(user));
+      dispatch(setIsProfileEditing(false));
+    } catch (error) {
+      dispatch(resetProfileForm());
+      dispatch(setErrors({ general: error.message || "Edit failed!" }));
+      console.log(error);
+    }
+  };
   return (
     <>
       {isProfileEditing ? (
-        <AuthForm>
+        <AuthForm onSubmit={submitForm} id="profile-form">
           {errors?.general && <AuthError>{errors.general}</AuthError>}
           <AuthLabel htmlFor="id">
             <strong>ID</strong>
