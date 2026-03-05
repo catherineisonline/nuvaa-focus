@@ -6,8 +6,12 @@ import { resetLoginForm, setErrors, setForm } from "../../../../../redux/slices/
 import { setUser } from "../../../../../redux/slices/profileSlice";
 import { loginSelectors } from "../../../../../redux/selectors/loginSelectors";
 
+import { useState } from "react";
+import { Turnstile } from "@marsidev/react-turnstile";
+
 export const Login = () => {
   const dispatch = useDispatch();
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const { form, errors } = useSelector(loginSelectors);
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
@@ -20,8 +24,12 @@ export const Login = () => {
       dispatch(setErrors(validation));
       return;
     }
+    if (!captchaToken) {
+      dispatch(setErrors({ general: "Please verify you are human." }));
+      return;
+    }
     try {
-      const user = await login(form);
+      const user = await login(form, captchaToken);
       dispatch(setErrors(null));
       dispatch(resetLoginForm());
       dispatch(setUser(user));
@@ -57,6 +65,13 @@ export const Login = () => {
       </AuthLabel>
       {errors?.password && <AuthError>{errors.password}</AuthError>}
       <PrimaryButton type="submit">Login</PrimaryButton>
+      <Turnstile
+        options={{
+          theme: "light",
+        }}
+        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+        onSuccess={(token: string) => setCaptchaToken(token)}
+      />
     </AuthForm>
   );
 };
