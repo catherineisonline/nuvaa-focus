@@ -13,7 +13,8 @@ export const Login = () => {
     const { name, value } = e;
     dispatch(setForm({ key: name, value: value }));
   };
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     const validation = validate(form, "login");
     if (Object.keys(validation).length > 0) {
       dispatch(setErrors(validation));
@@ -30,7 +31,7 @@ export const Login = () => {
     }
   };
   return (
-    <AuthForm>
+    <AuthForm onSubmit={handleLogin}>
       {errors?.general && <AuthError>{errors.general}</AuthError>}
       <AuthLabel htmlFor="email">
         Email
@@ -55,9 +56,7 @@ export const Login = () => {
         />
       </AuthLabel>
       {errors?.password && <AuthError>{errors.password}</AuthError>}
-      <PrimaryButton type="button" onClick={handleLogin}>
-        Login
-      </PrimaryButton>
+      <PrimaryButton type="submit">Login</PrimaryButton>
     </AuthForm>
   );
 };
