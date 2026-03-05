@@ -13,7 +13,8 @@ export const Register = () => {
     const { name, value } = e;
     dispatch(setForm({ key: name, value: value }));
   };
-  const handleRegister = async () => {
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
     const validation = validate(form, "register");
     if (Object.keys(validation).length > 0) {
       dispatch(setErrors(validation));
@@ -33,7 +34,7 @@ export const Register = () => {
     }
   };
   return (
-    <AuthForm>
+    <AuthForm onSubmit={handleRegister}>
       {errors?.general && <AuthError>{errors.general}</AuthError>}
       <AuthLabel htmlFor="fullname">
         Full Name
@@ -81,9 +82,7 @@ export const Register = () => {
         />
       </AuthLabel>
       {errors?.repeatPassword && <AuthError>{errors.repeatPassword}</AuthError>}
-      <PrimaryButton type="button" onClick={handleRegister}>
-        Register
-      </PrimaryButton>
+      <PrimaryButton type="submit">Register</PrimaryButton>
     </AuthForm>
   );
 };
