@@ -24,6 +24,7 @@ export const Login = () => {
       dispatch(setErrors(validation));
       return;
     }
+
     if (!captchaToken) {
       dispatch(setErrors({ general: "Please verify you are human." }));
       return;
