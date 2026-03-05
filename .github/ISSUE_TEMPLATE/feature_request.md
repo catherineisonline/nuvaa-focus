@@ -7,22 +7,16 @@ labels: ["feature", "open for contribution"]
 
 ## Feature Description
 
-Describe the feature clearly.
+Describe the feature clearly
 
 ---
 
 ## Problem It Solves
 
-Explain why this feature is needed.
+Explain why this feature is needed
 
 ---
 
-## Proposed Solution
+## Additional Context (recommended)
 
-Describe how it should work.
-
----
-
-## Additional Context
-
-Add examples, mockups, screenshots.
+Add examples, mockups, screenshots, if any

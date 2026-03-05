@@ -11,6 +11,12 @@ Clearly describe the bug.
 
 ---
 
+## Preconditions
+
+Add preconditions, if any
+
+---
+
 ## Steps to Reproduce
 
 1.
@@ -38,4 +44,4 @@ What should happen?
 
 ## Screenshots (recommended)
 
-Provide possible screenshots.
+Provide screenshots, if any
