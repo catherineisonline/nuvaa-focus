@@ -7,10 +7,12 @@ import { setActiveTab } from "../../../../../redux/slices/loginSlice";
 import { registerSelectors } from "../../../../../redux/selectors/registerSelectors";
 import { useState } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { RegisterSkeleton } from "./RegisterSkeleton";
 
 export const Register = () => {
   const dispatch = useDispatch();
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { form, errors } = useSelector(registerSelectors);
   const handleChange = (e: HTMLInputElement) => {
     const { name, value } = e;
@@ -18,13 +20,16 @@ export const Register = () => {
   };
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     const validation = validate(form, "register");
     if (Object.keys(validation).length > 0) {
       dispatch(setErrors(validation));
+      setIsLoading(false);
       return;
     }
     if (!captchaToken) {
       dispatch(setErrors({ general: "Please verify you are human." }));
+      setIsLoading(false);
       return;
     }
     try {
@@ -38,8 +43,11 @@ export const Register = () => {
     } catch (error) {
       dispatch(setErrors({ general: error.message || "Registration failed!" }));
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
+  if (isLoading) return <RegisterSkeleton />;
   return (
     <AuthForm onSubmit={handleRegister}>
       {errors?.general && <AuthError>{errors.general}</AuthError>}
