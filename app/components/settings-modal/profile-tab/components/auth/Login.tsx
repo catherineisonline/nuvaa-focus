@@ -8,9 +8,11 @@ import { loginSelectors } from "../../../../../redux/selectors/loginSelectors";
 
 import { useState } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { LoginSkeleton } from "./LoginSkeleton";
 
 export const Login = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const { form, errors } = useSelector(loginSelectors);
   const handleChange = (e: HTMLInputElement) => {
@@ -19,14 +21,17 @@ export const Login = () => {
   };
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     const validation = validate(form, "login");
     if (Object.keys(validation).length > 0) {
       dispatch(setErrors(validation));
+      setIsLoading(false);
       return;
     }
 
     if (!captchaToken) {
       dispatch(setErrors({ general: "Please verify you are human." }));
+      setIsLoading(false);
       return;
     }
     try {
@@ -37,8 +42,11 @@ export const Login = () => {
     } catch (error) {
       dispatch(setErrors({ general: error.message || "Login failed!" }));
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
+  if (isLoading) return <LoginSkeleton />;
   return (
     <AuthForm onSubmit={handleLogin}>
       {errors?.general && <AuthError>{errors.general}</AuthError>}

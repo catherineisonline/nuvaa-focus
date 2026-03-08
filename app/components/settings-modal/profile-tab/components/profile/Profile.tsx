@@ -20,10 +20,12 @@ import { deleteAccount } from "../../helpers/delete-account";
 import { profileSelectors } from "../../../../../redux/selectors/profileSelectors";
 import { validate } from "../../helpers/validate";
 import { edit } from "../../helpers/edit";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
+import { ProfileSkeleton } from "./ProfileSkeleton";
 
 export const Profile = ({ isEditing, setIsEditing }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const { user, form, errors, isConfirmationActive } = useSelector(profileSelectors);
 
   const handleChange = (e: HTMLInputElement) => {
@@ -31,6 +33,7 @@ export const Profile = ({ isEditing, setIsEditing }) => {
     dispatch(setForm({ key: name, value: value }));
   };
   const handleLogout = async () => {
+    setIsLoading(true);
     try {
       const response = await logout();
       if (response) {
@@ -40,6 +43,8 @@ export const Profile = ({ isEditing, setIsEditing }) => {
     } catch (error) {
       dispatch(setErrors({ general: error.message || "Editing failed!" }));
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,6 +52,7 @@ export const Profile = ({ isEditing, setIsEditing }) => {
     dispatch(setIsConfirmationActive(false));
   };
   const handleAccountDeletion = async () => {
+    setIsLoading(true);
     try {
       const response = await deleteAccount();
       if (response) {
@@ -57,6 +63,8 @@ export const Profile = ({ isEditing, setIsEditing }) => {
     } catch (error) {
       dispatch(setErrors({ general: error.message || "Deletion failed!" }));
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   const toggleAccountDeletion = () => {
@@ -64,9 +72,11 @@ export const Profile = ({ isEditing, setIsEditing }) => {
   };
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     const validation = validate(form, "edit");
     if (Object.keys(validation).length > 0) {
       dispatch(setErrors(validation));
+      setIsLoading(false);
       return;
     }
     try {
@@ -79,9 +89,11 @@ export const Profile = ({ isEditing, setIsEditing }) => {
       dispatch(resetProfileForm());
       dispatch(setErrors({ general: error.message || "Edit failed!" }));
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
+  if (isLoading) return <ProfileSkeleton />;
   return (
     <>
       {isEditing ? (

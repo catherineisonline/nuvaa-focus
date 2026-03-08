@@ -17,6 +17,7 @@ import { RootState } from "../../../redux/store";
 
 export default function ProfileTab() {
   const [isEditing, setIsEditing] = useState(false);
+
   const { user } = useSelector(profileSelectors);
   const { activeTab } = useSelector(loginSelectors);
   const isMusicPlaying = useSelector((state: RootState) => state.settings.isMusicPlaying);
