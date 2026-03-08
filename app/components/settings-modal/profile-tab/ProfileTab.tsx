@@ -1,22 +1,26 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ModalBody, SecondaryButton, TabSwitcher, TabButton, ModalHeading, EditProfileActions } from "./Profile.styled";
 import { useAuth } from "../../../hooks/useAuth";
 import { Register } from "./components/auth/Register";
 import { Login } from "./components/auth/Login";
 import { Profile } from "./components/profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
-import { resetProfileForm, setIsProfileEditing, setUser } from "../../../redux/slices/profileSlice";
+import { resetProfileForm, setUser } from "../../../redux/slices/profileSlice";
 import { resetLoginForm, setActiveTab, setErrors as setErrorsL } from "../../../redux/slices/loginSlice";
 import { resetRegisterForm, setErrors as setErrorsR } from "../../../redux/slices/registerSlice";
 import { setErrors as setErrorsProfile } from "../../../redux/slices/profileSlice";
 
 import { profileSelectors } from "../../../redux/selectors/profileSelectors";
 import { loginSelectors } from "../../../redux/selectors/loginSelectors";
+import { RootState } from "../../../redux/store";
 
 export default function ProfileTab() {
-  const { user, isProfileEditing } = useSelector(profileSelectors);
+  const [isEditing, setIsEditing] = useState(false);
+  const { user } = useSelector(profileSelectors);
   const { activeTab } = useSelector(loginSelectors);
+  const isMusicPlaying = useSelector((state: RootState) => state.settings.isMusicPlaying);
+
   const loggedUser = useAuth();
   const dispatch = useDispatch();
 
@@ -27,7 +31,7 @@ export default function ProfileTab() {
   }, [loggedUser, dispatch]);
 
   const handleEditToggle = (val: boolean) => {
-    dispatch(setIsProfileEditing(val));
+    setIsEditing(val);
     dispatch(resetProfileForm());
     if (!val) {
       dispatch(setErrorsProfile(null));
@@ -44,24 +48,28 @@ export default function ProfileTab() {
 
     dispatch(setActiveTab(tab));
   };
-
+  useEffect(() => {
+    if (isMusicPlaying) {
+      handleEditToggle(false);
+    }
+  }, [isMusicPlaying]);
   return (
     <ModalBody>
       <ModalHeading>
         <h2>{user ? user?.fullname : activeTab === "login" ? "Login" : "Register"}</h2>{" "}
         {user && (
           <EditProfileActions>
-            {!isProfileEditing && (
+            {!isEditing && (
               <SecondaryButton type="button" onClick={() => handleEditToggle(true)}>
                 Edit profile
               </SecondaryButton>
             )}
-            {isProfileEditing && (
+            {isEditing && (
               <SecondaryButton type="submit" form="profile-form">
                 Save changes
               </SecondaryButton>
             )}
-            {isProfileEditing && (
+            {isEditing && (
               <SecondaryButton type="button" onClick={() => handleEditToggle(false)}>
                 Cancel
               </SecondaryButton>
@@ -82,7 +90,7 @@ export default function ProfileTab() {
           {activeTab === "register" ? <Register /> : <Login />}
         </>
       )}
-      {user && <Profile />}
+      {user && <Profile isEditing={isEditing} setIsEditing={setIsEditing} />}
     </ModalBody>
   );
 }
